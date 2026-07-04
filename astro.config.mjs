@@ -6,9 +6,9 @@ export default defineConfig({
   site: 'https://opencraft.bar',
   i18n: {
     locales: ['en', 'th'],
-    defaultLocale: 'th',
+    defaultLocale: 'en',
     routing: {
-      prefixDefaultLocale: false,
+      prefixDefaultLocale: true,
     },
   },
   image: {
