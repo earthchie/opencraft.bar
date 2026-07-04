@@ -4,7 +4,7 @@
 
 import type { APIRoute, GetStaticPathsItem } from 'astro';
 import { getCollection } from 'astro:content';
-import { generateOgImageForPost } from '../../../../utils/generateOgImages.js';
+import { generateOgImageForPost } from '../../../../../utils/generateOgImages.js';
 
 // Strip emojis and other special Unicode symbols that may render as blank in SVG
 function stripEmojis(text: string): string {

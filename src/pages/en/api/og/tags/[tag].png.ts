@@ -4,7 +4,7 @@
 
 import type { APIRoute, GetStaticPathsItem } from 'astro';
 import { getCollection } from 'astro:content';
-import { generateOgImageForTag } from '../../../../utils/generateOgImages.js';
+import { generateOgImageForTag } from '../../../../../utils/generateOgImages.js';
 
 export const GET: APIRoute = async ({ params, request }) => {
   const tag = params.tag || '';
