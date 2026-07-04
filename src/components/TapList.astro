@@ -128,7 +128,7 @@ const standardTaps = taps.filter((tap) => tap.brewery !== 'Asahi');
               </div>
             ) : tap.price ? (
               <div class="flex justify-between items-baseline">
-                <span class="text-sm" style="color: var(--color-text-secondary);">{t('tapList.price', locale)}</span>
+                <span class="text-sm font-semibold" style="color: var(--color-text-muted);">330ml</span>
                 <span class="font-mono font-bold text-lg" style="color: var(--color-accent);">฿{tap.price}</span>
               </div>
             ) : ''}
