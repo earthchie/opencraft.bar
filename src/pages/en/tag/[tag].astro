@@ -1,0 +1,65 @@
+---
+// Tag page (EN)
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('knowledge');
+  const enArticles = allArticles.filter((e) => e.data.locale === 'en');
+  const allTags = [...new Set(enArticles.flatMap((e) => e.data.tags || []))];
+
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      articles: enArticles
+        .filter((e) => (e.data.tags || []).includes(tag))
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const { tag, articles } = Astro.props as { tag: string; articles: CollectionEntry<'knowledge'>[] };
+const locale = 'en';
+const ogImageUrl = `/api/og/tags/${tag}.png`;
+---
+
+<BaseLayout
+  title={`#${tag} | OpenCraft Knowledge`}
+  description={`Articles tagged #${tag}`}
+  ogImage={ogImageUrl}
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-5xl">
+        <a href="/en/knowledge/" class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← {t('knowledge.backToKnowledge', locale)}
+        </a>
+
+        <div class="article-header">
+          <h1 class="article-header-title" style="font-size: 1.8rem;">#{tag}</h1>
+          <p style="color: var(--color-text-muted); font-size: 0.95rem;">
+            {articles.length} {t('knowledge.articles', locale) || 'articles'}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          {articles.map((article) => (
+            <a href={`/knowledge/${article.id.replace(/^en\//, '')}/`} class="card block group">
+              <p class="text-xs mb-2" style="color: var(--color-text-muted);">
+                {article.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+              <h3 class="text-lg font-bold mb-2" style="color: var(--color-text-heading);">{article.data.title}</h3>
+              <p class="text-sm line-clamp-2" style="color: var(--color-text-secondary);">{article.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

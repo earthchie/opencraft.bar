@@ -1,5 +1,5 @@
 ---
-// News detail page (TH)
+// News detail page (EN)
 import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
@@ -8,17 +8,17 @@ import { t } from '@i18n/utils';
 
 export async function getStaticPaths() {
   const allNews = await getCollection('news');
-  const news = allNews.filter((e) => e.data.locale === 'th');
+  const news = allNews.filter((e) => e.data.locale === 'en');
   return news.map((entry) => ({
-    params: { slug: entry.id.replace(/^th\//, '') },
+    params: { slug: entry.id.replace(/^en\//, '') },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props as { entry: CollectionEntry<'news'> };
 const contentHtml = entry.rendered?.html || '';
-const locale = 'th';
-const slug = entry.id.replace(/^th\//, '');
+const locale = 'en';
+const slug = entry.id.replace(/^en\//, '');
 const ogImageUrl = entry.data.image ? entry.data.image : `/api/og/posts/${slug}.png`;
 ---
 
@@ -31,27 +31,31 @@ const ogImageUrl = entry.data.image ? entry.data.image : `/api/og/posts/${slug}.
   <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
     <article class="py-20">
       <div class="container-main max-w-3xl">
-        <a href="/th/news/" class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+        <!-- Back link -->
+        <a href="/en/news/" class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
           ← {t('news.backToNews', locale)}
         </a>
 
+        <!-- Featured badge -->
         {entry.data.featured && (
           <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-4" style="background-color: var(--color-accent); color: #fff;">
             Featured
           </span>
         )}
 
+        <!-- Title -->
         <h1 class="text-3xl md:text-4xl font-bold mb-4 page-enter" style="color: var(--color-text-heading);">
           {entry.data.title}
         </h1>
 
+        <!-- Date -->
         <p class="text-sm mb-8" style="color: var(--color-text-muted);">
-          {t('news.publishedOn', locale)}: {entry.data.date.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {t('news.publishedOn', locale)}: {entry.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
 
+        <!-- Content -->
         <div class="prose prose-lg max-w-none" style="color: var(--color-text-primary);">
           <Fragment set:html={contentHtml} />
-        </div>
         </div>
       </div>
     </article>

@@ -1,0 +1,123 @@
+---
+// Knowledge detail page (EN)
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  const allArticles = await getCollection('knowledge');
+  const enArticles = allArticles
+    .filter((e) => e.data.locale === 'en')
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return enArticles.map((entry, i) => ({
+    params: { slug: entry.id.replace(/^en\//, '') },
+    props: {
+      entry,
+      prev: i < enArticles.length - 1 ? enArticles[i + 1] : null,
+      next: i > 0 ? enArticles[i - 1] : null,
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props as {
+  entry: CollectionEntry<'knowledge'>;
+  prev: CollectionEntry<'knowledge'> | null;
+  next: CollectionEntry<'knowledge'> | null;
+};
+const contentHtml = entry.rendered?.html || '';
+const locale = 'en';
+const slug = entry.id.replace(/^en\//, '');
+const ogImageUrl = `/api/og/posts/${slug}.png`;
+---
+
+<BaseLayout
+  title={entry.data.title + ' | OpenCraft Knowledge'}
+  description={entry.data.description}
+  ogImage={ogImageUrl}
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <article class="py-20">
+      <div class="container-main max-w-5xl">
+        <a href="/en/knowledge/" class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← {t('knowledge.backToKnowledge', locale)}
+        </a>
+
+        <!-- Article Header Card -->
+        <div class="article-header">
+          <h1 class="article-header-title">{entry.data.title}</h1>
+
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div class="article-header-tags">
+              {entry.data.tags.map((tag: string) => (
+                <a href={`/tag/${tag}/`} class="article-header-tag">#{tag}</a>
+              ))}
+            </div>
+          )}
+
+          <div class="article-header-meta">
+            <span class="article-header-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {entry.data.author}
+            </span>
+            <span class="article-header-meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              {entry.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+          </div>
+        </div>
+
+        <div class="prose prose-lg max-w-none" data-pagefind-body style="color: var(--color-text-primary);">
+          <Fragment set:html={contentHtml} />
+        </div>
+
+        <!-- Article Footer -->
+        <div class="article-footer">
+          <div class="article-end-divider">
+            <span class="article-end-dot"></span>
+            <span class="article-end-text">END</span>
+          </div>
+
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div class="article-footer-tags">
+              {entry.data.tags.map((tag: string) => (
+                <a href={`/tag/${tag}/`} class="article-header-tag">#{tag}</a>
+              ))}
+            </div>
+          )}
+
+          <div class="article-nav">
+            {prev ? (
+              <a href={`/knowledge/${prev.id.replace(/^en\//, '')}/`} class="article-nav-card article-nav-prev">
+                <span class="article-nav-label">← {t('knowledge.prev', locale) || 'Previous'}</span>
+                <span class="article-nav-title">{prev.data.title}</span>
+              </a>
+            ) : <div />}
+            {next ? (
+              <a href={`/knowledge/${next.id.replace(/^en\//, '')}/`} class="article-nav-card article-nav-next">
+                <span class="article-nav-label">{t('knowledge.next', locale) || 'Next'} →</span>
+                <span class="article-nav-title">{next.data.title}</span>
+              </a>
+            ) : <div />}
+          </div>
+        </div>
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .prose h1, .prose h2, .prose h3 { color: var(--color-text-heading); }
+  .prose p { color: var(--color-text-secondary); line-height: 1.8; }
+  .prose strong { color: var(--color-text-primary); }
+  .prose a { color: var(--color-accent); }
+  .prose ul, .prose ol { color: var(--color-text-secondary); }
+  .prose li { margin-bottom: 0.5rem; }
+  .prose hr { border-color: var(--color-border); }
+</style>

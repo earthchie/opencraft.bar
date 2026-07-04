@@ -1,0 +1,129 @@
+---
+// Search page (EN)
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+
+const locale = Astro.currentLocale || 'th';
+---
+
+<BaseLayout
+  title="Search | OpenCraft"
+  description="Search knowledge articles about craft beer"
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-3xl">
+        <!-- Back link -->
+        <a href={`/${locale === 'th' ? 'th/' : ''}`} class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← {locale === 'th' ? 'กลับไปหน้าแรก' : 'Back to Home'}
+        </a>
+
+        <!-- Header -->
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">🔍 {locale === 'th' ? 'ค้นหา' : 'Search'}</h1>
+          <p class="section-subheading">{locale === 'th' ? 'ค้นหาบทความความรู้เรื่องเบียร์' : 'Search knowledge articles about craft beer'}</p>
+        </div>
+
+        <!-- Search container -->
+        <div id="pagefind-search" class="pagefind-search"></div>
+
+        <!-- Dev warning -->
+        <div id="dev-warning" class="hidden text-center py-12">
+          <p class="text-lg" style="color: var(--color-text-muted);">
+            {locale === 'th'
+              ? '⚠️ โหมดพัฒนา — กรุณา build โปรเจกก่อนเพื่อให้ค้นหาได้'
+              : '⚠️ DEV mode — Build the project first to enable search'}
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  /* Pagefind UI theme overrides */
+  .pagefind-search .pagefind-ui {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: #c8934f;
+    --pagefind-ui-text: #e0e0e0;
+    --pagefind-ui-background: #1a1a1a;
+    --pagefind-ui-border: #3a3a3a;
+    --pagefind-ui-tag: #2a2a2a;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 12px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: 'Inter', 'Noto Sans', system-ui, sans-serif;
+  }
+
+  [data-theme='wheat'] .pagefind-search .pagefind-ui,
+  [data-theme='lager'] .pagefind-search .pagefind-ui {
+    --pagefind-ui-primary: #a67a3a;
+    --pagefind-ui-text: #3a2010;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #e0d0a8;
+    --pagefind-ui-tag: #f8f0dc;
+  }
+
+  [data-theme='ipa'] .pagefind-search .pagefind-ui {
+    --pagefind-ui-primary: #c8934f;
+    --pagefind-ui-text: #e0d5c8;
+    --pagefind-ui-background: #2a1c12;
+    --pagefind-ui-border: #3a2818;
+    --pagefind-ui-tag: #241810;
+  }
+</style>
+
+<script>
+  function initSearch() {
+    const searchContainer = document.getElementById('pagefind-search');
+    const devWarning = document.getElementById('dev-warning');
+
+    if (!searchContainer) return;
+
+    // Check if Pagefind is available (only in production build)
+    if (typeof (window as any).pagefind === 'undefined') {
+      // Try to load Pagefind
+      const script = document.createElement('script');
+      script.src = '/pagefind/pagefind.js';
+      script.onload = async () => {
+        const pagefind = (window as any).pagefind;
+        await pagefind.init();
+        new (window as any).PagefindUI({
+          element: '#pagefind-search',
+          showImages: false,
+          showSubResults: true,
+          processTerm: function (term: string) {
+            const params = new URLSearchParams(window.location.search);
+            params.set('q', term);
+            history.replaceState(history.state, '', '?' + params.toString());
+            return term;
+          },
+        });
+
+        // Pre-fill search from URL params
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q');
+        if (q) {
+          const input = searchContainer.querySelector('input') as HTMLInputElement;
+          if (input) {
+            input.value = q;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        }
+      };
+      script.onerror = () => {
+        if (devWarning) devWarning.classList.remove('hidden');
+        searchContainer.classList.add('hidden');
+      };
+      document.head.appendChild(script);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initSearch);
+  document.addEventListener('astro:page-load', initSearch);
+</script>
