@@ -9,11 +9,11 @@ OpenCraft is an open brand craft beer bar website built with [Astro](https://ast
 - **Tap List** — Current beer rotation with multi-size pricing and card-based layout
 - **Knowledge Base** — Beer style guides and educational articles (i18n: EN/TH)
 - **News & Events** — Event announcements and community news
-- **i18n** — Full English and Thai language support
+- **i18n** — Full English and Thai language support (Thai is default)
 - **Dark/Light Theme** — User-selectable theme with smooth transitions
 - **OG Image Generation** — Auto-generated Open Graph images for articles and tags
 - **Search** — Pagefind-powered full-text search
-- **Responsive** — Mobile-first design with glass-morphism nav
+- **Responsive** — Mobile-first design with glass-morphism nav dropdowns
 
 ## 🚀 Tech Stack
 
@@ -23,7 +23,7 @@ OpenCraft is an open brand craft beer bar website built with [Astro](https://ast
 | [Tailwind CSS](https://tailwindcss.com) v4 | Utility-first styling |
 | [Pagefind](https://pagefind.app) | Static search indexing |
 | [Satori](https://github.com/vercel/satori) + [Resvg](https://github.com/yisibl/resvg-js) | OG image generation |
-| [Astro i18n](https://docs.astro.build/en/guides/internationalization/) | Multi-language routing |
+| [Astro i18n](https://docs.astro.build/en/guides/internationalization/) | Multi-language routing with prefix |
 
 ## 📁 Project Structure
 
@@ -42,13 +42,15 @@ src/
 ├── i18n/           # Translation files
 ├── layouts/        # Base layout
 ├── pages/          # Route pages
+│   ├── en/         # English locale routes
+│   ├── th/         # Thai locale routes
 │   ├── about.astro
 │   ├── license.astro
 │   ├── location.astro
 │   ├── services.astro
 │   ├── knowledge/
 │   ├── news/
-│   └── th/         # Thai locale routes
+│   └── tag/
 ├── styles/         # Global CSS and themes
 └── utils/          # OG image utilities
 ```
@@ -71,6 +73,14 @@ npx astro preview
 
 The dev server runs at `http://localhost:4321/`.
 
+## 🌐 Internationalization
+
+- **Default locale:** Thai (`th`)
+- **Secondary locale:** English (`en`)
+- Both locales use URL prefixes: `/th/...` and `/en/...`
+- Root `/` redirects to `/th/`
+- Language switcher in the nav toggles between locales while preserving the current page path
+
 ## ☁️ Deploy to Cloudflare Pages
 
 ### Prerequisites
@@ -90,13 +100,6 @@ The dev server runs at `http://localhost:4321/`.
    | Build command | `npm run build` |
    | Build output directory | `dist` |
    | Root directory | `/` (leave as default) |
-   | Node.js version | **18** (or later) |
-
-4. **Add environment variable** (optional but recommended):
-
-   | Variable | Value |
-   |---|---|
-   | `NODE_VERSION` | `18` |
 
 5. Click **Save and Deploy**.
 
@@ -113,11 +116,6 @@ Cloudflare will automatically detect the Astro framework and build your site on 
 - The site is fully static — no server-side rendering needed
 - Pagefind search index is built at compile time
 - OG images are pre-generated during build
-
-## 🌐 Internationalization
-
-- Default locale: **en** (English)
-- Secondary locale: **th** (Thai)
 - Thai routes are prefixed with `/th/`
 
 ## 📜 License
