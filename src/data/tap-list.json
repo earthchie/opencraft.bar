@@ -1,0 +1,75 @@
+[
+  {
+    "number": 1,
+    "brewery": "Erdinger",
+    "labelName": "Weissbier",
+    "style": "Hefe Weizen",
+    "abv": 5.3,
+    "price": 280,
+    "prices": [
+      { "size": "330ml", "price": 280 },
+      { "size": "475ml", "price": 320 },
+      { "size": "700ml", "price": 420 }
+    ]
+  },
+  {
+    "number": 2,
+    "brewery": "BrewDog",
+    "labelName": "Punk IPA",
+    "style": "Post Modern IPA",
+    "abv": 5.4,
+    "price": 270
+  },
+  {
+    "number": 3,
+    "brewery": "Sandport",
+    "labelName": "Empress & The Sun",
+    "style": "Hazy IPA",
+    "abv": 7.0,
+    "price": 330
+  },
+  {
+    "number": 4,
+    "brewery": "Brainfill",
+    "labelName": "Blisssonic",
+    "style": "Modern WC DIPA",
+    "abv": 8.0,
+    "price": 320
+  },
+  {
+    "number": 5,
+    "brewery": "Sanghok",
+    "labelName": "Yuzu & Honey",
+    "style": "Mead",
+    "abv": 5.0,
+    "price": 240
+  },
+  {
+    "number": 6,
+    "brewery": "Thong Pradit x Cat Lab",
+    "labelName": "Neo Genesis",
+    "style": "WC IPA",
+    "abv": 6.66,
+    "price": 340
+  },
+  {
+    "number": 7,
+    "brewery": "Chitbeer",
+    "labelName": "Porn's Milk",
+    "style": "Stout",
+    "abv": 5.0,
+    "price": 330
+  },
+  {
+    "number": 8,
+    "brewery": "Asahi",
+    "labelName": "Super Dry",
+    "style": "Japanese Rice Lager",
+    "abv": 5.0,
+    "prices": [
+      { "size": "Glass", "price": 99 },
+      { "size": "Pitcher", "price": 285 },
+      { "size": "Tower", "price": 790 }
+    ]
+  }
+]

@@ -1,0 +1,278 @@
+/* =============================================
+   Animation Utilities
+   Subtle & elegant animations for OpenCraft
+   ============================================= */
+
+@layer components {
+  /* Fade in on scroll */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger children */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .stagger-children.visible > *:nth-child(1) { transition-delay: 0ms; }
+  .stagger-children.visible > *:nth-child(2) { transition-delay: 100ms; }
+  .stagger-children.visible > *:nth-child(3) { transition-delay: 200ms; }
+  .stagger-children.visible > *:nth-child(4) { transition-delay: 300ms; }
+  .stagger-children.visible > *:nth-child(5) { transition-delay: 400ms; }
+  .stagger-children.visible > *:nth-child(6) { transition-delay: 500ms; }
+  .stagger-children.visible > *:nth-child(7) { transition-delay: 600ms; }
+  .stagger-children.visible > *:nth-child(8) { transition-delay: 700ms; }
+
+  .stagger-children.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Glow accent */
+  .glow-accent {
+    box-shadow: 0 0 8px var(--color-accent-glow);
+    transition: box-shadow 0.5s ease;
+  }
+
+  .glow-accent:hover,
+  .glow-accent:focus-within {
+    box-shadow: 0 0 20px var(--color-accent-glow),
+                0 0 40px rgba(200, 147, 79, 0.08);
+  }
+
+  /* Glow text */
+  .glow-text {
+    text-shadow: 0 0 10px var(--color-accent-glow);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      var(--color-accent),
+      var(--color-accent-light),
+      var(--color-accent-dark)
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gradient border */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent),
+      var(--color-accent-light),
+      var(--color-accent-dark),
+      var(--color-accent)
+    );
+    background-size: 300% 300%;
+    animation: gradientShift 4s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                 linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Hero gradient background — theme-driven */
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--hero-grad-1) 0%,
+      var(--hero-grad-2) 50%,
+      var(--hero-grad-3) 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 60s ease infinite;
+    animation-delay: -15s;
+  }
+
+  /* Hero tagline — uses theme variables for readability */
+  .hero-tagline {
+    background: linear-gradient(
+      135deg,
+      var(--hero-tagline-1),
+      var(--hero-tagline-2),
+      var(--hero-tagline-3)
+    );
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Morphing blob decoration */
+  .morph-blob {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    animation: morphShape 8s ease-in-out infinite;
+    background: radial-gradient(
+      circle at center,
+      var(--color-accent-glow),
+      transparent 70%
+    );
+    opacity: 0.3;
+    filter: blur(40px);
+  }
+
+  /* Float animation */
+  .float-anim {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* Tap list row hover */
+  .tap-row {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border-left: 3px solid transparent;
+  }
+
+  .tap-row:hover {
+    background-color: var(--color-bg-card-hover);
+    border-left-color: var(--color-accent);
+  }
+
+  /* Theme transition */
+  .theme-transition {
+    transition: background-color 0.5s ease,
+                color 0.5s ease,
+                border-color 0.5s ease,
+                box-shadow 0.5s ease;
+  }
+
+  /* Page entrance */
+  .page-enter {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  /* Underline hover effect */
+  .link-underline {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width 0.3s ease;
+  }
+
+  .link-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Nav dropdown */
+  .nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+  }
+
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 180px;
+    padding-top: 8px;
+    z-index: 50;
+  }
+
+  .nav-dropdown-menu > * {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-dropdown-menu > *:hover {
+    background-color: var(--color-bg-primary);
+    color: var(--color-accent) !important;
+  }
+
+  .nav-dropdown-menu > *:first-child {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .nav-dropdown-menu > *:last-child {
+    border-radius: 0 0 12px 12px;
+  }
+
+  .nav-dropdown-menu > *:only-child {
+    border-radius: 12px;
+  }
+
+  /* =============================================
+     Stout Beer Hero — swirling glass + bubbles
+     ============================================= */
+
+  @keyframes bubbleRise {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    5%   { opacity: 0.5; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+  }
+
+  /* Beer background container */
+  .beer-bg {
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Rising stout bubbles — CSS GPU animation */
+  .beer-bubble {
+    position: absolute;
+    bottom: -10px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 250, 0.6),
+      rgba(240, 235, 225, 0.12)
+    );
+    animation: bubbleRise linear infinite;
+    will-change: transform;
+    pointer-events: none;
+  }
+
+  /* Branded oak plank buttons */
+  .brand-btn {
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .brand-btn::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.02);
+    pointer-events: none;
+  }
+  .brand-btn:hover .rivet {
+    box-shadow: 0 0 3px var(--color-accent) !important;
+  }
+}

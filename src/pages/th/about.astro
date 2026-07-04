@@ -1,0 +1,146 @@
+---
+// About page (TH) — OpenCraft Official
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+const locale = Astro.currentLocale || 'th';
+---
+
+<BaseLayout
+  title="เกี่ยวกับ OpenCraft | OpenCraft"
+  description="OpenCraft คือแบรนด์เปิดที่งานคราฟต์มาพบกับวัฒนธรรมเปิด เรียนรู้เรื่องราว ค่านิยม และชุมชนของเรา"
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <!-- Hero -->
+    <section class="py-20" style="background-color: var(--color-bg-primary);">
+      <div class="container-main">
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">🍻 เกี่ยวกับ OpenCraft</h1>
+          <p class="section-subheading">Where Craft Meets Open Culture</p>
+        </div>
+
+        <div class="max-w-3xl mx-auto animate-on-scroll">
+          <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text-heading);">เรื่องราวของเรา</h2>
+          <div class="space-y-4 text-lg leading-relaxed" style="color: var(--color-text-secondary);">
+            <p>OpenCraft เริ่มต้นจากความเชื่อง่าย ๆ ที่ว่า <strong>งานคราฟต์</strong> <strong>วัฒนธรรมเปิด</strong> ชุมชนท้องถิ่น และการดำเนินกิจการอย่างรับผิดชอบ สามารถเติบโตไปด้วยกันได้</p>
+            <p>เราเป็น <strong>ร้าน OpenCraft แห่งแรก</strong> — สถานที่ก่อตั้งและ Core Team เบื้องหลังแบรนด์ OpenCraft ในฐานะแบรนด์เปิด ทุกสิ่งที่เราสร้างขึ้น — ตั้งแต่เทมเพลตเมนูไปจนถึงคู่มือดำเนินงานและสัญญาอนุญาตฉบับนี้ — เปิดให้ทุกคนนำไปใช้ ดัดแปลง และพัฒนาต่อได้ภายใต้ <a href="/th/license/" style="color: var(--color-accent);">OpenCraft Brand License</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Craft -->
+    <section class="py-20" style="background-color: var(--color-bg-secondary);">
+      <div class="container-main">
+        <div class="max-w-3xl mx-auto animate-on-scroll">
+          <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--color-text-heading);">🎯 งานคราฟต์ในความหมายของเรา</h2>
+          <div class="space-y-4 text-lg leading-relaxed" style="color: var(--color-text-secondary);">
+            <p>ในบริบทของ OpenCraft <strong>Craft</strong> ไม่ได้จำกัดอยู่เฉพาะเบียร์ อาหาร หรือสินค้าแฮนด์เมด แต่หมายถึงสินค้า บริการ ประสบการณ์ พื้นที่ กิจกรรม หรือองค์ความรู้ที่เกิดจาก <strong>ความตั้งใจ คุณภาพ ความซื่อสัตย์ และความเคารพ</strong> ต่อผู้สร้าง ผู้ให้บริการ ลูกค้า และชุมชน</p>
+            <p>เบียร์ทุกแท็ปในรายการเรา ทุกกิจกรรมที่เราจัด และทุกความรู้ที่เราแบ่งปัน ล้วนสะท้อนหลักการนี้</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Culture -->
+    <section class="py-20" style="background-color: var(--color-bg-primary);">
+      <div class="container-main">
+        <div class="max-w-3xl mx-auto animate-on-scroll">
+          <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--color-text-heading);">🌍 วัฒนธรรมเปิดในความหมายของเรา</h2>
+          <div class="space-y-4 text-lg leading-relaxed" style="color: var(--color-text-secondary);">
+            <p><strong>วัฒนธรรมเปิด</strong> คือวัฒนธรรมที่ผู้คนสามารถเรียนรู้ แบ่งปัน ทดลอง ดัดแปลง ร่วมสร้าง และพัฒนาต่อได้ โดยยังเคารพที่มา ความรับผิดชอบ และความปลอดภัยของชุมชน</p>
+            <p>รายการเบียร์ คลังความรู้ กิจกรรม และแม้แต่แบรนด์ของเรา ล้วนเป็นส่วนหนึ่งของปรัชญาเปิดนี้ เราเชื่อว่าการแบ่งปันความรู้ทำให้ชุมชนแข็งแกร่งขึ้น</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="py-20" style="background-color: var(--color-bg-secondary);">
+      <div class="container-main">
+        <div class="text-center mb-12">
+          <h2 class="section-heading animate-on-scroll">💎 ค่านิยมของเรา</h2>
+        </div>
+
+        <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-6 stagger-children">
+          <div class="card text-center group">
+            <div class="text-4xl mb-4">🤝</div>
+            <h3 class="font-bold mb-2" style="color: var(--color-text-heading);">ชุมชนมาก่อน</h3>
+            <p class="text-sm" style="color: var(--color-text-secondary);">เราสร้างพื้นที่ที่ผู้คนสามารถเรียนรู้ พูดคุย ทดลอง แบ่งปัน และพบปะกันด้วยเจตนาดี ชุมชนมาก่อนผลกำไร</p>
+          </div>
+          <div class="card text-center group">
+            <div class="text-4xl mb-4">🔓</div>
+            <h3 class="font-bold mb-2" style="color: var(--color-text-heading);">เปิดเป็นค่าเริ่มต้น</h3>
+            <p class="text-sm" style="color: var(--color-text-secondary);">ความรู้ เทมเพลต คู่มือ และแม้แต่สัญญาอนุญาตแบรนด์ของเรา เปิดให้ทุกคนนำไปใช้ ดัดแปลง และพัฒนาต่อได้</p>
+          </div>
+          <div class="card text-center group">
+            <div class="text-4xl mb-4">🎯</div>
+            <h3 class="font-bold mb-2" style="color: var(--color-text-heading);">คุณภาพด้วยความตั้งใจ</h3>
+            <p class="text-sm" style="color: var(--color-text-secondary);">เราให้ความสำคัญกับสินค้า บริการ และประสบการณ์ที่มีที่มา มีเรื่องราว และมีความใส่ใจอยู่เบื้องหลัง</p>
+          </div>
+          <div class="card text-center group">
+            <div class="text-4xl mb-4">🌱</div>
+            <h3 class="font-bold mb-2" style="color: var(--color-text-heading);">เติบโตอย่างรับผิดชอบ</h3>
+            <p class="text-sm" style="color: var(--color-text-secondary);">เราดำเนินกิจการอย่างถูกกฎหมาย มีจริยธรรม และยั่งยืน — เคารพชุมชน สิ่งแวดล้อม และอนาคตร่วมกันของเรา</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is OpenCraft -->
+    <section class="py-20" style="background-color: var(--color-bg-primary);">
+      <div class="container-main">
+        <div class="max-w-3xl mx-auto animate-on-scroll">
+          <h2 class="text-2xl font-bold mb-6 text-center" style="color: var(--color-text-heading);">🏷️ OpenCraft คืออะไร?</h2>
+          <div class="space-y-4 text-lg leading-relaxed" style="color: var(--color-text-secondary);">
+            <p>OpenCraft คือ <strong>แบรนด์เปิด</strong> — ไม่ใช่แฟรนไชส์ มันมีไว้สำหรับทุกคนที่เชื่อว่างานคราฟต์ วัฒนธรรมเปิด ชุมชนท้องถิ่น และการดำเนินกิจการอย่างรับผิดชอบ สามารถเติบโตไปด้วยกันได้</p>
+            <p>OpenCraft ไม่ได้จำกัดอยู่เฉพาะบาร์เบียร์หรือร้านอาหาร แนวคิดนี้สามารถนำไปใช้กับคาเฟ่ ร้านหนังสือ พื้นที่กิจกรรม เวิร์กช็อป สตูดิโอ maker space coworking space ร้านสินค้าคราฟต์ ชุมชนออนไลน์ pop-up event หรือกิจการรูปแบบอื่นที่สอดคล้องกับหลักการของเรา</p>
+            <p>ภายใต้ <a href="/th/license/" style="color: var(--color-accent);">OpenCraft Brand License</a> ทุกคนสามารถเปิดร้าน fork แนวคิด หรือพัฒนาต่อยอดได้ — ตราบเท่าที่ยังปฏิบัติตามมาตรฐานขั้นต่ำที่ปกป้องชุมชนและความสมบูรณ์ของแบรนด์</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="py-20" style="background-color: var(--color-bg-secondary);">
+      <div class="container-main">
+        <div class="max-w-xl mx-auto text-center animate-on-scroll">
+          <h2 class="section-heading mb-8">📬 ติดต่อเรา</h2>
+          <div class="card glow-accent space-y-4 text-left">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📧</span>
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--color-accent);">อีเมล</p>
+                <p style="color: var(--color-text-primary);">hi@opencraft.bar</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📱</span>
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--color-accent);">โทรศัพท์</p>
+                <p style="color: var(--color-text-primary);"><a href="tel:09204129992" style="color: var(--color-text-primary); text-decoration: none;">0920412-9992</a></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🌐</span>
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--color-accent);">โซเชียล</p>
+                <p style="color: var(--color-text-primary);"><a href="https://www.facebook.com/opencraft.bar" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent);">facebook.com/opencraft.bar</a></p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📜</span>
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--color-accent);">สัญญาอนุญาต</p>
+                <p style="color: var(--color-text-primary);"><a href="/th/license/" style="color: var(--color-accent);">OpenCraft Brand License v1.0.0</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

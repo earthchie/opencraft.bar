@@ -1,0 +1,77 @@
+---
+// News listing page (EN)
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const locale = Astro.currentLocale || 'en';
+
+const allNews = await getCollection('news', ({ data }) => data.locale === locale);
+const news = allNews
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title={t('news.heading', locale) + ' | OpenCraft'}
+  description="News and events at OpenCraft — beer launches, tap takeovers, community events, and more"
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-5xl">
+        <!-- Back link -->
+        <a href={`/${locale === 'th' ? 'th/' : ''}`} class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← {locale === 'th' ? 'กลับไปหน้าแรก' : 'Back to Home'}
+        </a>
+
+        <!-- Header -->
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">📰 {t('news.heading', locale)}</h1>
+          <p class="section-subheading">{t('news.subheading', locale)}</p>
+        </div>
+
+        <!-- News grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {news.map((item) => {
+            const slug = item.id.replace(/^(en|th)\//, '');
+            return (
+            <a href={`${getRelativeLocaleUrl(locale, 'news')}${slug}`} class="card block group overflow-hidden flex flex-col">
+              <p class="text-xs mb-2" style="color: var(--color-text-muted);">
+                {t('news.publishedOn', locale)}: {item.data.date.toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+
+              {item.data.featured && (
+                <span class="inline-block self-start px-2 py-0.5 rounded text-xs font-semibold mb-2" style="background-color: var(--color-accent); color: #fff;">
+                  Featured
+                </span>
+              )}
+
+              <h2 class="text-xl font-bold mb-2" style="color: var(--color-text-heading);">
+                {item.data.title}
+              </h2>
+
+              <p class="text-sm line-clamp-3 mb-3" style="color: var(--color-text-secondary);">
+                {item.data.description}
+              </p>
+
+              <span class="mt-auto text-sm font-semibold" style="color: var(--color-accent);">
+                {t('news.readMore', locale)} →
+              </span>
+            </a>
+            );
+          })}
+        </div>
+
+        {news.length === 0 && (
+          <p class="text-center text-lg" style="color: var(--color-text-muted);">
+            No news yet. Stay tuned!
+          </p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

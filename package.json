@@ -1,0 +1,25 @@
+{
+  "name": "opencraft-bar",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && npx pagefind --site dist && node -e \"const fs=require('fs');if(fs.existsSync('dist/pagefind'))fs.cpSync('dist/pagefind','public/pagefind',{recursive:true});const f='public/pagefind/pagefind.js';if(fs.existsSync(f)){let c=fs.readFileSync(f,'utf8');c=c.replace(/import\\.meta\\.url/g,'\\\"/pagefind/\\\"');fs.writeFileSync(f,c);}\"",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@pagefind/default-ui": "^1.5.2",
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.5",
+    "mermaid": "^11.15.0",
+    "pagefind": "^1.5.2",
+    "satori": "^0.26.0",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.5.0",
+    "wawoff2": "^2.0.1"
+  }
+}

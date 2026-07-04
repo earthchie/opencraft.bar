@@ -1,0 +1,80 @@
+---
+// NewsSection — displays recent news items from content collection
+import { getCollection } from 'astro:content';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const locale = Astro.currentLocale || 'en';
+
+const allNews = await getCollection('news', ({ data }) => data.locale === locale);
+const news = allNews
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<section id="news" class="py-20 theme-transition" style="background-color: var(--color-bg-secondary);">
+  <div class="container-main">
+    <!-- Section heading -->
+    <div class="text-center mb-12 animate-on-scroll">
+      <h2 class="section-heading">
+        📰 {t('news.heading', locale)}
+      </h2>
+      <p class="section-subheading">
+        {t('news.subheading', locale)}
+      </p>
+    </div>
+
+    <!-- News cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+      {news.map((item) => {
+        const slug = item.id.replace(/^(en|th)\//, '');
+        return (
+        <a href={`${getRelativeLocaleUrl(locale, 'news')}${slug}`} class="card block group overflow-hidden flex flex-col">
+          <!-- Cover Image -->
+          <div class="overflow-hidden rounded-lg mb-4" style="aspect-ratio: 16/9;">
+            <img
+              src={`/api/og/posts/${slug}.png`}
+              alt={item.data.title}
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
+
+          {item.data.featured && (
+            <span class="inline-block px-2 py-0.5 rounded text-xs font-semibold mb-3" style="background-color: var(--color-accent); color: #fff;">
+              Featured
+            </span>
+          )}
+          <p class="text-xs mb-2" style="color: var(--color-text-muted);">
+            {t('news.publishedOn', locale)}: {item.data.date.toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--color-text-heading);">
+            {item.data.title}
+          </h3>
+          <p class="text-sm line-clamp-3" style="color: var(--color-text-secondary);">
+            {item.data.description}
+          </p>
+          <span class="inline-block mt-3 text-sm font-semibold transition-colors" style="color: var(--color-accent);">
+            {t('news.readMore', locale)} →
+          </span>
+        </a>
+        );
+      })}
+    </div>
+
+    {news.length === 0 && (
+      <p class="text-center" style="color: var(--color-text-muted);">
+        No news yet. Stay tuned!
+      </p>
+    )}
+
+    {news.length > 0 && (
+      <div class="text-center mt-10">
+        <a href={getRelativeLocaleUrl(locale, 'news')} class="btn-outline">
+          {t('news.allNews', locale)}
+        </a>
+      </div>
+    )}
+  </div>
+</section>

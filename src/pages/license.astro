@@ -1,0 +1,201 @@
+---
+// License page (EN) — OpenCraft Brand License v1.0.0
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+
+const locale = Astro.currentLocale || 'en';
+---
+
+<BaseLayout
+  title="OpenCraft Brand License v1.0.0 | OpenCraft"
+  description="OpenCraft Brand License — an open brand license for the OpenCraft community. Permissions, standards, and guidelines."
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-4xl">
+        <a href="/about/" class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← Back to About
+        </a>
+
+        <article class="prose prose-lg max-w-none" style="color: var(--color-text-primary);">
+          <h1>OpenCraft Brand License v1.0.0</h1>
+          <p class="text-lg" style="color: var(--color-text-secondary);"><em>สัญญาอนุญาตให้ใช้แบรนด์ OpenCraft</em></p>
+
+          <hr />
+
+          <h2>1. Purpose</h2>
+          <p>OpenCraft is an open brand for those who believe that craft, open culture, local community, and responsible business can grow together.</p>
+          <p>OpenCraft operates under the tagline <strong>Where Craft Meets Open Culture</strong>.</p>
+          <p>In the context of OpenCraft, <strong>Craft</strong> is not limited to beer, food, or handmade goods. It means products, services, experiences, spaces, activities, or knowledge created with intention, quality, honesty, and respect for creators, providers, customers, and the community.</p>
+          <p><strong>Open Culture</strong> means a culture where people can learn, share, experiment, adapt, co-create, and build upon — while respecting provenance, responsibility, and community safety.</p>
+          <p>OpenCraft is not limited to beer bars or restaurants. It can be applied to cafes, restaurants, bars, bookshops, event spaces, workshops, studios, maker spaces, coworking spaces, craft stores, online communities, pop-up events, or any other venture aligned with OpenCraft principles.</p>
+          <p>This license allows anyone to open a venue, operate a business, adapt, fork, or develop the OpenCraft concept — as long as they meet the minimum standards and conditions set out in this document.</p>
+          <p>The goal of OpenCraft is not to create a franchise system, but to build an open brand that communities can freely use, adapt, experiment with, and build upon — while maintaining brand integrity, responsibility, and shared values.</p>
+
+          <hr />
+
+          <h2>2. Definitions</h2>
+          <p><strong>OpenCraft</strong> — the name OpenCraft, logo, visual identity, tagline, design language, brand documents, operational guides, menu templates, activity formats, and other media published by the OpenCraft Core Team.</p>
+          <p><strong>Tagline</strong> — "Where Craft Meets Open Culture" or any future tagline officially announced by the Core Team.</p>
+          <p><strong>OpenCraft Venue</strong> — any shop, space, business, community, event, or platform using the OpenCraft name or presenting itself as part of the OpenCraft ecosystem.</p>
+          <p><strong>Craft</strong> — products, services, experiences, creative work, knowledge, or activities created with intention, quality, provenance, story, and respect.</p>
+          <p><strong>Open Culture</strong> — a culture that supports collaborative learning, knowledge sharing, adaptability, community participation, transparency, and responsible development.</p>
+          <p><strong>Fork</strong> — adapting, using, or developing the OpenCraft concept, brand, venue format, documents, or media by another operator, space, community, or team.</p>
+          <p><strong>Operator</strong> — any person, company, group, organization, or entity using the OpenCraft brand under this license.</p>
+          <p><strong>Core Team</strong> — the original OpenCraft brand stewards, or their designated successors.</p>
+          <p><strong>Brand Materials</strong> — logos, brand name, tagline, graphics, templates, menus, posters, documents, websites, mascots, brand guides, operations guides, training guides, or other media published by the Core Team.</p>
+
+          <hr />
+
+          <h2>3. Granted Rights</h2>
+          <p>Under this license, the Core Team grants the Operator a non-exclusive, worldwide, royalty-free, revocable license to use the OpenCraft name and Brand Materials.</p>
+          <p>Operators may:</p>
+          <ol>
+            <li>Use the OpenCraft name with venue names, events, menus, signage, websites, social media, or promotional materials.</li>
+            <li>Use logos and visual elements according to brand guidelines.</li>
+            <li>Use the tagline "Where Craft Meets Open Culture" with the OpenCraft brand.</li>
+            <li>Modify, adapt, translate, localize, or remix Brand Materials for their own use.</li>
+            <li>Create Forks of OpenCraft for specific cities, neighbourhoods, communities, event formats, venue types, or business types.</li>
+            <li>Share improvements, templates, guides, event formats, operations methods, or knowledge back to the OpenCraft community.</li>
+          </ol>
+          <p>This license does not create a franchise, agency, employment, partnership, joint venture, or investment relationship between Operator and Core Team.</p>
+
+          <hr />
+
+          <h2>4. Minimum Standards</h2>
+
+          <h3>4.1 Open Culture</h3>
+          <p>Operators must support open culture, knowledge sharing, and community participation. An OpenCraft Venue should be a space where people can learn, talk, experiment, create, taste, use, share, and meet in good faith.</p>
+
+          <h3>4.2 Craft and Intention</h3>
+          <p>Operators should prioritize quality products, services, or experiences with intention, provenance, and honesty. OpenCraft is not limited to beer or drinks but should maintain a stance of care, transparency, and respect.</p>
+
+          <h3>4.3 Transparency</h3>
+          <p>Operators should provide clear, honest information about products, services, pricing, provenance, ingredients, terms, and important limitations. If there are specific risks (alcohol, food, allergens, activities, equipment, etc.), operators should inform customers appropriately.</p>
+
+          <h3>4.4 Responsible Business</h3>
+          <p>Operators must comply with all applicable laws and regulations including business licenses, taxes, labour, safety, food, beverages, public health, consumer protection, advertising, intellectual property, and other relevant local laws.</p>
+
+          <h3>4.5 Responsible Alcohol Service</h3>
+          <p>Venues serving alcohol must comply with all relevant laws including licenses, hours, age restrictions, advertising restrictions, taxes, food safety, and public health regulations. Operators must not sell or promote alcohol in a manner that encourages unsafe, illegal, or irresponsible consumption.</p>
+
+          <h3>4.6 Community Safety</h3>
+          <p>Operators must maintain a safe, friendly space free from harassment, violence, threats, discrimination, exploitation, or knowingly unsafe activities inconsistent with the OpenCraft brand.</p>
+
+          <h3>4.7 Independence</h3>
+          <p>Each OpenCraft Venue is independently operated unless stated otherwise. Operators must not claim common ownership, management, certification, oversight, or official endorsement from the Core Team without written permission.</p>
+
+          <h3>4.8 Brand Honesty</h3>
+          <p>Operators must not use the OpenCraft brand in a confusing manner and must clearly indicate their status (e.g., "OpenCraft Community Fork", "Inspired by OpenCraft", "Formerly OpenCraft", or other status approved by Core Team). Forks must not present themselves as "OpenCraft Official" without written permission.</p>
+
+          <h3>4.9 Legal and Ethical Operation</h3>
+          <p>Operators must operate lawfully and ethically. The OpenCraft brand must not be used for fraud, illegal goods or services, underage alcohol sales, unsafe activities, deceptive advertising, counterfeit goods, hate speech, political violence, or actions causing significant harm to the OpenCraft community.</p>
+
+          <hr />
+
+          <h2>5. Brand Usage Guidelines</h2>
+
+          <h3>5.1 Permitted Use</h3>
+          <p>Operators may use the OpenCraft name and Brand Materials for: venue signage, menus, social media, websites, event posters, staff training, merchandise, community events, local adaptation, and explaining the OpenCraft concept publicly.</p>
+
+          <h3>5.2 Attribution</h3>
+          <p>Independent Forks should display attribution in appropriate locations (e.g., website footer, menu, poster, or public profile).</p>
+          <p><strong>Recommended English:</strong> "OpenCraft is an open brand. This venue is an independent community fork operating under the OpenCraft Brand License."</p>
+          <p><strong>Recommended Thai:</strong> "OpenCraft เป็นแบรนด์เปิด สถานที่นี้เป็น community fork อิสระ ที่บริหารงานภายใต้ OpenCraft Brand License"</p>
+
+          <h3>5.3 Prohibited Use</h3>
+          <p>Operators must not: claim to be original OpenCraft without permission, claim official endorsement without written authorization, register confusing trademarks or domain names, sell counterfeit goods, use the brand for illegal alcohol sales, damage the OpenCraft community's reputation, remove attribution from Brand Materials, block community-developed materials from re-use, plagiarize others' work or Forks, or use OpenCraft to deceive customers, suppliers, authorities, or community members.</p>
+
+          <h3>5.4 Tagline Use</h3>
+          <p>Operators may use "Where Craft Meets Open Culture" with the OpenCraft name if consistent with this license. Translations or local equivalents may be used but must not mislead the public into thinking they are official taglines without Core Team permission.</p>
+
+          <hr />
+
+          <h2>6. Fork Naming</h2>
+          <p>Forks may use names such as: OpenCraft Chiang Mai, OpenCraft Phuket, OpenCraft Community Fork Bangkok, OpenCraft Lab, OpenCraft Pop-up, OpenCraft Market, OpenCraft Studio, OpenCraft Books, OpenCraft Café, OpenCraft Night Market Edition, or similar.</p>
+          <p>The Core Team may request a name change if it causes confusion, conflicts with existing Forks, misleadingly suggests official status, or damages the OpenCraft community.</p>
+
+          <hr />
+
+          <h2>7. Official Status</h2>
+          <p>The Core Team may maintain a public registry of OpenCraft Venues and Forks, including name, Operator, location, contact, status, registration date, license status, and notes on compliance, suspension, or revocation. Registry listing does not imply common ownership, management, warranty, certification, or financial backing from the Core Team.</p>
+
+          <hr />
+
+          <h2>8. Community Contribution</h2>
+          <p>Operators are encouraged to share their developments back to the OpenCraft community: menu templates, tasting cards, event formats, staff training docs, supplier info, knowledge media, open source software, design files, operations checklists, and business lessons. Contributions sent to public OpenCraft repositories may be used, modified, translated, redistributed, and incorporated by the Core Team and other Operators unless stated otherwise.</p>
+
+          <hr />
+
+          <h2>9. Quality & Safety Review</h2>
+          <p>The Core Team may review public use of the OpenCraft brand. If the Core Team reasonably believes a violation has occurred, they may notify the Operator to remedy it. Operators should make reasonable efforts to resolve issues within 30 days of notice. In cases of serious violation (illegal activity, unsafe alcohol service, fraud, violence, harassment, or conduct posing urgent risk to the public or brand), the Core Team may suspend or terminate the license immediately.</p>
+
+          <hr />
+
+          <h2>10. Suspension & Termination</h2>
+          <p>This license automatically terminates if the Operator materially breaches conditions and fails to remedy within the given period. After termination, the Operator must stop using the OpenCraft name, logo, tagline, and Brand Materials in a way that suggests ongoing OpenCraft status. Operators may still use general concepts, independently created media, and operational knowledge that does not cause confusion with OpenCraft.</p>
+
+          <hr />
+
+          <h2>11. No Warranty</h2>
+          <p>The OpenCraft brand and Brand Materials are provided "as is." The Core Team does not guarantee profitability, legal compliance, customer demand, supplier availability, product quality, venue safety, or regulatory approval for any Operator. Each Operator is responsible for their own business, licenses, taxes, employment, insurance, public safety, food safety, alcohol service, advertising, and local law compliance.</p>
+
+          <hr />
+
+          <h2>12. Limitation of Liability</h2>
+          <p>To the maximum extent permitted by law, the Core Team is not liable for any loss, damage, claims, fines, business interruption, regulatory action, injury, disputes, or consequences arising from use of the OpenCraft brand or Brand Materials by any Operator. Each Operator agrees to accept responsibility for their own actions, omissions, staff, contractors, suppliers, customers, premises, activities, and legal compliance.</p>
+
+          <hr />
+
+          <h2>13. No Transfer of Ownership</h2>
+          <p>This license does not transfer ownership of the OpenCraft name, trademark, logo, tagline, or Brand Materials. Goodwill from using the OpenCraft brand should benefit the OpenCraft community and relevant rights holders. Operators must not attempt to claim exclusive rights over the OpenCraft brand or any confusingly similar brand.</p>
+
+          <hr />
+
+          <h2>14. Local Law</h2>
+          <p>This license is intended to be interpreted in a manner that supports open collaboration while maintaining brand integrity and reputation. If any part is unenforceable, the remainder continues in effect to the fullest extent possible. The Core Team may publish jurisdiction-specific addenda for different countries, provinces, cities, or legal environments.</p>
+
+          <hr />
+
+          <h2>15. Versioning</h2>
+          <p>The Core Team may update this license from time to time. Each version should have a clear version number and publication date. Operators may continue using the version they originally adopted unless: they choose to accept a new version, the old version creates legal, safety, or brand integrity issues, or the Core Team requires active Operators to migrate to a new version.</p>
+
+          <hr />
+
+          <h2>16. Recommended Public Notice</h2>
+          <p>Operators should publish a notice stating:</p>
+          <blockquote>
+            <p><strong>English:</strong> "This venue is an independent OpenCraft community fork. We are not a franchise. We operate under the OpenCraft Brand License and are responsible for our own business, staff, products, services, licenses, and local compliance."</p>
+            <p><strong>Thai:</strong> "สถานที่นี้เป็น OpenCraft community fork อิสระ ไม่ใช่แฟรนไชส์ ผู้ดำเนินการสถานที่นี้รับผิดชอบการประกอบกิจการ พนักงาน สินค้า บริการ ใบอนุญาต และการปฏิบัติตามกฎหมายท้องถิ่นด้วยตนเอง ภายใต้ OpenCraft Brand License"</p>
+          </blockquote>
+
+          <hr />
+
+          <h2>17. Contact</h2>
+          <p>Questions, issues, registration requests, and brand use requests: <a href="mailto:license@opencraft.bar">license@opencraft.bar</a></p>
+
+          <hr />
+
+          <h2>18. Summary</h2>
+          <p>OpenCraft is an open brand under the principle <strong>Where Craft Meets Open Culture</strong>.</p>
+          <p>You may use and fork the OpenCraft brand if you:</p>
+          <ol>
+            <li>Follow OpenCraft's minimum standards</li>
+            <li>Operate legally and responsibly</li>
+            <li>Prioritize craft, open culture, and community</li>
+            <li>Clearly indicate official or independent fork status</li>
+            <li>Do not mislead customers or the community</li>
+            <li>Do not damage the OpenCraft brand reputation</li>
+            <li>Share developments back when possible</li>
+            <li>Respect the Core Team's right to stop harmful or confusing brand use</li>
+          </ol>
+          <p><strong>OpenCraft is open for builders, not for destroyers.</strong></p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

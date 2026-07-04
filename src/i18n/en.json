@@ -1,0 +1,126 @@
+{
+  "site": {
+    "title": "OpenCraft",
+    "tagline": "Where Craft Meets Open Culture"
+  },
+  "nav": {
+    "home": "Home",
+    "tapList": "Tap List",
+    "news": "News & Events",
+    "knowledge": "Knowledge",
+    "location": "How to Get Here",
+    "services": "Services",
+    "about": "About Us"
+  },
+  "hero": {
+    "ctaTapList": "View Tap List",
+    "ctaLocation": "Find Us"
+  },
+  "tapList": {
+    "heading": "Current Tap List",
+    "subheading": "Our rotating selection of craft beers — always fresh, always interesting",
+    "number": "#",
+    "brewery": "Brewery",
+    "labelName": "Label",
+    "style": "Style",
+    "abv": "ABV",
+    "price": "Price",
+    "updated": "Last updated",
+    "onTap": "on tap"
+  },
+  "news": {
+    "heading": "News & Events",
+    "subheading": "What's happening at OpenCraft — events, releases, and more",
+    "readMore": "Read More",
+    "allNews": "View All News",
+    "publishedOn": "Published on",
+    "backToNews": "Back to News"
+  },
+  "knowledge": {
+    "heading": "Beer Knowledge",
+    "subheading": "Learn about craft beer — styles, brewing, tasting, and culture",
+    "readMore": "Read Article",
+    "allArticles": "View All Articles",
+    "publishedOn": "Published on",
+    "by": "by",
+    "backToKnowledge": "Back to Knowledge",
+    "prev": "Previous",
+    "next": "Next",
+    "articles": "articles"
+  },
+  "location": {
+    "heading": "How to Get Here",
+    "subheading": "Visit us and enjoy craft beer in a warm, open atmosphere",
+    "address": "Address",
+    "hours": "Opening Hours",
+    "parking": "Parking",
+    "parkingInfo": "Free street parking available in front of the shop along the street.",
+    "viewOnMap": "View on Google Maps",
+    "getDirections": "Get Directions",
+    "contact": "Contact"
+  },
+  "services": {
+    "heading": "Our Services",
+    "subheading": "Beyond great beer, OpenCraft offers spaces and experiences for every occasion",
+    "shopRental": {
+      "title": "Shop Rental",
+      "description": "Rent out the entire OpenCraft bar for your private events, parties, or gatherings. Full bar service included with craft beer on tap."
+    },
+    "meetingRoom": {
+      "title": "Meeting Room Rental",
+      "description": "Our second floor meeting room is available for rent — perfect for workshops, meetups, presentations, and collaborative sessions. Equipped with projector and seating."
+    },
+    "beerLounge": {
+      "title": "Beer Lounge Service",
+      "description": "Experience our premium beer lounge — curated tastings, beer flights, and guided pairing experiences for groups and private events."
+    },
+    "inquiryCta": "Contact us for bookings and inquiries"
+  },
+  "about": {
+    "heading": "About OpenCraft",
+    "subheading": "Where the love of craft beer meets the spirit of open culture",
+    "story": {
+      "heading": "Our Story",
+      "paragraph1": "OpenCraft is a craft beer bar born from the fusion of two passions: exceptional craft beer and the open-source culture. We believe that just as open-source software is built by communities sharing knowledge freely, great beer experiences are best when shared openly.",
+      "paragraph2": "The name OpenCraft reflects our philosophy — BeerCraft + OpenSource. We celebrate the art and science of brewing, while fostering an open, welcoming community where everyone can discover and appreciate craft beer."
+    },
+    "values": {
+      "heading": "Our Values",
+      "community": "Community First",
+      "communityDesc": "Building a welcoming space for beer lovers and curious newcomers alike.",
+      "quality": "Quality Craft",
+      "qualityDesc": "Curating exceptional beers from the best breweries, local and international.",
+      "knowledge": "Open Knowledge",
+      "knowledgeDesc": "Sharing beer education freely — from brewing techniques to tasting notes.",
+      "sustainability": "Sustainability",
+      "sustainabilityDesc": "Supporting sustainable brewing practices and local producers."
+    },
+    "contact": {
+      "heading": "Company Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "social": "Social Media"
+    }
+  },
+  "footer": {
+    "tagline": "Where Craft Meets Open Culture",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "copyright": "© 2026 OpenCraft. All rights reserved.",
+    "craftedWith": "Crafted with ❤️ and open source"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "themeDark": "Stout",
+    "themeWheat": "Wheat",
+    "themeSepia": "Lager",
+    "themeRustic": "IPA",
+    "switchToEN": "English",
+    "switchToTH": "ไทย",
+    "language": "Language",
+    "theme": "Theme",
+    "menu": "Menu",
+    "close": "Close"
+  }
+}

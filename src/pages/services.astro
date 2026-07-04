@@ -1,0 +1,208 @@
+---
+// Services page (EN)
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+
+const locale = Astro.currentLocale || 'en';
+
+const services = [
+  { icon: '🏪', key: 'services.shopRental' },
+  { icon: '🏢', key: 'services.meetingRoom' },
+  { icon: '🚚', key: 'services.catering' },
+];
+---
+
+<BaseLayout
+  title={t('services.heading', locale) + ' | OpenCraft'}
+  description="OpenCraft services: shop rental, meeting room rental, off-site catering."
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-4xl">
+        <!-- Heading -->
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">🛎️ {t('services.heading', locale)}</h1>
+          <p class="section-subheading">{t('services.subheading', locale)}</p>
+        </div>
+
+        <!-- Service 1: Shop Rental -->
+        <div class="card mb-8 animate-on-scroll">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl">🏪</span>
+            <div>
+              <h3 class="text-xl font-bold mb-2" style="color: var(--color-text-heading);">Shop Rental</h3>
+              <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
+                Rent the entire OpenCraft space for private events, parties, or gatherings. Free with a minimum spend of <strong style="color: var(--color-accent);">15,000 THB / 6 hours</strong>
+              </p>
+              <p class="text-xs" style="color: var(--color-text-muted);">
+                Alcoholic beverages can be served from 11:00-24:00 or as permitted by law
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service 2: Meeting Room -->
+        <div class="card mb-8 animate-on-scroll">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl">🏢</span>
+            <div>
+              <h3 class="text-xl font-bold mb-2" style="color: var(--color-text-heading);">Meeting Room Rental</h3>
+              <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
+                2nd floor meeting room — capacity 20–30 seats. Perfect for workshops, meetings, presentations, and activities. Equipped with TV screen and whiteboard.
+              </p>
+            </div>
+          </div>
+
+          <!-- Price -->
+          <div class="p-4 rounded-lg mb-4" style="background: var(--color-bg-card-hover);">
+            <p class="text-lg font-bold" style="color: var(--color-accent);">
+              💰 4,000 THB / 4 hours
+            </p>
+          </div>
+
+          <!-- Benefits -->
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">✓</span>
+              Free parking for 2 cars (Bang Pho Hospital parking building)
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">✓</span>
+              Free drinking water
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">✓</span>
+              Free Hi-Speed Internet 1 Gbps / 1 Gbps with Wi-Fi 7
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">✓</span>
+              10% discount on food and alcoholic beverages
+            </div>
+          </div>
+
+          <!-- Printer Services -->
+          <h4 class="text-sm font-semibold mb-3" style="color: var(--color-text-heading);">
+            🖨️ High-quality printing service (up to A3) — additional fees apply
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm" style="color: var(--color-text-secondary);">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <th class="text-left py-2 pr-4" style="color: var(--color-text-heading);">Document</th>
+                  <th class="text-left py-2" style="color: var(--color-text-heading);">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A4 B&W</td>
+                  <td class="py-2">2 THB / sheet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A4 Color (less than 50% coverage)</td>
+                  <td class="py-2">10 THB / sheet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A4 Color (50%+ coverage)</td>
+                  <td class="py-2">20 THB / sheet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A4 Photo Paper 260gsm</td>
+                  <td class="py-2">65 THB / sheet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A3 B&W</td>
+                  <td class="py-2">15 THB / sheet</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">A3 Color</td>
+                  <td class="py-2">50 THB / sheet</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-4">A3 Photo Paper 160gsm</td>
+                  <td class="py-2">120 THB / sheet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Service 3: Catering -->
+        <div class="card mb-8 animate-on-scroll">
+          <div class="flex items-start gap-4 mb-4">
+            <span class="text-4xl">🚚</span>
+            <div>
+              <h3 class="text-xl font-bold mb-2" style="color: var(--color-text-heading);">Off-Site Catering</h3>
+              <p class="text-sm mb-1" style="color: var(--color-text-secondary);">
+                Service available in Bangkok and surrounding areas only
+              </p>
+            </div>
+          </div>
+
+          <!-- Asahi Draft pricing -->
+          <h4 class="text-sm font-semibold mb-3" style="color: var(--color-text-heading);">
+            🍺 Asahi Draft
+          </h4>
+          <div class="overflow-x-auto mb-4">
+            <table class="w-full text-sm" style="color: var(--color-text-secondary);">
+              <thead>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <th class="text-left py-2 pr-4" style="color: var(--color-text-heading);">Servings</th>
+                  <th class="text-right py-2" style="color: var(--color-text-heading);">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">150 servings</td>
+                  <td class="py-2 text-right font-semibold" style="color: var(--color-accent);">12,000 THB</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">200 servings</td>
+                  <td class="py-2 text-right font-semibold" style="color: var(--color-accent);">15,000 THB</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--color-border);">
+                  <td class="py-2 pr-4">250 servings</td>
+                  <td class="py-2 text-right font-semibold" style="color: var(--color-accent);">18,000 THB</td>
+                </tr>
+                <tr>
+                  <td class="py-2 pr-4">300 servings</td>
+                  <td class="py-2 text-right font-semibold" style="color: var(--color-accent);">21,000 THB</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Other offerings -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">🍺</span>
+              Craft beer (cans and bottles) — pricing based on the requested budget
+            </div>
+            <div class="flex items-center gap-2 text-sm" style="color: var(--color-text-secondary);">
+              <span style="color: var(--color-accent);">🍷</span>
+              Wine — pricing based on the requested budget
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-12 animate-on-scroll">
+          <div class="card inline-block max-w-md mx-auto glow-accent">
+            <p class="text-lg font-semibold mb-4" style="color: var(--color-text-heading);">
+              {t('services.inquiryCta', locale)}
+            </p>
+            <a href="mailto:hi@opencraft.bar" class="btn-primary">
+              📧 hi@opencraft.bar
+            </a>
+            <p class="text-sm mt-3" style="color: var(--color-text-muted);">
+              📱 <a href="tel:0924129992" style="color: var(--color-accent);">092-412-9992</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

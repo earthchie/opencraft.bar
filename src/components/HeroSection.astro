@@ -1,0 +1,97 @@
+---
+// HeroSection — full-width hero with gradient background, tagline, CTA
+import Logo from './Logo.astro';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const locale = Astro.currentLocale || 'en';
+---
+
+<section class="hero-gradient relative overflow-hidden min-h-[90vh] flex items-center justify-center theme-transition" id="hero-section">
+  <!-- Stout beer background: bubbles -->
+  <div class="absolute inset-0 beer-bg" id="beer-bg">
+  </div>
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0" style="background: rgba(10, 8, 5, 0.2);"></div>
+
+  <!-- Content -->
+  <div class="container-main relative z-10 text-center page-enter">
+    <!-- Full Logo — centered, static -->
+    <div class="mb-8 flex justify-center">
+      <Logo variant="icon" size="xl" />
+    </div>
+
+    <!-- Tagline -->
+    <div class="mb-10 max-w-4xl mx-auto">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <span class="hidden sm:block h-px flex-1 max-w-16" style="background: linear-gradient(to right, transparent, var(--hero-label));"></span>
+        <span class="text-xs tracking-[0.3em] uppercase font-semibold" style="color: var(--hero-label);">Craft Beer Bar</span>
+        <span class="hidden sm:block h-px flex-1 max-w-16" style="background: linear-gradient(to left, transparent, var(--hero-label));"></span>
+      </div>
+      <p class="text-3xl md:text-4xl lg:text-5xl font-bold leading-snug hero-tagline glow-text"
+         style="font-family: 'Dancing Script', cursive; text-shadow: 0 0 30px rgba(200,147,79,0.4), 0 2px 8px rgba(0,0,0,0.15);">
+        {t('site.tagline', locale)}
+      </p>
+    </div>
+
+    <!-- CTA Buttons — branded oak plank style -->
+    <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+      <a href="#tap-list" class="brand-btn group relative flex items-center justify-center gap-3 px-10 py-5 text-lg font-bold uppercase tracking-[0.15em] transition-all duration-500 hover:-translate-y-1 w-80"
+         style="background: linear-gradient(180deg, #3d2b1a 0%, #2e1f12 50%, #1f140a 100%); color: var(--color-accent); box-shadow: 0 2px 0 rgba(200,147,79,0.15), 0 6px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);">
+        <!-- Iron corner rivets -->
+        <span class="rivet absolute w-[6px] h-[6px] rounded-full" style="top:8px;left:10px;background:radial-gradient(circle,#888,#333);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[6px] h-[6px] rounded-full" style="top:8px;right:10px;background:radial-gradient(circle,#888,#333);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[6px] h-[6px] rounded-full" style="bottom:8px;left:10px;background:radial-gradient(circle,#888,#333);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[6px] h-[6px] rounded-full" style="bottom:8px;right:10px;background:radial-gradient(circle,#888,#333);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <!-- Brand burn glow -->
+        <div class="absolute inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded"
+             style="box-shadow: inset 0 0 20px rgba(200,147,79,0.15);"></div>
+        <span class="text-2xl relative z-10">🍺</span>
+        <span class="relative z-10">{t('hero.ctaTapList', locale)}</span>
+      </a>
+
+      <a href={getRelativeLocaleUrl(locale, 'location')} class="brand-btn group relative flex items-center justify-center gap-3 px-10 py-5 text-lg font-bold uppercase tracking-[0.15em] transition-all duration-500 hover:-translate-y-1 w-80"
+         style="background: linear-gradient(180deg, #2d2118 0%, #1f1610 50%, #140e08 100%); color: #888; box-shadow: 0 2px 0 rgba(100,80,60,0.1), 0 6px 24px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);">
+        <span class="rivet absolute w-[5px] h-[5px] rounded-full" style="top:8px;left:10px;background:radial-gradient(circle,#666,#222);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[5px] h-[5px] rounded-full" style="top:8px;right:10px;background:radial-gradient(circle,#666,#222);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[5px] h-[5px] rounded-full" style="bottom:8px;left:10px;background:radial-gradient(circle,#666,#222);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <span class="rivet absolute w-[5px] h-[5px] rounded-full" style="bottom:8px;right:10px;background:radial-gradient(circle,#666,#222);box-shadow:0 0 2px rgba(0,0,0,0.8);"></span>
+        <div class="absolute inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded"
+             style="box-shadow: inset 0 0 20px rgba(200,147,79,0.08);"></div>
+        <span class="text-2xl relative z-10">📍</span>
+        <span class="relative z-10">{t('hero.ctaLocation', locale)}</span>
+      </a>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="mt-16 animate-bounce">
+      <svg class="w-6 h-6 mx-auto" style="color: var(--color-text-muted);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<script>
+  function spawnBubbles() {
+    const bg = document.getElementById('beer-bg');
+    if (!bg) return;
+    bg.querySelectorAll('.beer-bubble').forEach(function(b) { b.remove(); });
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 300; i++) {
+      const b = document.createElement('div');
+      b.className = 'beer-bubble';
+      const size = 1.5 + Math.pow(Math.random(), 1.8) * 11;
+      const left = Math.random() * 100;
+      const duration = 4 + Math.random() * 8;
+      const delay = Math.random() * -12;
+      const opacity = 0.2 + Math.random() * 0.7;
+      b.style.cssText = 'left:' + left + '%;width:' + size + 'px;height:' + size + 'px;animation-duration:' + duration + 's;animation-delay:' + delay + 's;opacity:' + opacity + ';';
+      frag.appendChild(b);
+    }
+    bg.appendChild(frag);
+  }
+  spawnBubbles();
+  document.addEventListener('astro:after-swap', spawnBubbles);
+</script>

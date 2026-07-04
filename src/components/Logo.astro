@@ -1,0 +1,37 @@
+---
+// Logo component — theme-aware logo switching
+export interface Props {
+  variant?: 'icon' | 'wordmark';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  className?: string;
+}
+
+const { variant = 'wordmark', size = 'md', className = '' } = Astro.props;
+
+const sizes = {
+  sm: variant === 'icon' ? 'h-12 w-auto' : 'h-5 w-auto',
+  md: variant === 'icon' ? 'h-16 w-auto' : 'h-7 w-auto',
+  lg: variant === 'icon' ? 'h-24 w-auto' : 'h-10 w-auto',
+  xl: variant === 'icon' ? 'h-40 w-auto' : 'h-14 w-auto',
+};
+
+// Theme-aware logos
+// Dark themes (stout, ipa) → use gold logo; light themes (wheat, lager) → use black logo
+// On dark background: white logo. On light background: gold/black logo.
+// We use CSS filter to handle this dynamically
+const goldSrc = variant === 'icon' ? '/images/logos/OpenCraft_Icon_Gold_2.png' : '/images/logos/OpenCraft_Wordmark_Gold.png';
+const blackSrc = variant === 'icon' ? '/images/logos/OpenCraft_Icon_Black_2.png' : '/images/logos/OpenCraft_Wordmark_black.png';
+---
+
+<img
+  src={goldSrc}
+  alt="OpenCraft"
+  class={`theme-logo logo-gold ${sizes[size]} ${className}`}
+  style="transition: filter 0.4s ease;"
+/>
+<img
+  src={blackSrc}
+  alt="OpenCraft"
+  class={`theme-logo logo-black ${sizes[size]} ${className}`}
+  style="transition: filter 0.4s ease;"
+/>

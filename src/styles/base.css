@@ -1,0 +1,801 @@
+@import "tailwindcss";
+
+/* =============================================
+   Tailwind CSS 4 Theme Configuration
+   ============================================= */
+@theme {
+  --color-gold: #c8934f;
+  --color-gold-light: #d4a76a;
+  --color-gold-dark: #a67a3a;
+  --color-dark-50: #fafafa;
+  --color-dark-100: #f5f5f5;
+  --color-dark-200: #e5e5e5;
+  --color-dark-300: #a3a3a3;
+  --color-dark-400: #737373;
+  --color-dark-500: #525252;
+  --color-dark-600: #404040;
+  --color-dark-700: #2a2a2a;
+  --color-dark-800: #1a1a1a;
+  --color-dark-900: #0a0a0a;
+  --color-dark-950: #050505;
+  --font-family-sans: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+  --font-family-display: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+  --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+  --animate-glow-pulse: glowPulse 3s ease-in-out infinite;
+  --animate-gradient-shift: gradientShift 8s ease infinite;
+  --animate-morph-shape: morphShape 6s ease-in-out infinite;
+  --animate-float: float 4s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(200, 147, 79, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(200, 147, 79, 0.8); }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes morphShape {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* =============================================
+   CSS Custom Properties — Theming System
+   ============================================= */
+
+/* =============================================
+   Logo visibility — black on light, gold on dark
+   ============================================= */
+.logo-gold { display: block; }
+.logo-black { display: none; }
+
+[data-theme='lager'] .logo-gold,
+[data-theme='wheat'] .logo-gold,
+[data-theme='ipa'] #hero-section .logo-gold { display: none; }
+[data-theme='lager'] .logo-black,
+[data-theme='wheat'] .logo-black,
+[data-theme='ipa'] #hero-section .logo-black { display: block; }
+
+/* =============================================
+   CSS Custom Properties — Theming System
+   ============================================= */
+
+:root {
+  /* Dark Theme (default) — pure black/grey, no blue */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #141414;
+  --color-bg-card: #1a1a1a;
+  --color-bg-card-hover: #262626;
+  --color-bg-nav: rgba(10, 10, 10, 0.92);
+  --color-bg-footer: #050505;
+  --color-bg-hero-overlay: rgba(10, 10, 10, 0.6);
+
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #707070;
+  --color-text-heading: #ffffff;
+
+  --color-accent: #c8934f;
+  --color-accent-light: #d4a76a;
+  --color-accent-dark: #a67a3a;
+  --color-accent-glow: rgba(200, 147, 79, 0.15);
+
+  --color-border: #2a2a2a;
+  --color-border-light: #3a3a3a;
+
+  --color-gradient-1: #c8934f;
+  --color-gradient-2: #8b6914;
+  --color-gradient-3: #1a0f07;
+
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.3);
+
+  /* Logo selection */
+  --logo-brightness: 1;
+  --logo-filter: brightness(1);
+
+  /* Hero gradient — Stout (deep dark brown) */
+  --hero-grad-1: #080402;
+  --hero-grad-2: #0e0805;
+  --hero-grad-3: #1e120a;
+  --hero-label: var(--color-accent);
+  --hero-tagline-1: var(--color-accent);
+  --hero-tagline-2: var(--color-accent-light);
+  --hero-tagline-3: var(--color-accent-dark);
+}
+
+/* =============================================
+   Wheat Theme
+   ============================================= */
+[data-theme='wheat'] {
+  --color-bg-primary: #f4ecd8;
+  --color-bg-secondary: #ede0c8;
+  --color-bg-card: #faf5eb;
+  --color-bg-card-hover: #ede0c8;
+  --color-bg-nav: rgba(244, 236, 216, 0.9);
+  --color-bg-footer: #5b4636;
+  --color-bg-hero-overlay: rgba(91, 70, 54, 0.45);
+
+  --color-text-primary: #5b4636;
+  --color-text-secondary: #6b5846;
+  --color-text-muted: #8b7b6b;
+  --color-text-heading: #3c2415;
+
+  --color-accent: #c8934f;
+  --color-accent-light: #d4a76a;
+  --color-accent-dark: #a67a3a;
+  --color-accent-glow: rgba(200, 147, 79, 0.1);
+
+  --color-border: #c4b896;
+  --color-border-light: #dbd0b8;
+
+  --color-gradient-1: #c8934f;
+  --color-gradient-2: #b8860b;
+  --color-gradient-3: #8b7355;
+
+  --shadow-card: 0 4px 6px -1px rgba(91, 70, 54, 0.15), 0 2px 4px -2px rgba(91, 70, 54, 0.08);
+  --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.2);
+
+  --logo-brightness: 0;
+  --logo-filter: brightness(0);
+
+  /* Hero gradient — Wheat (golden straw) */
+  /* Hero gradient — Wheat (pale creamy straw) */
+  --hero-grad-1: #ffe11b;
+  --hero-grad-2: #ffe264;
+  --hero-grad-3: #e8d480;
+  --hero-label: #4a3020;
+  --hero-tagline-1: #4a3020;
+  --hero-tagline-2: #6b4830;
+  --hero-tagline-3: #2a1808;
+}
+
+/* =============================================
+   Lager Theme
+   ============================================= */
+[data-theme='lager'] {
+  --color-bg-primary: #fdfaf2;
+  --color-bg-secondary: #f8f0dc;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f8f0dc;
+  --color-bg-nav: rgba(253, 250, 242, 0.9);
+  --color-bg-footer: #4a3020;
+  --color-bg-hero-overlay: rgba(74, 48, 32, 0.4);
+
+  --color-text-primary: #3a2010;
+  --color-text-secondary: #5b4030;
+  --color-text-muted: #8b7040;
+  --color-text-heading: #2a1808;
+
+  --color-accent: #c8934f;
+  --color-accent-light: #d4a76a;
+  --color-accent-dark: #a67a3a;
+  --color-accent-glow: rgba(200, 147, 79, 0.1);
+
+  --color-border: #e0d0a8;
+  --color-border-light: #f0e4c0;
+
+  --color-gradient-1: #d4a76a;
+  --color-gradient-2: #c8934f;
+  --color-gradient-3: #f5e6a8;
+
+  --shadow-card: 0 4px 6px -1px rgba(74, 48, 32, 0.1), 0 2px 4px -2px rgba(74, 48, 32, 0.06);
+  --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.2);
+
+  --logo-brightness: 0;
+  --logo-filter: brightness(0);
+
+  /* Hero gradient — Lager (bright golden) */
+  --hero-grad-1: #fff050;
+  --hero-grad-2: #ffe030;
+  --hero-grad-3: #f5c818;
+  --hero-label: #3c1800;
+  --hero-tagline-1: #3c1800;
+  --hero-tagline-2: #5c2800;
+  --hero-tagline-3: #1a0800;
+}
+
+/* =============================================
+   IPA Theme (was Rustic)
+   ============================================= */
+[data-theme='ipa'] {
+  --color-bg-primary: #1a1008;
+  --color-bg-secondary: #241810;
+  --color-bg-card: #2a1c12;
+  --color-bg-card-hover: #352418;
+  --color-bg-nav: rgba(26, 16, 8, 0.92);
+  --color-bg-footer: #0f0804;
+  --color-bg-hero-overlay: rgba(16, 8, 4, 0.5);
+
+  --color-text-primary: #e0d5c8;
+  --color-text-secondary: #a89888;
+  --color-text-muted: #786858;
+  --color-text-heading: #f5ebe0;
+
+  --color-accent: #c8934f;
+  --color-accent-light: #d4a76a;
+  --color-accent-dark: #a67a3a;
+  --color-accent-glow: rgba(200, 147, 79, 0.15);
+
+  --color-border: #3a2818;
+  --color-border-light: #4a3828;
+
+  --color-gradient-1: #c8934f;
+  --color-gradient-2: #8b6914;
+  --color-gradient-3: #3c2415;
+
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.3);
+
+  --logo-brightness: 1;
+  --logo-filter: brightness(1);
+
+  /* Hero gradient — IPA (warm amber) */
+  --hero-grad-1: #e88828;
+  --hero-grad-2: #f09838;
+  --hero-grad-3: #f8a848;
+  --hero-label: #1a0800;
+  --hero-tagline-1: #1a0800;
+  --hero-tagline-2: #3a1800;
+  --hero-tagline-3: #0a0400;
+  --logo-brightness: 1;
+  --logo-filter: brightness(1) drop-shadow(0 0 4px rgba(0,0,0,0.5));
+}
+
+/* =============================================
+   Base Styles
+   ============================================= */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: 'Inter', 'Noto Sans Thai', system-ui, sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-light);
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass-nav {
+    background: var(--color-bg-nav);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .glass-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl font-bold mb-2;
+    color: var(--color-text-heading);
+  }
+
+  .section-subheading {
+    @apply text-lg mb-8;
+    color: var(--color-text-muted);
+  }
+
+  .accent-text {
+    color: var(--color-accent);
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold
+           transition-all duration-300 ease-out;
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent-light);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold
+           transition-all duration-300 ease-out;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--color-accent);
+    color: #ffffff;
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-1px);
+  }
+
+  .card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card:hover {
+    background-color: var(--color-bg-card-hover);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+/* =============================================
+   Article Content Utilities
+   ============================================= */
+
+.article-lead {
+  font-size: 1.12rem;
+  line-height: 1.9;
+  margin: 1.5rem 0 2rem;
+  opacity: 0.95;
+}
+
+.quick-summary {
+  margin: 2rem 0;
+}
+
+.beer-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.beer-card,
+.taste-box,
+.pairing-box,
+.final-summary {
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 1.25rem;
+  background: var(--color-bg-card);
+}
+
+.beer-card h3,
+.style-item h4 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.beer-card p,
+.style-item p,
+.taste-box li,
+.final-summary li {
+  line-height: 1.75;
+}
+
+.beer-section {
+  margin: 3rem 0;
+}
+
+.section-intro {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+}
+
+.style-list {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.style-item {
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-bg-card);
+  border-radius: 12px;
+}
+
+.taste-box,
+.pairing-box {
+  margin: 1.5rem 0;
+}
+
+.taste-box ul,
+.final-summary ul {
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 720px) {
+  .beer-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-lead,
+  .section-intro {
+    font-size: 1rem;
+  }
+
+  .beer-card,
+  .taste-box,
+  .pairing-box,
+  .final-summary {
+    padding: 1rem;
+  }
+}
+
+/* =============================================
+   Prose / Article Content Styles
+   ============================================= */
+
+/* Article Header Card */
+.article-header {
+  text-align: center;
+  padding: 2.5rem 2rem 2rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: 18px;
+  background: var(--color-bg-card);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.article-header-title {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--color-text-heading);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .article-header-title {
+    font-size: 2.5rem;
+  }
+}
+
+.article-header-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.article-header-tag {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--color-accent-glow);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent-dark);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.article-header-tag:hover {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.article-header-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.article-header-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-primary);
+}
+
+.article-header-meta-item svg {
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.prose {
+  font-size: 1.08rem;
+  line-height: 1.85;
+}
+
+.prose h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.35;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.35rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: var(--color-bg-card);
+  border-radius: 0 12px 12px 0;
+  color: var(--color-text-secondary);
+  font-style: normal;
+}
+
+.prose blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Table styles */
+.prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+
+.prose thead {
+  background-color: var(--color-bg-secondary);
+}
+
+.prose th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.prose td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tbody tr:hover {
+  background-color: var(--color-bg-card-hover);
+}
+
+/* Mermaid font */
+.mermaid {
+  font-family: 'Inter', 'Noto Sans Thai', system-ui, sans-serif !important;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid .nodeLabel {
+  font-family: 'Inter', 'Noto Sans Thai', system-ui, sans-serif !important;
+  font-size: 13px !important;
+}
+
+.mermaid .edgeLabel {
+  font-family: 'Inter', 'Noto Sans Thai', system-ui, sans-serif !important;
+  font-size: 12px !important;
+}
+
+/* =============================================
+   Article Footer
+   ============================================= */
+
+.article-footer {
+  margin-top: 3rem;
+}
+
+/* End Divider */
+.article-end-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2.5rem 0 2rem;
+}
+
+.article-end-divider::before,
+.article-end-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border), transparent);
+}
+
+.article-end-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.article-end-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+/* Footer Tags */
+.article-footer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* Prev / Next Navigation */
+.article-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.article-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-bg-card);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.article-nav-card:hover {
+  border-color: var(--color-accent);
+  background: var(--color-bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.article-nav-next {
+  text-align: right;
+}
+
+.article-nav-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.article-nav-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  line-height: 1.4;
+}
+
+/* =============================================
+   Prose List Styles
+   ============================================= */
+
+.prose ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.prose ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  counter-reset: prose-counter;
+}
+
+.prose ol li {
+  counter-increment: prose-counter;
+  line-height: 1.8;
+}
+
+.prose ol li::marker {
+  color: var(--color-accent);
+  font-weight: 600;
+}

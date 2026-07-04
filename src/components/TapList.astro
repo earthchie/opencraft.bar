@@ -1,0 +1,145 @@
+---
+// TapList — renders the current beer tap list from JSON data
+import { t } from '@i18n/utils';
+import tapListData from '@data/tap-list.json';
+
+const locale = Astro.currentLocale || 'en';
+
+interface PriceOption {
+  size: string;
+  price: number;
+}
+
+interface TapItem {
+  number: number;
+  brewery: string;
+  labelName: string;
+  style: string;
+  abv: number;
+  price?: number;
+  prices?: PriceOption[];
+}
+
+const taps: TapItem[] = tapListData;
+
+// Separate featured beer (Asahi) from standard taps
+const asahiBeer = taps.find((tap) => tap.brewery === 'Asahi');
+const standardTaps = taps.filter((tap) => tap.brewery !== 'Asahi');
+---
+
+<section id="tap-list" class="py-20 theme-transition" style="background-color: var(--color-bg-primary);">
+  <div class="container-main">
+    <!-- Section heading -->
+    <div class="text-center mb-12 animate-on-scroll">
+      <h2 class="section-heading">
+        🍺 {t('tapList.heading', locale)}
+      </h2>
+      <p class="section-subheading">
+        {t('tapList.subheading', locale)}
+      </p>
+    </div>
+
+    <!-- Featured beer (Asahi) — distinct full-width banner card -->
+    {asahiBeer && (
+      <div class="mb-10 animate-on-scroll">
+        <div class="relative overflow-hidden rounded-2xl" style="background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%); border: 2px solid var(--color-accent); box-shadow: 0 20px 50px -20px var(--color-accent-glow);">
+          <!-- Accent glow strip -->
+          <div class="absolute top-0 left-0 right-0 h-1.5" style="background: linear-gradient(90deg, transparent, var(--color-accent), transparent);"></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-0">
+            <!-- Left: Beer identity -->
+            <div class="md:col-span-2 p-8 flex flex-col justify-center" style="border-right: 1px solid var(--color-border);">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider" style="background-color: var(--color-accent); color: var(--color-bg-primary);">
+                  ★ Featured
+                </span>
+                <span class="text-xs font-mono" style="color: var(--color-text-muted);">
+                  {asahiBeer.abv}% ABV
+                </span>
+              </div>
+              <h3 class="text-3xl md:text-4xl font-black leading-none mb-2" style="color: var(--color-text-heading);">
+                {asahiBeer.labelName}
+              </h3>
+              <p class="text-lg font-medium mb-1" style="color: var(--color-accent);">
+                {asahiBeer.brewery}
+              </p>
+              <a href={`/${locale === 'th' ? 'th/' : ''}tag/${encodeURIComponent(asahiBeer.style)}/`} class="text-sm transition-colors" style="color: var(--color-text-secondary);">
+                {asahiBeer.style} ↗
+              </a>
+            </div>
+
+            <!-- Right: Pricing tiers -->
+            <div class="md:col-span-3 p-8 grid grid-cols-3 gap-4 items-center">
+              {asahiBeer.prices?.map((p, i) => (
+                <div class={`text-center ${i < (asahiBeer.prices!.length - 1) ? 'md:border-r' : ''}`} style={i < (asahiBeer.prices!.length - 1) ? { borderColor: 'var(--color-border)' } : {}}>
+                  <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">
+                    {p.size}
+                  </div>
+                  <div class="text-3xl md:text-4xl font-black font-mono leading-none" style="color: var(--color-accent);">
+                    ฿{p.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Standard tap cards grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children animate-on-scroll">
+      {standardTaps.map((tap) => (
+        <article class="card flex flex-col">
+          <!-- Header: number + abv -->
+          <div class="flex items-start justify-between mb-3">
+            <span class="text-3xl font-black leading-none" style="color: var(--color-accent);">
+              {String(tap.number).padStart(2, '0')}
+            </span>
+            <span class="text-sm font-mono font-bold px-2.5 py-1 rounded-full" style="background-color: var(--color-bg-secondary); color: var(--color-text-heading);">
+              {tap.abv}% ABV
+            </span>
+          </div>
+
+          <!-- Beer name -->
+          <h3 class="font-bold text-xl leading-tight mb-1" style="color: var(--color-text-heading);">
+            {tap.labelName}
+          </h3>
+
+          <!-- Brewery -->
+          <p class="text-sm mb-3" style="color: var(--color-text-secondary);">
+            {tap.brewery}
+          </p>
+
+          <!-- Style badge (clickable → tag page) -->
+          <a href={`/${locale === 'th' ? 'th/' : ''}tag/${encodeURIComponent(tap.style)}/`} class="self-start px-2.5 py-1 rounded-full text-xs font-medium mb-4 transition-colors" style="background-color: var(--color-accent-glow); color: var(--color-accent);">
+            {tap.style}
+          </a>
+
+          <!-- Prices: flex-grow fills remaining space, prices pinned to bottom -->
+          <div class="mt-auto pt-3 border-t" style="border-color: var(--color-border);">
+            {tap.prices ? (
+              <div class="grid grid-cols-3 gap-1 text-center">
+                {tap.prices.map(p => (
+                  <div>
+                    <div class="text-xs font-semibold tracking-wider mb-0.5" style="color: var(--color-text-muted);">{p.size}</div>
+                    <div class="font-mono font-bold" style="color: var(--color-accent);">฿{p.price}</div>
+                  </div>
+                ))}
+              </div>
+            ) : tap.price ? (
+              <div class="flex justify-between items-baseline">
+                <span class="text-sm" style="color: var(--color-text-secondary);">{t('tapList.price', locale)}</span>
+                <span class="font-mono font-bold text-lg" style="color: var(--color-accent);">฿{tap.price}</span>
+              </div>
+            ) : ''}
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Updated info -->
+    <p class="text-center mt-8 text-sm" style="color: var(--color-text-muted);">
+      📋 {t('tapList.updated', locale)}: 2026-07-04 — {standardTaps.length + (asahiBeer ? 1 : 0)} {t('tapList.onTap', locale)}
+    </p>
+  </div>
+</section>

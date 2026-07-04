@@ -1,0 +1,21 @@
+---
+// LanguageSwitcher — toggle between EN and TH
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { t } from '@i18n/utils';
+
+const currentLocale = Astro.currentLocale || 'en';
+const isEN = currentLocale === 'en';
+const targetLocale = isEN ? 'th' : 'en';
+const targetPath = Astro.url.pathname.replace(/^\/(th\/?)?/, '');
+const switchUrl = getRelativeLocaleUrl(targetLocale, targetPath || '');
+---
+
+<a
+  href={switchUrl}
+  class="lang-switch flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300"
+  style="color: var(--color-text-secondary); border: 1px solid var(--color-border);"
+  aria-label={isEN ? t('common.switchToTH', 'en') : t('common.switchToEN', 'th')}
+>
+  <span class="text-base">{isEN ? '🇹🇭' : '🇬🇧'}</span>
+  <span class="hidden sm:inline">{isEN ? 'ไทย' : 'EN'}</span>
+</a>

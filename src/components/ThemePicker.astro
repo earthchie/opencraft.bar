@@ -1,0 +1,230 @@
+---
+// ThemePicker — compact swatch-style theme selector
+import { t } from '@i18n/utils';
+
+const locale = Astro.currentLocale || 'en';
+const themes = [
+  { id: 'lager', label: t('common.themeSepia', locale), swatch: 'linear-gradient(135deg, #fff050 0%, #f5c818 100%)', dot: '#f5d860' },
+  { id: 'wheat', label: t('common.themeWheat', locale), swatch: 'linear-gradient(135deg, #ffe11b 0%, #e8d480 100%)', dot: '#f0d870' },
+  { id: 'ipa', label: t('common.themeRustic', locale), swatch: 'linear-gradient(135deg, #e88828 0%, #f09838 100%)', dot: '#1a1008' },
+  { id: 'dark', label: t('common.themeDark', locale), swatch: 'linear-gradient(135deg, #141414 0%, #0a0a0a 100%)', dot: '#0a0a0a' },
+];
+---
+
+<div class="theme-picker" id="theme-picker">
+  <!-- Trigger button -->
+  <button
+    id="theme-toggle"
+    class="theme-trigger"
+    aria-label={t('common.theme', locale)}
+    title={t('common.theme', locale)}
+  >
+    <span class="theme-trigger-icon">◐</span>
+  </button>
+
+  <!-- Floating panel -->
+  <div id="theme-panel" class="theme-panel">
+    <div class="theme-panel-inner">
+      <span class="theme-panel-label">Theme</span>
+      <div class="theme-swatches">
+        {themes.map((theme) => (
+          <button
+            data-theme-value={theme.id}
+            class="theme-swatch"
+            title={theme.label}
+          >
+            <span
+              class="theme-swatch-color"
+              style={`background: ${theme.swatch};`}
+            ></span>
+            <span class="theme-swatch-label">{theme.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const themeLabels: Record<string, string> = {
+    lager: 'Lager',
+    wheat: 'Wheat',
+    ipa: 'IPA',
+    dark: 'Stout',
+  };
+
+  function applyTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('opencraft-theme', theme);
+
+    // Highlight active swatch
+    document.querySelectorAll('.theme-swatch').forEach((el) => {
+      const isActive = (el as HTMLElement).dataset.themeValue === theme;
+      el.classList.toggle('active', isActive);
+    });
+  }
+
+  // Apply saved theme on load
+  const saved = localStorage.getItem('opencraft-theme') || 'dark';
+  applyTheme(saved);
+
+  // Click handlers
+  document.querySelectorAll('.theme-swatch').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const theme = (btn as HTMLElement).dataset.themeValue;
+      if (theme) applyTheme(theme);
+    });
+  });
+
+  // Toggle panel on trigger click (mobile-friendly)
+  const toggle = document.getElementById('theme-toggle');
+  const panel = document.getElementById('theme-panel');
+  if (toggle && panel) {
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      panel.classList.toggle('open');
+    });
+    document.addEventListener('click', () => {
+      panel.classList.remove('open');
+    });
+    panel.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+</script>
+
+<style>
+  .theme-picker {
+    position: relative;
+  }
+
+  /* Trigger */
+  .theme-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .theme-trigger:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px var(--color-accent-glow);
+  }
+  .theme-trigger-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  /* Invisible bridge to prevent hover gap */
+  .theme-picker::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 14px;
+  }
+
+  /* Floating panel */
+  .theme-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+    z-index: 100;
+    pointer-events: none;
+  }
+  .theme-picker:hover .theme-panel,
+  .theme-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .theme-panel-inner {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-light);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18),
+                0 2px 8px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(12px);
+    min-width: 200px;
+  }
+
+  .theme-panel-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 10px;
+  }
+
+  .theme-swatches {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* Individual swatch */
+  .theme-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+  }
+  .theme-swatch:hover {
+    background: var(--color-bg-card-hover);
+  }
+  .theme-swatch.active {
+    border-color: var(--color-accent);
+    background: var(--color-accent-glow);
+  }
+
+  .theme-swatch-color {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15),
+                inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease;
+  }
+  .theme-swatch:hover .theme-swatch-color {
+    transform: scale(1.1);
+  }
+  .theme-swatch.active .theme-swatch-color {
+    box-shadow: 0 0 0 2px var(--color-bg-card),
+                0 0 0 4px var(--color-accent);
+  }
+
+  .theme-swatch-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .theme-swatch.active .theme-swatch-label {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>

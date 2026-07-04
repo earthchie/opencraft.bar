@@ -1,0 +1,77 @@
+---
+// SearchModal — floating search overlay with ⌘K shortcut
+import { t } from '@i18n/utils';
+const locale = Astro.currentLocale || 'en';
+---
+
+<div id="search-modal" class="search-modal hidden">
+  <div class="search-backdrop" id="search-backdrop"></div>
+  <div class="search-dialog">
+    <div class="search-header">
+      <span class="search-icon">🔍</span>
+      <span class="search-title">{locale === 'th' ? 'ค้นหา' : 'Search'}</span>
+      <kbd class="search-kbd">Esc</kbd>
+    </div>
+    <div id="pagefind-search" style="padding: 12px;"></div>
+    <div class="search-footer">
+      <span><kbd class="search-kbd-sm">⌘K</kbd> {locale === 'th' ? 'เปิด' : 'Open'}</span>
+      <span><kbd class="search-kbd-sm">Esc</kbd> {locale === 'th' ? 'ปิด' : 'Close'}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-start; justify-content: center; padding-top: 15vh; }
+  .search-modal.hidden { display: none; }
+  .search-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+  .search-dialog { position: relative; width: 100%; max-width: 560px; margin: 0 16px; background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4); overflow: hidden; }
+  .search-header { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--color-border); }
+  .search-icon { font-size: 18px; flex-shrink: 0; }
+  .search-title { flex: 1; font-size: 16px; font-weight: 600; color: var(--color-text-primary); }
+  .search-kbd, .search-kbd-sm { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: var(--color-bg-primary); border: 1px solid var(--color-border); color: var(--color-text-muted); flex-shrink: 0; }
+  .search-kbd-sm { font-size: 10px; padding: 1px 5px; }
+  .search-footer { display: flex; justify-content: space-between; padding: 10px 16px; border-top: 1px solid var(--color-border); font-size: 12px; color: var(--color-text-muted); }
+</style>
+
+<script>
+  function initSearchModal() {
+    const modal = document.getElementById('search-modal');
+    const backdrop = document.getElementById('search-backdrop');
+    let pagefindReady = false;
+
+    function openModal() {
+      modal?.classList.remove('hidden');
+      if (!pagefindReady) loadPagefind();
+    }
+    function closeModal() { modal?.classList.add('hidden'); }
+
+    function loadPagefind() {
+      if (window.PagefindUI) {
+        try {
+          new window.PagefindUI({ element: '#pagefind-search', showImages: false, showSubResults: true });
+          pagefindReady = true;
+          console.log('PagefindUI ready');
+        } catch (e) { console.error('PagefindUI init failed:', e); }
+      } else {
+        console.error('PagefindUI not available');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); modal?.classList.contains('hidden') ? openModal() : closeModal(); }
+      if (e.key === 'Escape' && !modal?.classList.contains('hidden')) closeModal();
+    });
+
+    backdrop?.addEventListener('click', closeModal);
+    document.getElementById('search-trigger')?.addEventListener('click', openModal);
+  }
+
+  document.addEventListener('DOMContentLoaded', initSearchModal);
+  document.addEventListener('astro:page-load', initSearchModal);
+</script>
+
+<style is:global>
+  .pagefind-ui { --pagefind-ui-scale: 1; --pagefind-ui-primary: #c8934f; --pagefind-ui-text: #e0e0e0; --pagefind-ui-background: #1a1a1a; --pagefind-ui-border: #3a3a3a; --pagefind-ui-tag: #2a2a2a; --pagefind-ui-border-width: 1px; --pagefind-ui-border-radius: 12px; --pagefind-ui-font: 'Inter', 'Noto Sans', system-ui, sans-serif; }
+  [data-theme='wheat'] .pagefind-ui, [data-theme='lager'] .pagefind-ui { --pagefind-ui-primary: #a67a3a; --pagefind-ui-text: #3a2010; --pagefind-ui-background: #ffffff; --pagefind-ui-border: #e0d0a8; --pagefind-ui-tag: #f8f0dc; }
+  [data-theme='ipa'] .pagefind-ui { --pagefind-ui-primary: #c8934f; --pagefind-ui-text: #e0d5c8; --pagefind-ui-background: #2a1c12; --pagefind-ui-border: #3a2818; --pagefind-ui-tag: #241810; }
+</style>

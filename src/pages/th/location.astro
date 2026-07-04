@@ -1,0 +1,138 @@
+---
+// Location page (TH)
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { t } from '@i18n/utils';
+
+const locale = Astro.currentLocale || 'th';
+---
+
+<BaseLayout
+  title={t('location.heading', locale) + ' | OpenCraft'}
+  description="การเดินทางมาที่ OpenCraft คราฟต์เบียร์บาร์ ที่จอดรถฟรีริมถนนหน้าร้าน"
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main">
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">📍 {t('location.heading', locale)}</h1>
+          <p class="section-subheading">{t('location.subheading', locale)}</p>
+        </div>
+
+        <!-- Map — full width -->
+        <div class="max-w-5xl mx-auto mb-6 animate-on-scroll">
+          <div class="card overflow-hidden p-0" style="min-height: 450px;">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7748.994660607414!2d100.521237!3d13.8091486!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29be5e831018f%3A0x37c078afbf9cdecb!2zT3BlbkNyYWZ0IENyYWZ0IEJlZXIgQmFyIOC5guC4reC5gOC4nuC5iOC4meC4hOC4o-C4suC4n-C4leC5jCDguYDguJrguLXguKLguKPguYzguITguKPguLLguJ_guJXguYwg4LmE4Lin4LiZ4LmMIOC5geC4peC4sOC4reC4suC4q-C4suC4ow!5e0!3m2!1sen!2sth!4v1782089052319!5m2!1sen!2sth"
+              width="100%"
+              height="450"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="OpenCraft Bar Location"
+            ></iframe>
+          </div>
+        </div>
+
+        <!-- Map action buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 max-w-5xl mx-auto mb-12 animate-on-scroll">
+          <a
+            href="https://maps.app.goo.gl/bH8yFY5uGPGMXYFm6"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-outline flex-1 text-center justify-center"
+          >
+            📍 {t('location.viewOnMap', locale)} ↗
+          </a>
+          <a
+            href="https://www.google.com/maps/dir//'/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x30e29be5e831018f:0x37c078afbf9cdecb!3e0"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary flex-1 text-center justify-center"
+          >
+            🧭 {t('location.getDirections', locale)}
+          </a>
+        </div>
+
+        <!-- Info cards — 2 columns -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+
+          <!-- Address -->
+          <div class="card animate-on-scroll">
+            <h3 class="font-semibold text-lg mb-3" style="color: var(--color-text-heading);">
+              📍 ที่อยู่
+            </h3>
+            <p style="color: var(--color-text-secondary); line-height: 1.8;">
+              17/8 ถ.ประชาอุทิศ 2<br />
+              แขวงบางซื่อ เขตบางซื่อ<br />
+              กรุงเทพฯ 10800
+            </p>
+          </div>
+
+          <!-- Operating Hours -->
+          <div class="card animate-on-scroll">
+            <h3 class="font-semibold text-lg mb-3" style="color: var(--color-text-heading);">
+              🕐 เวลาเปิดทำการ
+            </h3>
+            <div style="color: var(--color-text-secondary); line-height: 1.8;">
+              <p><strong>ทุกวัน:</strong> 18:00 – เที่ยงคืน</p>
+              <p class="text-sm mt-2" style="color: var(--color-text-muted);">ปิดในวันที่ห้ามขายเครื่องดื่มแอลกอฮอล์ เช่น วันพระสำคัญ วันก่อนเลือกตั้ง</p>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div class="card animate-on-scroll">
+            <h3 class="font-semibold text-lg mb-3" style="color: var(--color-text-heading);">
+              📞 ติดต่อ
+            </h3>
+            <div style="color: var(--color-text-secondary); line-height: 1.8;">
+              <p>📱 <a href="tel:0924129992" style="color: var(--color-accent);">092 412 9992</a></p>
+              <p>📧 <a href="mailto:hi@opencraft.bar" style="color: var(--color-accent);">hi@opencraft.bar</a></p>
+            </div>
+          </div>
+
+          <!-- How to Get Here -->
+          <div class="card animate-on-scroll">
+            <h3 class="font-semibold text-lg mb-3" style="color: var(--color-text-heading);">
+              🚇 การเดินทาง
+            </h3>
+            <div style="color: var(--color-text-secondary); line-height: 1.8;">
+              <p><strong>MRT บางโพ</strong> — ทางออก 2B</p>
+              <p class="text-sm" style="color: var(--color-text-muted);">เดินต่อประมาณ 100 เมตร</p>
+            </div>
+          </div>
+
+          <!-- Parking -->
+          <div class="card md:col-span-2 animate-on-scroll">
+            <h3 class="font-semibold text-lg mb-3" style="color: var(--color-text-heading);">
+              🚗 ที่จอดรถ
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="color: var(--color-text-secondary); line-height: 1.8;">
+              <div class="p-3 rounded-lg" style="background: var(--color-bg-card-hover);">
+                <p class="font-semibold" style="color: var(--color-text-heading);">จอดริมถนนหน้าร้าน (ฟรี)</p>
+                <p class="text-sm">จอดได้ตามริมถนนหน้าร้าน ไม่เสียค่าใช้จ่าย</p>
+              </div>
+              <div class="p-3 rounded-lg" style="background: var(--color-bg-card-hover);">
+                <p class="font-semibold" style="color: var(--color-text-heading);">Gateway Bangsue</p>
+                <p class="text-sm">22 บาท/ชม. ต้องนำรถออกก่อน 23:00 ไม่งั้นถูกปรับ 2,000 บาท</p>
+              </div>
+              <div class="p-3 rounded-lg" style="background: var(--color-bg-card-hover);">
+                <p class="font-semibold" style="color: var(--color-text-heading);">อาคารจอดรถ รพ.บางโพ</p>
+                <p class="text-sm">ชั่วโมงแรก 40 บาท ชั่วโมงถัดไป 20 บาท/ชม.</p>
+              </div>
+              <div class="p-3 rounded-lg" style="background: var(--color-bg-card-hover);">
+                <p class="font-semibold" style="color: var(--color-text-heading);">ใต้สถานี MRT บางโพ</p>
+                <p class="text-sm">จอดตามถนนใต้สถานี (~150 ม.) ฟรี</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

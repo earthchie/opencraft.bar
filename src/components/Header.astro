@@ -1,0 +1,156 @@
+---
+// Header — responsive nav with sticky glass effect, mobile hamburger
+import Logo from './Logo.astro';
+import ThemePicker from './ThemePicker.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import SearchModal from './SearchModal.astro';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const locale = Astro.currentLocale || 'en';
+
+const navLinks = [
+  { key: 'nav.home', href: getRelativeLocaleUrl(locale, '') },
+  { key: 'nav.tapList', href: getRelativeLocaleUrl(locale, '') + '#tap-list' },
+  { key: 'nav.news', href: getRelativeLocaleUrl(locale, 'news') },
+  { key: 'nav.knowledge', href: getRelativeLocaleUrl(locale, 'knowledge') },
+  { key: 'nav.location', href: getRelativeLocaleUrl(locale, 'location') },
+  { key: 'nav.services', href: getRelativeLocaleUrl(locale, 'services') },
+];
+---
+
+<header class="sticky top-0 z-50 glass-nav theme-transition">
+  <div class="container-main">
+    <nav class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href={getRelativeLocaleUrl(locale, '')} class="flex items-center flex-shrink-0">
+        <Logo variant="wordmark" size="md" />
+      </a>
+
+      <!-- Desktop nav -->
+      <div class="hidden lg:flex items-center gap-1">
+        {navLinks.map((link) => {
+          const isActive = link.href !== getRelativeLocaleUrl(locale, '') && Astro.url?.pathname === link.href;
+          return (
+            <a
+              href={link.href}
+              class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 link-underline"
+              style={{ color: isActive ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
+            >
+              {t(link.key, locale)}
+            </a>
+          );
+        })}
+
+        <!-- About dropdown -->
+        <div class="relative nav-dropdown">
+          <a
+            href={getRelativeLocaleUrl(locale, 'about')}
+            class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 link-underline"
+            style={{ color: Astro.url?.pathname.startsWith(getRelativeLocaleUrl(locale, 'about')) ? 'var(--color-accent)' : 'var(--color-text-secondary)' }}
+          >
+            {t('nav.about', locale)}
+          </a>
+          <div class="nav-dropdown-menu">
+            <a
+              href={getRelativeLocaleUrl(locale, 'about')}
+              class="block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+              style="color: var(--color-text-secondary);"
+            >
+              {t('nav.about', locale)}
+            </a>
+            <a
+              href={locale === 'en' ? '/license/' : '/th/license/'}
+              class="block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+              style="color: var(--color-text-secondary);"
+            >
+              {locale === 'en' ? 'Brand License' : 'สัญญาอนุญาต'}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right section -->
+      <div class="flex items-center gap-2">
+        <!-- Search trigger -->
+        <button
+          id="search-trigger"
+          class="p-2 rounded-lg transition-colors cursor-pointer"
+          style="color: var(--color-text-secondary);"
+          aria-label="Search"
+          title="Search (⌘K)"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+        <LanguageSwitcher />
+        <ThemePicker />
+
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden p-2 rounded-lg transition-colors"
+          style="color: var(--color-text-secondary);"
+          aria-label={t('common.menu', locale)}
+        >
+          <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="lg:hidden hidden py-4 border-t" style="border-color: var(--color-border);">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200"
+          style="color: var(--color-text-secondary);"
+        >
+          {t(link.key, locale)}
+        </a>
+      ))}
+      <a
+        href={getRelativeLocaleUrl(locale, 'about')}
+        class="block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200"
+        style="color: var(--color-text-secondary);"
+      >
+        {t('nav.about', locale)}
+      </a>
+      <a
+        href={locale === 'en' ? '/license/' : '/th/license/'}
+        class="block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 pl-8"
+        style="color: var(--color-text-secondary);"
+      >
+        {locale === 'en' ? 'Brand License' : 'สัญญาอนุญาต'}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+
+  // Close mobile menu on route change
+  document.addEventListener('astro:after-swap', () => {
+    menu?.classList.add('hidden');
+    iconOpen?.classList.remove('hidden');
+    iconClose?.classList.add('hidden');
+  });
+</script>
+
+<SearchModal />

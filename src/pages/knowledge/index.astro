@@ -1,0 +1,94 @@
+---
+// Knowledge listing page (EN)
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const locale = Astro.currentLocale || 'en';
+
+const allArticles = await getCollection('knowledge', ({ data }) => data.locale === locale);
+const articles = allArticles
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout
+  title={t('knowledge.heading', locale) + ' | OpenCraft'}
+  description="Learn about craft beer — styles, brewing, tasting, and culture"
+>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <section class="py-20">
+      <div class="container-main max-w-5xl">
+        <!-- Back link -->
+        <a href={`/${locale === 'th' ? 'th/' : ''}`} class="inline-flex items-center gap-1 text-sm mb-8 transition-colors" style="color: var(--color-text-muted);">
+          ← {locale === 'th' ? 'กลับไปหน้าแรก' : 'Back to Home'}
+        </a>
+
+        <!-- Header -->
+        <div class="text-center mb-12 page-enter">
+          <h1 class="section-heading">📚 {t('knowledge.heading', locale)}</h1>
+          <p class="section-subheading">{t('knowledge.subheading', locale)}</p>
+        </div>
+
+        <!-- Articles grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {articles.map((item) => {
+            const slug = item.id.replace(/^(en|th)\//, '');
+            const coverUrl = `/api/og/posts/${slug}.png`;
+            return (
+            <a href={`${getRelativeLocaleUrl(locale, 'knowledge')}${slug}`} class="card block group overflow-hidden flex flex-col">
+              <!-- Cover Image -->
+              <div class="overflow-hidden rounded-lg mb-4" style="aspect-ratio: 16/9;">
+                <img
+                  src={coverUrl}
+                  alt={item.data.title}
+                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                  onerror="this.style.display='none'"
+                />
+              </div>
+
+              <p class="text-xs mb-2" style="color: var(--color-text-muted);">
+                {t('knowledge.publishedOn', locale)}: {item.data.date.toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+
+              <h2 class="text-xl font-bold mb-2" style="color: var(--color-text-heading);">
+                {item.data.title}
+              </h2>
+
+              <p class="text-sm line-clamp-3 mb-3" style="color: var(--color-text-secondary);">
+                {item.data.description}
+              </p>
+
+              <p class="text-xs mb-3" style="color: var(--color-text-muted);">
+                {t('knowledge.by', locale)} {item.data.author}
+              </p>
+
+              <!-- Tags at bottom -->
+              {item.data.tags && item.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-auto">
+                  {item.data.tags.map((tag: string) => (
+                    <span class="px-2 py-0.5 rounded text-xs font-medium" style="background-color: var(--color-accent-glow); color: var(--color-accent);">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+            );
+          })}
+        </div>
+
+        {articles.length === 0 && (
+          <p class="text-center text-lg" style="color: var(--color-text-muted);">
+            {locale === 'th' ? 'ยังไม่มีบทความ Knowledge' : 'No knowledge articles yet.'}
+          </p>
+        )}
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
