@@ -6,8 +6,19 @@ import { t } from '@i18n/utils';
 const currentLocale = Astro.currentLocale || 'th';
 const isEN = currentLocale === 'en';
 const targetLocale = isEN ? 'th' : 'en';
-const targetPath = Astro.url.pathname.replace(/^\/(th\/?)?/, '');
-const switchUrl = getRelativeLocaleUrl(targetLocale, targetPath || '');
+
+// Strip locale prefix from current path to get the clean path
+let cleanPath = Astro.url.pathname;
+if (isEN) {
+  // Currently at /en/... — strip /en prefix
+  cleanPath = cleanPath.replace(/^\/en(\/|$)/, '/');
+} else {
+  // Currently at /... or /th/... — strip /th prefix if present
+  cleanPath = cleanPath.replace(/^\/th(\/|$)/, '/');
+}
+cleanPath = cleanPath.replace(/^\/+$/, '') || '';
+
+const switchUrl = getRelativeLocaleUrl(targetLocale, cleanPath);
 ---
 
 <a
