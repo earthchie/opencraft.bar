@@ -11,6 +11,7 @@ const { title = 'OpenCraft', description = "OpenCraft — Where Craft Meets Open
 // Construct full OG image URL
 const siteUrl = 'https://opencraft.bar';
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const pageUrl = `${siteUrl}${Astro.url.pathname}`;
 
 // Import global styles (bundled by Astro at build time)
 import '/src/styles/base.css';
@@ -26,6 +27,7 @@ import '/src/styles/animations.css';
   <meta name="theme-color" content="#c8934f" />
 
   <!-- Open Graph -->
+  <meta property="og:url" content={pageUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={fullOgImage} />
