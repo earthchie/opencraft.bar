@@ -71,6 +71,49 @@ npx astro preview
 
 The dev server runs at `http://localhost:4321/`.
 
+## ☁️ Deploy to Cloudflare Pages
+
+### Prerequisites
+
+- A [Cloudflare](https://cloudflare.com) account
+- Your project pushed to a GitHub repository
+
+### Steps
+
+1. **Go to Cloudflare Dashboard** → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
+2. **Select your repository** (`earthchie/opencraft.bar`)
+3. **Configure your build settings:**
+
+   | Setting | Value |
+   |---|---|
+   | Framework preset | **Astro** |
+   | Build command | `npm run build` |
+   | Build output directory | `dist` |
+   | Root directory | `/` (leave as default) |
+   | Node.js version | **18** (or later) |
+
+4. **Add environment variable** (optional but recommended):
+
+   | Variable | Value |
+   |---|---|
+   | `NODE_VERSION` | `18` |
+
+5. Click **Save and Deploy**.
+
+Cloudflare will automatically detect the Astro framework and build your site on every push to the main branch.
+
+### Custom Domain (Optional)
+
+1. Go to your Pages project → **Custom domains** → **Set up a custom domain**
+2. Enter your domain (e.g., `opencraft.bar`)
+3. Follow Cloudflare's DNS instructions
+
+### Notes
+
+- The site is fully static — no server-side rendering needed
+- Pagefind search index is built at compile time
+- OG images are pre-generated during build
+
 ## 🌐 Internationalization
 
 - Default locale: **en** (English)
