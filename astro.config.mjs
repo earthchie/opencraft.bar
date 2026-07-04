@@ -8,7 +8,7 @@ export default defineConfig({
     locales: ['en', 'th'],
     defaultLocale: 'en',
     routing: {
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false,
     },
   },
   image: {
