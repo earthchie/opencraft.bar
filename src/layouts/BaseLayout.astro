@@ -11,6 +11,10 @@ const { title = 'OpenCraft', description = "OpenCraft — Where Craft Meets Open
 // Construct full OG image URL
 const siteUrl = 'https://opencraft.bar';
 const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+
+// Import global styles (bundled by Astro at build time)
+import '/src/styles/base.css';
+import '/src/styles/animations.css';
 ---
 
 <!DOCTYPE html>
@@ -41,10 +45,6 @@ const fullOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Thai:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Global Styles -->
-  <link rel="stylesheet" href="/src/styles/base.css" />
-  <link rel="stylesheet" href="/src/styles/animations.css" />
 
   <title>{title} | OpenCraft</title>
 
