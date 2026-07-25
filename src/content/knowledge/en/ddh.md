@@ -66,7 +66,7 @@ The key aroma compounds extracted during dry hopping are **terpenes and thiols**
 These compounds are highly volatile and degrade more quickly when exposed to oxygen, heat, or time. How well a DDH beer holds its aroma depends heavily on **how it's packaged and stored**:
 
 - **Keg (draught under CO2 pressure)** — usually the best format for preserving hop aroma, because the beer is better protected from oxygen during storage and service. A well-handled keg can hold its aromatic character very well over its serving life.
-- **Can or bottle** — aroma tends to fade faster over time. Even good packaging allows more opportunity for oxidation and heat exposure than an intact draught system. **Canned or bottled DDH beer is generally best consumed fresh** — often within 4-8 weeks of packaging, depending on the brewery and storage conditions.
+- **Can or bottle** — aroma tends to fade faster over time. Even good packaging allows more opportunity for oxidation and heat exposure than an intact draught system. **Canned or bottled DDH beer is generally best consumed fresh** — often within 4–8 weeks of packaging, depending on the brewery and storage conditions.
 
 ---
 

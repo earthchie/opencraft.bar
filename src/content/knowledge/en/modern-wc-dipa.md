@@ -23,16 +23,16 @@ In practical terms, it is a **stronger, drier, more hop-forward West Coast IPA**
 
 The "Double" in DIPA originally suggested a bigger, more heavily hopped IPA. In modern use, it usually means a beer with:
 
-- **Higher ABV** — typically 7.5-9.5%
-- **More hop bitterness and flavor** — often 60-100+ IBU
+- **Higher ABV** — typically 7.5–9.5%
+- **More hop bitterness and flavor** — often 60–100+ IBU
 - **A larger malt base** — to balance the alcohol and hop load
 
 The "Modern" part usually means: **less crystal/caramel malt, cleaner fermentation, and a drier finish** than older West Coast DIPAs. That shift reduces toffee-like sweetness and lets the hop profile come through more clearly.
 
 | Feature | Standard IPA | Modern WC DIPA |
 |---|---|---|
-| ABV | 5.5-7.0% | 7.5-9.5% |
-| IBU (Bitterness) | 40-70 | 60-100+ |
+| ABV | 5.5–7.0% | 7.5–9.5% |
+| IBU (Bitterness) | 40–70 | 60–100+ |
 | Body | Medium | Medium-full |
 | Malt character | Subtle | Firm but clean |
 | Hop intensity | Bold | Very high |
@@ -81,7 +81,7 @@ The "Modern" part usually means: **less crystal/caramel malt, cleaner fermentati
 | Hop character | Pine, resin, citrus | Tropical fruit, juicy |
 | Malt | Clean, supportive | Soft, oat-y |
 | Body | Medium-full, crisp edge | Full, pillowy |
-| ABV | 7.5-9.5% | 6.5-8.5% |
+| ABV | 7.5–9.5% | 6.5–8.5% |
 
 ---
 
@@ -102,7 +102,7 @@ Modern WC DIPA works best with food that can handle high bitterness and alcohol.
 
 ## 💡 Tips for Enjoying
 
-- **Serve cool, not ice-cold** — around 10-13°C helps the aroma and bitterness show more clearly
+- **Serve cool, not ice-cold** — around 10–13°C helps the aroma and bitterness show more clearly
 - **Drink it slowly** — at 7.5%+ ABV, this is not a fast-drinking beer
 - **Food helps** — the bitterness and alcohol usually show better alongside richer dishes
 - **Freshness matters** — hop aroma changes with time, so most examples are best while still relatively fresh

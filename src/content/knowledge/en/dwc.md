@@ -23,8 +23,8 @@ West Coast IPA (WC IPA) is already a hop-forward style: crisp, clear, piney, and
 
 | | WC IPA | DWC (Double West Coast IPA) |
 |---|---|---|
-| ABV | 6-7.5% | 8-10%+ |
-| IBU (bitterness) | 50-70 | 70-100+ |
+| ABV | 6–7.5% | 8–10%+ |
+| IBU (bitterness) | 50–70 | 70–100+ |
 | Hop character | Bold, piney, citrusy | Intense, resinous, layered |
 | Malt backbone | Clean, supportive | Stronger — needed to balance |
 | Clarity | Crystal clear | Clear to slightly hazy |
