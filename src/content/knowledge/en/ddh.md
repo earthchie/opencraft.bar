@@ -63,7 +63,10 @@ The key aroma compounds extracted during dry hopping are **terpenes and thiols**
 - **Geraniol** → rose, citrus
 - **3-Mercaptohexanol (3MH)** → passion fruit, guava (released by yeast during fermentation from hop precursors)
 
-These compounds are highly volatile — they fade quickly after the beer is packaged. **Fresh DDH beer is always at its aromatic peak.** The hop aroma in a DDH beer that's two weeks old is noticeably more muted than one that's just been tapped.
+These compounds are highly volatile and are the enemy of oxygen. How well a DDH beer holds its aroma depends heavily on **how it's packaged**:
+
+- **Keg (draught on CO2 pressure)** — by far the best format for DDH aroma. The beer never contacts oxygen after being sealed under CO2, meaning the hop volatiles are preserved almost completely. A properly kept DDH keg can maintain its aromatic character throughout its lifespan — often better than a freshly opened can.
+- **Can or bottle** — aroma fades more noticeably over time. Oxidation during packaging and through the seal gradually degrades the volatile compounds. **Drink canned/bottled DDH beer fresh** — within 4–8 weeks of the package date for the best experience.
 
 ---
 
@@ -95,5 +98,5 @@ DDH is most commonly applied to:
 - **DDH = Double Dry Hopped** — two additions of hops after fermentation
 - Adds **aroma, not bitterness**
 - Creates **juicy, tropical, intense** hop character
-- Best enjoyed **fresh** — aroma fades quickly
+- Best on **draught (keg under CO2)** — aroma is preserved almost perfectly; **drink canned/bottled versions fresh** within 4–8 weeks
 - Often paired with **Hazy IPA** or **West Coast IPA** styles
