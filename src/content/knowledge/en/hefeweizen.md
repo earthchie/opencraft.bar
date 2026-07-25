@@ -83,7 +83,25 @@ Hefe Weizen is traditionally served in a **tall, curvy "Weizen glass"** that sho
 
 ---
 
-## 🍽️ Food Pairing
+## �️ Hefe Weizen vs. Hefe-Weissbier — Same Beer, Different Name
+
+You'll often see the same style written as **Hefe-Weissbier** — and it refers to exactly the same thing. The two names come from two different German words for wheat:
+
+- **Weizen** — the northern/modern German word for wheat
+- **Weiss** (or **Weiß**) — the Bavarian/traditional word for wheat (literally "white," describing the beer's pale, hazy colour)
+
+So **Hefe Weizen** and **Hefe-Weissbier** are simply regional names for the same style:
+
+| Term | Breakdown | Region |
+|---|---|---|
+| **Hefe Weizen** | Hefe (yeast) + Weizen (wheat) | Northern Germany / modern usage |
+| **Hefe-Weissbier** | Hefe (yeast) + Weiss (white/wheat) + Bier (beer) | Bavaria / traditional usage |
+
+Brands like **Paulaner** label their flagship as *Hefe-Weissbier*, while others like Erdinger use *Weissbier*. Either way, if you see "Hefe" on the label, you're getting an **unfiltered, yeast-forward wheat beer** with that classic banana-and-clove character.
+
+---
+
+## �🍽️ Food Pairing
 
 Hefe Weizen is incredibly food-friendly. The carbonation cuts through richness, while the banana-and-clove character complements a wide range of dishes.
 
