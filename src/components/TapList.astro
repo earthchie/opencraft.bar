@@ -158,22 +158,30 @@ const asahi = {
         const abvTag = tags.find((tag) => /^\d+\.?\d*%$/.test(tag)) || '';
         const abv = parseFloat(abvTag) || 0;
 
-        // Style: prefer tags with "Style: " prefix, otherwise use first
-        // non-brewery / non-abv / non-volume / non-draft tag
-        const styleTags = tags
+        // Styles: collect all "Style: " tags, then drop any that are merely
+        // a concatenation of the other style values (e.g. "DDHDWCIPA" when
+        // "DDH", "DWC" and "IPA" are also present).
+        const rawStyleTags = tags
           .filter((tag) => tag.startsWith('Style: '))
           .map((tag) => tag.replace('Style: ', ''));
-        const style =
-          styleTags.length > 0
-            ? styleTags[0]
-            : tags.find(
-                (tag) =>
-                  tag !== brewery &&
-                  !/^\d+\.?\d*%$/.test(tag) &&
-                  !/^\d+ml$/.test(tag) &&
-                  tag !== 'Draft' &&
-                  !tag.startsWith('Style: ')
-              ) || '';
+        const styles =
+          rawStyleTags.length > 0
+            ? rawStyleTags.filter((s) => {
+                const others = rawStyleTags.filter((o) => o !== s);
+                if (others.length < 2) return true;
+                return !others.every((o) => s.toLowerCase().includes(o.toLowerCase()));
+              })
+            : (() => {
+                const fallback = tags.find(
+                  (tag) =>
+                    tag !== brewery &&
+                    !/^\d+\.?\d*%$/.test(tag) &&
+                    !/^\d+ml$/.test(tag) &&
+                    tag !== 'Draft' &&
+                    !tag.startsWith('Style: ')
+                );
+                return fallback ? [fallback] : [];
+              })();
 
         // Strip brewery prefix and ABV suffix to get a clean label name
         let labelName = beerKey;
@@ -184,7 +192,7 @@ const asahi = {
           labelName = labelName.slice(0, -abvTag.length).trim();
         }
 
-        beers.set(beerKey, { tapNumber, brewery, labelName, abv, style, sizes: [] });
+        beers.set(beerKey, { tapNumber, brewery, labelName, abv, styles, sizes: [] });
       }
 
       // Volume from tags: e.g. "250ml", "500ml"
@@ -206,11 +214,13 @@ const asahi = {
   function renderCard(beer) {
     const num = String(beer.tapNumber).padStart(2, '0');
 
-    const styleLink = beer.style
-      ? `<a href="${tagBase}${encodeURIComponent(beer.style)}/"
-            class="self-start px-2.5 py-1 rounded-full text-xs font-medium mb-4 transition-colors"
+    const styleLink = beer.styles && beer.styles.length > 0
+      ? `<div class="flex flex-wrap gap-1.5 mb-4">${beer.styles
+          .map((s) => `<a href="${tagBase}${encodeURIComponent(s)}/"
+            class="px-2.5 py-1 rounded-full text-xs font-medium transition-colors"
             style="background-color: var(--color-accent-glow); color: var(--color-accent);"
-          >${esc(beer.style)}</a>`
+          >${esc(s)}</a>`)
+          .join('')}</div>`
       : '';
 
     const sizesHtml =
