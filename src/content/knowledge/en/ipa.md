@@ -1,8 +1,8 @@
 ---
-title: "IPA — The Hoppy, Bold Beer That Changed Craft Brewing"
+title: "IPA — Hop-Forward and Broadly Diverse"
 date: 2026-07-04
 author: "OpenCraft Team"
-description: "Discover IPA (India Pale Ale) — the hoppy, bold beer style that defined the craft beer revolution. From West Coast to Hazy, explore the IPA family"
+description: "Understand IPA (India Pale Ale) — a broad family of hop-forward beers ranging from bitter and clear to soft and fruit-driven"
 locale: en
 tags: ["IPA", "India Pale Ale", "craft beer", "knowledge"]
 ---
@@ -11,9 +11,9 @@ tags: ["IPA", "India Pale Ale", "craft beer", "knowledge"]
 
 <div class="article-lead">
 
-IPA — India Pale Ale — is the style that **sparked the craft beer revolution**. Known for its bold hop character, higher alcohol, and unapologetic bitterness, IPA is the most diverse and exciting beer family in the world today.
+IPA — India Pale Ale — is one of the beer styles most closely associated with modern craft brewing. It is best understood not as one single flavor, but as a broad family of **hop-forward beers** that can range from bitter and crisp to soft and fruit-driven.
 
-If you've ever tasted a beer that bursts with pine, citrus, or tropical fruit flavours, you've experienced what makes IPA so special: **the hop**.
+If you have tasted a beer full of pine, citrus, tropical fruit, resin, or floral character, you have already met the ingredient that defines IPA: **the hop**.
 
 </div>
 
@@ -21,38 +21,38 @@ If you've ever tasted a beer that bursts with pine, citrus, or tropical fruit fl
 
 ## 🏯 A Brief History
 
-Despite the name, IPA has little to do with India. The story goes that in the 18th century, British brewers added extra hops to their pale ales to preserve them during the long sea voyage to India. The result was a beer that was **more bitter, more alcoholic, and more aromatic** than standard pale ale.
+Despite the name, IPA was brewed in Britain, not India. The familiar story is that brewers made pale ales with enough stability to survive long export journeys to India, and hops were part of that equation. Modern historians debate the simplified version of the tale, but IPA did emerge as an export-oriented, well-hopped pale ale associated with the British Empire.
 
-The modern IPA revolution began in the **United States in the 1970s and 80s**, when American brewers started experimenting with the bold, aromatic hop varieties grown in the Pacific Northwest. By the 1990s, IPA had become the defining style of the American craft beer movement, and it has since spread worldwide.
+The modern IPA boom took shape in the **United States in the 1970s and 80s**, when brewers began using bold American hop varieties more aggressively. By the 1990s, IPA had become one of the signature styles of American craft beer and has since spread worldwide in many different forms.
 
 ---
 
 ## 👅 The IPA Family
 
-IPA is not a single style — it's a **vast and diverse family**:
+IPA is not a single style. It is a **broad family** with several recognizable branches:
 
 <div class="taste-box">
 
 ### 🌊 West Coast IPA
-The classic American IPA. **Crystal clear, sharply bitter, and boldly hoppy** with pine, citrus, and resin notes. Clean malt profile, dry finish.
+The classic American expression. Usually **clear, firm in bitterness, and hop-forward** with pine, citrus, and resin notes, supported by a clean malt profile.
 
 ### ☁️ Hazy IPA (NEIPA)
-The modern sensation. **Cloudy, juicy, and low in bitterness** with intense tropical fruit flavours. Soft, pillowy mouthfeel from oats and wheat.
+The softer modern expression. **Cloudy, fruit-forward, and usually lower in perceived bitterness** with a fuller, softer texture.
 
 ### 🍯 Double IPA (DIPA / Imperial IPA)
-IPA turned up to 11. **Higher ABV (7.5–9.5%), more hops, more malt body**. Intensely flavourful and satisfying.
+A stronger IPA. **Higher ABV (often 7.5–9.5% or more)**, more concentrated hop character, and a larger malt base.
 
 ### 🇬🇧 English IPA
-The original. **More balanced, less bitter**, with earthy hop character and a noticeable malt presence. Lower ABV than American versions.
+The historical British lineage. Usually **more balanced**, with earthy or herbal hop character and a more noticeable malt presence than many American IPAs.
 
 ### 🌿 Session IPA
-A lighter IPA (4–5% ABV). **All the hop flavour, less alcohol**. Perfect for drinking multiple pints.
+A lighter IPA (often around 4–5% ABV) that keeps hop aroma while reducing alcohol and weight.
 
 ### 🥭 New England / Hazy DIPA
-A hybrid — Double IPA brewed in the Hazy style. **Big ABV, massive fruit flavours, low bitterness, pillowy body**.
+A stronger hazy expression — a Double IPA brewed in the hazy style, often with bigger alcohol, fuller body, and saturated fruit-forward hop aroma.
 
 ### Special: Brut IPA, Cold IPA, White IPA, etc.
-Brewers continue to push boundaries — Brut IPA is dry and Champagne-like, Cold IPA uses lager yeast, and White IPA blends IPA with Witbier.
+Brewers continue to push the category in new directions — Brut IPA emphasizes dryness, Cold IPA aims for a cleaner, crisper profile, and White IPA draws influence from Witbier.
 
 </div>
 
@@ -62,8 +62,8 @@ Brewers continue to push boundaries — Brut IPA is dry and Champagne-like, Cold
 
 | Aspect | IPA | Pale Ale |
 |---|---|---|
-| Bitterness | High (40–100+ IBU) | Moderate (20–45 IBU) |
-| ABV | 5.5–9.5%+ | 4.5–6.0% |
+| Bitterness | Often higher (40–100+ IBU, depending on substyle) | Usually moderate (20–45 IBU) |
+| ABV | Often 5.5–9.5%+ | Often 4.5–6.0% |
 | Hop character | Bold, intense | Moderate, balanced |
 | Malt | Supportive | More present |
 | Body | Medium to full | Light to medium |
@@ -72,7 +72,7 @@ Brewers continue to push boundaries — Brut IPA is dry and Champagne-like, Cold
 
 ## 🍽️ Food Pairing
 
-IPA's bold hop character makes it a **powerful food companion**.
+IPA's hop character often makes it a strong food companion.
 
 | Food | Why It Works |
 |---|---|
@@ -87,11 +87,11 @@ IPA's bold hop character makes it a **powerful food companion**.
 
 ## 💡 Tips for Enjoying
 
-- **Fresh is best** — Hop aroma fades quickly. Drink IPA within 2–3 months of packaging
-- **Serve cool, not cold** — 8–12°C. Too cold and you numb the hop flavours
-- **Not all IPAs are bitter** — Hazy IPA proves you can have massive hop flavour without harsh bitterness
-- **Try them side by side** — A West Coast IPA vs Hazy IPA tasting reveals the full spectrum
-- **Great for aging (some)** — Imperial IPAs and English IPAs can develop nicely over 6–12 months
+- **Freshness matters** — hop aroma and flavor change over time, especially in packaged beer
+- **Serve cool, not ice-cold** — 8–12°C helps hop aroma show more clearly
+- **Not all IPAs drink the same way** — some are sharp and bitter, others are softer and fruit-forward
+- **Try them side by side** — comparing West Coast IPA and Hazy IPA is one of the clearest ways to understand the category
+- **Aging is the exception, not the rule** — most IPAs are best consumed relatively fresh, though a few stronger examples may evolve for a short period
 
 ---
 
