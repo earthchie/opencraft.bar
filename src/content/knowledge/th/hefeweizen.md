@@ -4,7 +4,7 @@ date: 2026-07-04
 author: "ทีม OpenCraft"
 description: "ทำความรู้จัก Hefe Weizen — เบียร์ข้าวสาลีเยอรมันที่มีกลิ่นหอมของกล้วยและกานพลูจากยีสต์ นุ่มละมุน ดื่มง่าย"
 locale: th
-tags: ["Hefe Weizen", "Weizen", "Wheat Beer", "เบียร์เยอรมัน", "คราฟต์เบียร์", "ความรู้"]
+tags: ["Hefe Weizen", "Hefe-Weissbier", "Weizen", "Wheat Beer", "เบียร์เยอรมัน", "คราฟต์เบียร์", "ความรู้"]
 ---
 
 # 🌾 Hefe Weizen

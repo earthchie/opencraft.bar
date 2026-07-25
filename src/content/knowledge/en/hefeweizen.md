@@ -4,7 +4,7 @@ date: 2026-07-04
 author: "OpenCraft Team"
 description: "Discover Hefe Weizen — Germany's beloved wheat beer with signature banana and clove aromas, soft mouthfeel, and incredible drinkability"
 locale: en
-tags: ["Hefe Weizen", "Weizen", "Wheat Beer", "German beer", "craft beer", "knowledge"]
+tags: ["Hefe Weizen", "Hefe-Weissbier", "Weizen", "Wheat Beer", "German beer", "craft beer", "knowledge"]
 ---
 
 # 🌾 Hefe Weizen
