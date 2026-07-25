@@ -1,8 +1,8 @@
 ---
-title: "Wheat Beer — Smooth, Refreshing, and Naturally Cloudy"
+title: "Wheat Beer — Soft, Expressive, and Often Hazy"
 date: 2026-07-04
 author: "OpenCraft Team"
-description: "Discover Wheat Beer — the smooth, low-bitterness beer style made with wheat. From German Hefeweizen to Belgian Witbier, explore the family"
+description: "Understand Wheat Beer — a broad group of beers brewed with a significant proportion of wheat, often known for soft texture, lively foam, and distinctive yeast or spice character"
 locale: en
 tags: ["Wheat Beer", "Weizen", "Witbier", "craft beer", "knowledge"]
 ---
@@ -11,9 +11,9 @@ tags: ["Wheat Beer", "Weizen", "Witbier", "craft beer", "knowledge"]
 
 <div class="article-lead">
 
-Wheat Beer is the **friendliest entry point into craft beer**. With its smooth body, low bitterness, and naturally cloudy appearance, it's a style that surprises people who think they don't like beer. The secret? **Wheat** — which gives it a soft, creamy texture and a gentle, approachable flavour.
+Wheat Beer is a broad category of beer made with a significant proportion of **wheat** alongside or instead of barley. Many wheat beers are low in bitterness and soft in texture, but the family is more diverse than it first appears.
 
-If Lager is about cleanliness and crispness, Wheat Beer is about **smoothness, gentleness, and drinkability**.
+If lager often feels crisp and neutral, wheat beer more often emphasizes **texture, foam, yeast character, or spice**.
 
 </div>
 
@@ -21,42 +21,42 @@ If Lager is about cleanliness and crispness, Wheat Beer is about **smoothness, g
 
 ## 🏯 What Makes a Beer a Wheat Beer?
 
-By law in many countries, a Wheat Beer must contain **at least 50% wheat malt** (the rest is barley). Wheat contributes:
+There is no single worldwide legal definition for all wheat beer, but many classic wheat-beer traditions use a **substantial proportion of wheat**, sometimes around or above 50% depending on the style and country. Wheat contributes:
 
-- **Cloudy haze** — wheat proteins don't settle out, giving the beer its signature look
+- **Cloudy haze** — in many styles, proteins and yeast help create the familiar haze
 - **Creamy head** — wheat promotes thick, stable foam
-- **Soft mouthfeel** — wheat adds smoothness without heaviness
-- **Mild flavour** — gentle grain character that lets yeast and spices shine
+- **Soft mouthfeel** — wheat can add smoothness without making the beer heavy
+- **Gentle grain character** — often allowing yeast and spices to stand out
 
-The defining character often comes not from the wheat itself, but from **the yeast** — especially in German styles where the yeast produces banana and clove aromas.
+In many wheat-beer styles, the most distinctive character comes not only from wheat itself but from **yeast choice and process** — especially in German styles where fermentation can create banana and clove aromas.
 
 ---
 
 ## 👅 The Wheat Beer Family
 
-Wheat Beer comes in two main traditions — **German** and **Belgian** — each with its own personality:
+Wheat Beer is often introduced through two major traditions — **German** and **Belgian** — though other wheat-based styles exist as well:
 
 <div class="taste-box">
 
 ### 🇩🇪 German Wheat Beer (Weizen / Weissbier)
 
-The most famous wheat beer style. Unfiltered, cloudy gold, with **signature banana and clove aromas** produced by the yeast.
+A classic wheat-beer tradition. Often unfiltered and hazy, with **banana and clove** fermentation character produced by the yeast.
 
 **Sub-styles:**
-- **Hefeweizen** — The classic: cloudy, banana, clove, creamy
-- **Dunkles Weizen** — Dark version with caramel and toasted notes
-- **Weizenbock** — Strong version (6–8% ABV), rich and warming
+- **Hefeweizen** — cloudy, banana-forward, clove-spiced, soft in texture
+- **Dunkles Weizen** — darker, with more bread crust, toast, or caramel-like malt depth
+- **Weizenbock** — stronger, richer, and often fuller-bodied
 
 ### 🇧🇪 Belgian Wheat Beer (Witbier)
 
-A spiced wheat beer from Belgium, brewed with **raw (unmalted) wheat** and flavoured with **coriander and orange peel**. Bright, citrusy, and refreshing.
+A Belgian wheat tradition often brewed with **raw (unmalted) wheat** and commonly associated with **coriander and orange peel**. Usually bright, lightly spicy, and refreshing.
 
-**Key difference:** The cloudiness comes from wheat *and* spices, and the yeast produces milder, spicier notes rather than banana.
+**Key difference:** Witbier usually shows a gentler yeast profile and more spice-citrus character than a German hefeweizen.
 
 ### 🌍 Other Wheat Styles
-- **American Wheat** — Cleaner, more hop-forward, often clearer
-- **Berliner Weisse** — Tart, sour wheat beer from Berlin, often served with syrup
-- **Gose** — Salty, sour, and spiced (coriander) — a German original
+- **American Wheat** — cleaner fermentation, often with more hop presence and sometimes clearer presentation
+- **Berliner Weisse** — tart wheat beer from Berlin, often low in alcohol and sharply refreshing
+- **Gose** — a sour wheat beer traditionally associated with coriander and salt
 
 </div>
 
@@ -66,7 +66,7 @@ A spiced wheat beer from Belgium, brewed with **raw (unmalted) wheat** and flavo
 
 | Aspect | German Hefeweizen | Belgian Witbier |
 |---|---|---|
-| Wheat | Malted wheat (50%+) | Raw, unmalted wheat (50%+) |
+| Wheat | Usually malted wheat, often in high proportion | Usually includes raw or unmalted wheat |
 | Adjuncts | None | Coriander, orange peel |
 | Yeast character | Banana, clove | Mild, spicy, citrus |
 | Bitterness | Very low (10–15 IBU) | Very low (10–20 IBU) |
@@ -77,7 +77,7 @@ A spiced wheat beer from Belgium, brewed with **raw (unmalted) wheat** and flavo
 
 ## 🍽️ Food Pairing
 
-Wheat Beer's low bitterness and smooth body make it **incredibly versatile at the table**.
+Wheat Beer's lower bitterness and softer body often make it very versatile at the table.
 
 | Food | Why It Works |
 |---|---|
@@ -92,11 +92,11 @@ Wheat Beer's low bitterness and smooth body make it **incredibly versatile at th
 
 ## 💡 Tips for Enjoying
 
-- **Serve in a Weizen glass** — The tall, curved shape showcases the appearance and holds the foam
-- **Pour correctly** — Leave the last sip in the bottle, swirl to suspend the yeast, then add it to your glass
-- **Best cool, not ice-cold** — 8–10°C lets the flavours open up
-- **Lemon in Witbier?** — Yes! A lemon slice is traditional with Belgian Witbier. In Hefeweizen, it's more debated
-- **Great for beginners** — Low bitterness and smooth body make it the perfect introduction to craft beer
+- **Serve in appropriate glassware when possible** — a tall Weizen glass suits many German wheat beers because it supports foam and shows the haze well
+- **Pour according to the style and package** — unfiltered wheat beers are often poured with some yeast roused from the bottle, though preferences vary
+- **Best cool, not ice-cold** — around 8–10°C often lets the yeast and spice character show more clearly
+- **Citrus garnish depends on context** — some bars serve Witbier with citrus, but it is not a universal rule; in Hefeweizen it is more debated and often avoided in traditional service
+- **Useful for newer drinkers** — especially if they prefer low bitterness and expressive aroma over strong hop bite
 
 ---
 
