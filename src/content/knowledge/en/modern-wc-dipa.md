@@ -13,7 +13,7 @@ tags: ["Modern WC DIPA", "DIPA", "Double IPA", "IPA", "West Coast IPA", "craft b
 
 Modern WC DIPA (West Coast Double IPA) is **IPA amplified** — more hops, more alcohol, more flavor, but with a modern sensibility that keeps it dangerously drinkable. It's a Double IPA brewed in the West Coast tradition: **clear, boldly bitter, and unapologetically hoppy**, but with a cleaner malt profile and smoother finish than the old-school versions.
 
-Think of it as a **West Coast IPA turned up to 11** — bigger body, higher ABV, and even more hop intensity.
+Think of it as a **stronger, fuller, more hop-intense West Coast IPA** — bigger body, higher ABV, and a firmer hop presence.
 
 </div>
 
