@@ -1,30 +1,18 @@
 ---
-// TapList — renders the current beer tap list from JSON data
+// TapList — fetches current beer tap list from live API
 import { t } from '@i18n/utils';
-import tapListData from '@data/tap-list.json';
 
 const locale = Astro.currentLocale || 'th';
-
-interface PriceOption {
-  size: string;
-  price: number;
-}
-
-interface TapItem {
-  number: number;
-  brewery: string;
-  labelName: string;
-  style: string;
-  abv: number;
-  price?: number;
-  prices?: PriceOption[];
-}
-
-const taps: TapItem[] = tapListData;
-
-// Separate featured beer (Asahi) from standard taps
-const asahiBeer = taps.find((tap) => tap.brewery === 'Asahi');
-const standardTaps = taps.filter((tap) => tap.brewery !== 'Asahi');
+const tagBase = `/${locale === 'th' ? 'th/' : ''}tag/`;
+const strings = {
+  updated: t('tapList.updated', locale),
+  onTap: t('tapList.onTap', locale),
+  loading: locale === 'th' ? 'กำลังโหลด...' : 'Loading...',
+  error:
+    locale === 'th'
+      ? 'ไม่สามารถโหลดรายการเบียร์ได้ในขณะนี้'
+      : 'Unable to load tap list. Please try again later.',
+};
 ---
 
 <section id="tap-list" class="py-20 theme-transition" style="background-color: var(--color-bg-primary);">
@@ -39,107 +27,166 @@ const standardTaps = taps.filter((tap) => tap.brewery !== 'Asahi');
       </p>
     </div>
 
-    <!-- Featured beer (Asahi) — distinct full-width banner card -->
-    {asahiBeer && (
-      <div class="mb-10 animate-on-scroll">
-        <div class="relative overflow-hidden rounded-2xl" style="background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%); border: 2px solid var(--color-accent); box-shadow: 0 20px 50px -20px var(--color-accent-glow);">
-          <!-- Accent glow strip -->
-          <div class="absolute top-0 left-0 right-0 h-1.5" style="background: linear-gradient(90deg, transparent, var(--color-accent), transparent);"></div>
-
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-0">
-            <!-- Left: Beer identity -->
-            <div class="md:col-span-2 p-8 flex flex-col justify-center" style="border-right: 1px solid var(--color-border);">
-              <div class="flex items-center gap-3 mb-4">
-                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider" style="background-color: var(--color-accent); color: var(--color-bg-primary);">
-                  ★ Featured
-                </span>
-                <span class="text-xs font-mono" style="color: var(--color-text-muted);">
-                  {asahiBeer.abv}% ABV
-                </span>
-              </div>
-              <h3 class="text-3xl md:text-4xl font-black leading-none mb-2" style="color: var(--color-text-heading);">
-                {asahiBeer.labelName}
-              </h3>
-              <p class="text-lg font-medium mb-1" style="color: var(--color-accent);">
-                {asahiBeer.brewery}
-              </p>
-              <a href={`/${locale === 'th' ? 'th/' : ''}tag/${encodeURIComponent(asahiBeer.style)}/`} class="text-sm transition-colors" style="color: var(--color-text-secondary);">
-                {asahiBeer.style} ↗
-              </a>
-            </div>
-
-            <!-- Right: Pricing tiers -->
-            <div class="md:col-span-3 p-8 grid grid-cols-3 gap-4 items-center">
-              {asahiBeer.prices?.map((p, i) => (
-                <div class={`text-center ${i < (asahiBeer.prices!.length - 1) ? 'md:border-r' : ''}`} style={i < (asahiBeer.prices!.length - 1) ? { borderColor: 'var(--color-border)' } : {}}>
-                  <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: var(--color-text-muted);">
-                    {p.size}
-                  </div>
-                  <div class="text-3xl md:text-4xl font-black font-mono leading-none" style="color: var(--color-accent);">
-                    ฿{p.price}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
-
-    <!-- Standard tap cards grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children animate-on-scroll">
-      {standardTaps.map((tap) => (
-        <article class="card flex flex-col">
-          <!-- Header: number + abv -->
-          <div class="flex items-start justify-between mb-3">
-            <span class="text-3xl font-black leading-none" style="color: var(--color-accent);">
-              {String(tap.number).padStart(2, '0')}
-            </span>
-            <span class="text-sm font-mono font-bold px-2.5 py-1 rounded-full" style="background-color: var(--color-bg-secondary); color: var(--color-text-heading);">
-              {tap.abv}% ABV
-            </span>
-          </div>
-
-          <!-- Beer name -->
-          <h3 class="font-bold text-xl leading-tight mb-1" style="color: var(--color-text-heading);">
-            {tap.labelName}
-          </h3>
-
-          <!-- Brewery -->
-          <p class="text-sm mb-3" style="color: var(--color-text-secondary);">
-            {tap.brewery}
-          </p>
-
-          <!-- Style badge (clickable → tag page) -->
-          <a href={`/${locale === 'th' ? 'th/' : ''}tag/${encodeURIComponent(tap.style)}/`} class="self-start px-2.5 py-1 rounded-full text-xs font-medium mb-4 transition-colors" style="background-color: var(--color-accent-glow); color: var(--color-accent);">
-            {tap.style}
-          </a>
-
-          <!-- Prices: flex-grow fills remaining space, prices pinned to bottom -->
-          <div class="mt-auto pt-3 border-t" style="border-color: var(--color-border);">
-            {tap.prices ? (
-              <div class="grid grid-cols-3 gap-1 text-center">
-                {tap.prices.map(p => (
-                  <div>
-                    <div class="text-xs font-semibold tracking-wider mb-0.5" style="color: var(--color-text-muted);">{p.size}</div>
-                    <div class="font-mono font-bold" style="color: var(--color-accent);">฿{p.price}</div>
-                  </div>
-                ))}
-              </div>
-            ) : tap.price ? (
-              <div class="flex justify-between items-baseline">
-                <span class="text-sm font-semibold" style="color: var(--color-text-muted);">330ml</span>
-                <span class="font-mono font-bold text-lg" style="color: var(--color-accent);">฿{tap.price}</span>
-              </div>
-            ) : ''}
-          </div>
-        </article>
-      ))}
+    <!-- Loading state -->
+    <div id="tap-list-loading" class="text-center py-12">
+      <p class="text-lg" style="color: var(--color-text-muted);">{strings.loading}</p>
     </div>
 
+    <!-- Tap cards grid — hidden until API data loads -->
+    <div
+      id="tap-list-grid"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children animate-on-scroll"
+      style="display: none;"
+    ></div>
+
     <!-- Updated info -->
-    <p class="text-center mt-8 text-sm" style="color: var(--color-text-muted);">
-      📋 {t('tapList.updated', locale)}: 2026-07-04 — {standardTaps.length + (asahiBeer ? 1 : 0)} {t('tapList.onTap', locale)}
-    </p>
+    <p id="tap-list-meta" class="text-center mt-8 text-sm" style="color: var(--color-text-muted); display: none;"></p>
   </div>
 </section>
+
+<script define:vars={{ tagBase, strings }}>
+  async function loadTapList() {
+    const loadingEl = document.getElementById('tap-list-loading');
+    const gridEl = document.getElementById('tap-list-grid');
+    const metaEl = document.getElementById('tap-list-meta');
+
+    try {
+      const res = await fetch('https://pos-api.opencraft.bar/api/taplist');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const beers = processTapList(data.items || []);
+      if (beers.length === 0) throw new Error('No items');
+
+      gridEl.innerHTML = beers.map(renderCard).join('');
+      gridEl.style.display = '';
+
+      const date = data.cachedAt
+        ? new Date(data.cachedAt).toISOString().slice(0, 10)
+        : new Date().toISOString().slice(0, 10);
+      metaEl.textContent = `📋 ${strings.updated}: ${date} — ${beers.length} ${strings.onTap}`;
+      metaEl.style.display = '';
+
+      loadingEl.style.display = 'none';
+    } catch (_) {
+      loadingEl.innerHTML = `<p style="color: var(--color-text-muted);">${strings.error}</p>`;
+    }
+  }
+
+  /**
+   * Group raw API items by unique beer (split name on ']'), extract metadata,
+   * and collect size/price options per beer.
+   */
+  function processTapList(items) {
+    const beers = new Map();
+
+    for (const item of items) {
+      const bracketStart = item.name.indexOf('[');
+      const bracketEnd = item.name.indexOf(']');
+      if (bracketStart === -1 || bracketEnd === -1) continue;
+
+      // "1. [S] Paulaner Hefe-Weissbier 5.5%" → sizeLabel="S", beerKey="Paulaner Hefe-Weissbier 5.5%"
+      const sizeLabel = item.name.slice(bracketStart + 1, bracketEnd);
+      const beerKey = item.name.slice(bracketEnd + 1).trim();
+      const tapNumber = parseInt(item.name.split('.')[0].trim(), 10) || 0;
+
+      if (!beers.has(beerKey)) {
+        const tags = item.tags || [];
+
+        // First tag is always the brewery name
+        const brewery = tags[0] || '';
+
+        // ABV tag: e.g. "5.5%"
+        const abvTag = tags.find((tag) => /^\d+\.?\d*%$/.test(tag)) || '';
+        const abv = parseFloat(abvTag) || 0;
+
+        // Style: prefer tags with "Style: " prefix, otherwise use first
+        // non-brewery / non-abv / non-volume / non-draft tag
+        const styleTags = tags
+          .filter((tag) => tag.startsWith('Style: '))
+          .map((tag) => tag.replace('Style: ', ''));
+        const style =
+          styleTags.length > 0
+            ? styleTags[0]
+            : tags.find(
+                (tag) =>
+                  tag !== brewery &&
+                  !/^\d+\.?\d*%$/.test(tag) &&
+                  !/^\d+ml$/.test(tag) &&
+                  tag !== 'Draft' &&
+                  !tag.startsWith('Style: ')
+              ) || '';
+
+        // Strip brewery prefix and ABV suffix to get a clean label name
+        let labelName = beerKey;
+        if (brewery && labelName.startsWith(brewery)) {
+          labelName = labelName.slice(brewery.length).trim();
+        }
+        if (abvTag && labelName.endsWith(abvTag)) {
+          labelName = labelName.slice(0, -abvTag.length).trim();
+        }
+
+        beers.set(beerKey, { tapNumber, brewery, labelName, abv, style, sizes: [] });
+      }
+
+      // Volume from tags: e.g. "250ml", "500ml"
+      const mlTag = (item.tags || []).find((tag) => /^\d+ml$/.test(tag)) || '';
+      beers.get(beerKey).sizes.push({ sizeLabel, volume: mlTag, price: item.price });
+    }
+
+    return Array.from(beers.values()).sort((a, b) => a.tapNumber - b.tapNumber);
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderCard(beer) {
+    const num = String(beer.tapNumber).padStart(2, '0');
+
+    const styleLink = beer.style
+      ? `<a href="${tagBase}${encodeURIComponent(beer.style)}/"
+            class="self-start px-2.5 py-1 rounded-full text-xs font-medium mb-4 transition-colors"
+            style="background-color: var(--color-accent-glow); color: var(--color-accent);"
+          >${esc(beer.style)}</a>`
+      : '';
+
+    const sizesHtml =
+      beer.sizes.length > 0
+        ? `<div class="grid gap-1 text-center" style="grid-template-columns: repeat(${beer.sizes.length}, 1fr);">
+            ${beer.sizes
+              .map(
+                (s) =>
+                  `<div>
+                    <div class="text-xs font-semibold tracking-wider mb-0.5" style="color: var(--color-text-muted);">
+                      ${esc(s.sizeLabel)}${s.volume ? ` · ${esc(s.volume)}` : ''}
+                    </div>
+                    <div class="font-mono font-bold" style="color: var(--color-accent);">฿${s.price}</div>
+                  </div>`
+              )
+              .join('')}
+          </div>`
+        : '';
+
+    return `<article class="card flex flex-col">
+      <div class="flex items-start justify-between mb-3">
+        <span class="text-3xl font-black leading-none" style="color: var(--color-accent);">${esc(num)}</span>
+        <span class="text-sm font-mono font-bold px-2.5 py-1 rounded-full"
+          style="background-color: var(--color-bg-secondary); color: var(--color-text-heading);"
+        >${esc(beer.abv)}% ABV</span>
+      </div>
+      <h3 class="font-bold text-xl leading-tight mb-1" style="color: var(--color-text-heading);">${esc(beer.labelName)}</h3>
+      <p class="text-sm mb-3" style="color: var(--color-text-secondary);">${esc(beer.brewery)}</p>
+      ${styleLink}
+      <div class="mt-auto pt-3 border-t" style="border-color: var(--color-border);">
+        ${sizesHtml}
+      </div>
+    </article>`;
+  }
+
+  loadTapList();
+</script>
