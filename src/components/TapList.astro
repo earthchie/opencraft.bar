@@ -4,6 +4,9 @@ import { t } from '@i18n/utils';
 
 const locale = Astro.currentLocale || 'th';
 const tagBase = `/${locale === 'th' ? 'th/' : ''}tag/`;
+const apiUrl = import.meta.env.DEV
+  ? '/pos-api/taplist'
+  : 'https://pos-api.opencraft.bar/api/taplist';
 const strings = {
   updated: t('tapList.updated', locale),
   onTap: t('tapList.onTap', locale),
@@ -102,14 +105,14 @@ const asahi = {
   </div>
 </section>
 
-<script define:vars={{ tagBase, strings }}>
+<script define:vars={{ tagBase, strings, apiUrl }}>
   async function loadTapList() {
     const loadingEl = document.getElementById('tap-list-loading');
     const gridEl = document.getElementById('tap-list-grid');
     const metaEl = document.getElementById('tap-list-meta');
 
     try {
-      const res = await fetch('https://pos-api.opencraft.bar/api/taplist');
+      const res = await fetch(apiUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
 

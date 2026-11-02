@@ -16,5 +16,16 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      // The tap-list API only allows the production origin, so proxy it
+      // same-origin during local development.
+      proxy: {
+        '/pos-api': {
+          target: 'https://pos-api.opencraft.bar',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/pos-api/, '/api'),
+        },
+      },
+    },
   },
 });

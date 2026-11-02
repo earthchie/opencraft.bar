@@ -1,0 +1,1208 @@
+---
+// StandardPage — BLF specification page, shared shell for EN/TH
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import BlfPlayground from '@components/BlfPlayground.astro';
+import parserSource from '../scripts/blf-parser.js?raw';
+import { en } from '@data/standard/en';
+import { th } from '@data/standard/th';
+import type { TokenKind } from '@data/standard/types';
+
+export interface Props {
+  lang?: 'en' | 'th';
+}
+
+const { lang = 'en' } = Astro.props;
+const copy = lang === 'th' ? th : en;
+const sampleBlf = copy.examples.cards.map((card) => card.compact).join('\n');
+
+const sectionNumber = (index: number) => String(index + 1).padStart(2, '0');
+
+const tokenClass: Record<TokenKind, string> = {
+  plain: '',
+  order: 'tok-order',
+  producer: 'tok-producer',
+  beverage: 'tok-beverage',
+  style: 'tok-style',
+  abv: 'tok-abv',
+  size: 'tok-size',
+  container: 'tok-container',
+  currency: 'tok-currency',
+  cost: 'tok-cost',
+  vat: 'tok-vat',
+  costInc: 'tok-cost-inc',
+  stock: 'tok-stock',
+  price: 'tok-price',
+  priceInc: 'tok-price-inc',
+};
+
+const sectionIds = {
+  why: 0,
+  anatomy: 1,
+  fields: 2,
+  forms: 3,
+  vat: 4,
+  examples: 5,
+  machine: 6,
+  beyond: 7,
+  roadmap: 8,
+  feedback: 9,
+};
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description}>
+  <Header />
+  <main class="flex-grow theme-transition" style="background-color: var(--color-bg-primary);">
+    <article class="blf-page" data-pagefind-body>
+      <!-- Hero -->
+      <section class="blf-hero">
+        <div class="container-main max-w-5xl">
+          <div class="text-center page-enter">
+            <div class="blf-eyebrow">
+              <span class="blf-eyebrow-line"></span>
+              <span>{copy.hero.eyebrow}</span>
+              <span class="blf-eyebrow-line"></span>
+            </div>
+
+            <h1 class="blf-title">{copy.hero.title}</h1>
+
+            <div class="blf-acronym-row">
+              <span class="blf-acronym">{copy.hero.acronym}</span>
+              <span class="blf-version">v1.0</span>
+            </div>
+
+            <p class="blf-subtitle">{copy.hero.subtitle}</p>
+
+            <div class="blf-chips">
+              {copy.hero.chips.map((chip) => <span class="blf-chip">{chip}</span>)}
+            </div>
+
+            <p class="blf-published">{copy.hero.published}</p>
+          </div>
+
+          <BlfPlayground content={copy.playground} sample={sampleBlf} lang={lang} />
+        </div>
+      </section>
+
+      <div class="container-main max-w-5xl">
+        <!-- Table of contents -->
+        <nav class="blf-toc" aria-label={copy.toc.label}>
+          <p class="blf-toc-label">{copy.toc.label}</p>
+          <div class="blf-toc-grid">
+            {copy.toc.items.map((item, i) => (
+              <a href={`#${item.id}`} class="blf-toc-link">
+                <span class="blf-toc-num">{sectionNumber(i)}</span>
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+
+        <!-- Why BLF -->
+        <section id="why" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.why)}</span>
+            <h2 class="blf-heading">{copy.why.heading}</h2>
+          </div>
+          {copy.why.lead.map((paragraph) => <p class="blf-lead">{paragraph}</p>)}
+
+          <div class="blf-grid-2">
+            {copy.why.principles.map((principle) => (
+              <div class="blf-card">
+                <div class="blf-card-icon" aria-hidden="true">{principle.icon}</div>
+                <h3 class="blf-card-title">{principle.title}</h3>
+                <p class="blf-card-body">{principle.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Anatomy -->
+        <section id="anatomy" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.anatomy)}</span>
+            <h2 class="blf-heading">{copy.anatomy.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.anatomy.lead}</p>
+
+          <div class="blf-label">{copy.anatomy.patternLabel}</div>
+          <pre class="blf-code blf-code-pattern"><code>{copy.anatomy.pattern}</code></pre>
+
+          <div class="blf-label">{copy.anatomy.exampleLabel}</div>
+          <pre class="blf-code blf-code-annotated"><code>{copy.anatomy.exampleSegments.map((segment) => (
+  <span class={tokenClass[segment.kind]}>{segment.text}</span>
+))}</code></pre>
+
+          <div class="blf-table-wrap">
+            <table class="blf-table blf-table-stack">
+              <thead>
+                <tr>
+                  {copy.anatomy.tokenHeaders.map((header) => <th>{header}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {copy.anatomy.tokens.map((row) => (
+                  <tr>
+                    <td data-label={copy.anatomy.tokenHeaders[0]}><code class="blf-code-inline">{row.token}</code></td>
+                    <td class="blf-emphasis" data-label={copy.anatomy.tokenHeaders[1]}>{row.field}</td>
+                    <td data-label={copy.anatomy.tokenHeaders[2]}>{row.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="blf-footnote">{copy.anatomy.footnote}</p>
+        </section>
+
+        <!-- Field reference -->
+        <section id="fields" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.fields)}</span>
+            <h2 class="blf-heading">{copy.fields.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.fields.lead}</p>
+
+          <div class="blf-table-wrap">
+            <table class="blf-table blf-table-stack">
+              <thead>
+                <tr>
+                  {copy.fields.headers.map((header) => <th>{header}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {copy.fields.rows.map((row) => (
+                  <tr>
+                    <td class="blf-emphasis" data-label={copy.fields.headers[0]}>{row.field}</td>
+                    <td data-label={copy.fields.headers[1]}>
+                      <span class={row.required ? 'blf-badge blf-badge-required' : 'blf-badge'}>
+                        {row.required ? copy.fields.required : copy.fields.optional}
+                      </span>
+                    </td>
+                    <td data-label={copy.fields.headers[2]}><code class="blf-code-inline">{row.syntax}</code></td>
+                    <td data-label={copy.fields.headers[3]}>{row.notes}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="blf-footnote">{copy.fields.footnote}</p>
+        </section>
+
+        <!-- Forms -->
+        <section id="forms" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.forms)}</span>
+            <h2 class="blf-heading">{copy.forms.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.forms.lead}</p>
+
+          <div class="blf-form-block">
+            <h3 class="blf-subheading">{copy.forms.compact.title}</h3>
+            <p class="blf-body">{copy.forms.compact.body}</p>
+            <pre class="blf-code"><code>{copy.forms.compact.code}</code></pre>
+            <ul class="blf-list">
+              {copy.forms.compact.notes.map((note) => <li>{note}</li>)}
+            </ul>
+          </div>
+
+          <div class="blf-form-block">
+            <h3 class="blf-subheading">{copy.forms.expanded.title}</h3>
+            <p class="blf-body">{copy.forms.expanded.body}</p>
+            <pre class="blf-code"><code>{copy.forms.expanded.code}</code></pre>
+            <ul class="blf-list">
+              {copy.forms.expanded.notes.map((note) => <li>{note}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <!-- VAT -->
+        <section id="vat" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.vat)}</span>
+            <h2 class="blf-heading">{copy.vat.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.vat.lead}</p>
+
+          <div class="blf-grid-2 blf-rules">
+            {copy.vat.rules.map((rule) => (
+              <div class="blf-rule">
+                <h3 class="blf-card-title">{rule.title}</h3>
+                <p class="blf-card-body">{rule.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="blf-form-block">
+            <h3 class="blf-subheading">{copy.vat.exampleTitle}</h3>
+            <pre class="blf-code"><code>{copy.vat.exampleCode}</code></pre>
+            <p class="blf-footnote">{copy.vat.exampleNote}</p>
+          </div>
+        </section>
+
+        <!-- Examples -->
+        <section id="examples" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.examples)}</span>
+            <h2 class="blf-heading">{copy.examples.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.examples.lead}</p>
+
+          <div class="blf-examples">
+            {copy.examples.cards.map((card) => (
+              <div class="blf-example-card">
+                <h3 class="blf-example-title">{card.title}</h3>
+                <pre class="blf-code blf-code-example"><code>{card.compact}</code></pre>
+                <details class="blf-details">
+                  <summary>{copy.examples.expandedLabel}</summary>
+                  <dl class="blf-fields">
+                    {card.fields.map((field) => (
+                      <div class="blf-field">
+                        <dt>{field.key}</dt>
+                        <dd>{field.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </details>
+                <p class="blf-example-note">{card.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- For developers -->
+        <section id="machine" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.machine)}</span>
+            <h2 class="blf-heading">{copy.machine.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.machine.lead}</p>
+
+          <div class="blf-table-wrap">
+            <table class="blf-table">
+              <thead>
+                <tr>
+                  {copy.machine.tokenHeaders.map((header) => <th>{header}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {copy.machine.tokenRows.map((row) => (
+                  <tr>
+                    <td class="blf-emphasis">{row.token}</td>
+                    <td><code class="blf-code-inline">{row.pattern}</code></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="blf-subheading">{copy.machine.stepsTitle}</h3>
+          <ol class="blf-steps">
+            {copy.machine.steps.map((step) => <li>{step}</li>)}
+          </ol>
+
+          <h3 class="blf-subheading">{copy.machine.parserTitle}</h3>
+          <p class="blf-body">{copy.machine.parserLead}</p>
+          <div class="blf-source" data-pagefind-ignore>
+            <div class="blf-source-head">
+              <span class="blf-source-name">blf-parser.js</span>
+              <button
+                type="button"
+                class="blf-copy"
+                id="blf-copy-parser"
+                data-copy={copy.machine.copyButton}
+                data-copied={copy.machine.copiedButton}
+                data-selected={copy.machine.selectedButton}
+              >
+                {copy.machine.copyButton}
+              </button>
+            </div>
+            <pre class="blf-code blf-code-source" id="blf-parser-source"><code>{parserSource}</code></pre>
+          </div>
+
+          <h3 class="blf-subheading">{copy.machine.jsonTitle}</h3>
+          <pre class="blf-code"><code>{copy.machine.jsonCode}</code></pre>
+          <p class="blf-footnote">{copy.machine.jsonNote}</p>
+        </section>
+
+        <!-- Beyond beer -->
+        <section id="beyond" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.beyond)}</span>
+            <h2 class="blf-heading">{copy.beyond.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.beyond.lead}</p>
+
+          <div class="blf-grid-3">
+            {copy.beyond.cards.map((card) => (
+              <div class="blf-card">
+                <div class="blf-card-icon" aria-hidden="true">{card.icon}</div>
+                <h3 class="blf-card-title">{card.title}</h3>
+                <p class="blf-card-body">{card.body}</p>
+                <pre class="blf-code blf-code-mini"><code>{card.example}</code></pre>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap" class="blf-section">
+          <div class="blf-section-head">
+            <span class="blf-section-num">{sectionNumber(sectionIds.roadmap)}</span>
+            <h2 class="blf-heading">{copy.roadmap.heading}</h2>
+          </div>
+          <p class="blf-lead">{copy.roadmap.lead}</p>
+
+          <div class="blf-timeline">
+            {copy.roadmap.items.map((item) => (
+              <div class="blf-timeline-item">
+                <div class="blf-timeline-marker">
+                  <span class="blf-version">{item.version}</span>
+                </div>
+                <div>
+                  <h3 class="blf-card-title">{item.title}</h3>
+                  <p class="blf-card-body">{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Feedback -->
+        <section id="feedback" class="blf-section blf-feedback">
+          <div class="blf-feedback-card glow-accent">
+            <h2 class="blf-heading">{copy.feedback.heading}</h2>
+            <p class="blf-lead">{copy.feedback.body}</p>
+            <a href={`mailto:${copy.feedback.email}`} class="btn-primary">
+              📧 {copy.feedback.button}
+            </a>
+            <p class="blf-footnote">{copy.feedback.footer}</p>
+          </div>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  const copyButton = document.getElementById('blf-copy-parser');
+  const parserSourceEl = document.getElementById('blf-parser-source');
+
+  const copyText = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the selection-based fallback.
+    }
+
+    try {
+      const helper = document.createElement('textarea');
+      helper.value = text;
+      helper.setAttribute('readonly', '');
+      helper.style.position = 'fixed';
+      helper.style.opacity = '0';
+      document.body.append(helper);
+      helper.select();
+      const copied = document.execCommand('copy');
+      helper.remove();
+      if (copied) return true;
+    } catch {
+      // Fall through to selecting the source block.
+    }
+
+    if (parserSourceEl) {
+      const range = document.createRange();
+      range.selectNodeContents(parserSourceEl);
+      const selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+    }
+
+    return false;
+  };
+
+  copyButton?.addEventListener('click', async () => {
+    const sourceText = parserSourceEl?.textContent ?? '';
+    const copied = await copyText(sourceText);
+
+    copyButton.textContent = copied
+      ? copyButton.getAttribute('data-copied') || 'Copied'
+      : copyButton.getAttribute('data-selected') || 'Selected';
+
+    window.setTimeout(() => {
+      copyButton.textContent = copyButton.getAttribute('data-copy') || 'Copy code';
+    }, 2200);
+  });
+</script>
+
+<style>
+  .blf-page {
+    color: var(--color-text-primary);
+  }
+
+  .blf-section {
+    scroll-margin-top: 5.5rem;
+    padding: 3.5rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .blf-hero {
+    padding: 4rem 0 3rem;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 0%, var(--color-accent-glow), transparent 70%),
+      var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .blf-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .blf-eyebrow-line {
+    height: 1px;
+    width: 2.5rem;
+    background: linear-gradient(to right, transparent, var(--color-accent));
+  }
+
+  .blf-eyebrow-line:last-child {
+    background: linear-gradient(to left, transparent, var(--color-accent));
+  }
+
+  .blf-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--color-text-heading);
+    margin: 0 auto 1rem;
+    max-width: 30ch;
+  }
+
+  .blf-acronym-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blf-acronym {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent-dark);
+    background: var(--color-accent-glow);
+  }
+
+  .blf-version {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  .blf-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    max-width: 42rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  .blf-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blf-chip {
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+  }
+
+  .blf-published {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .blf-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    white-space: pre;
+    overflow-x: auto;
+    padding: 1rem 1.15rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+  }
+
+  .blf-code code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .blf-code-pattern {
+    color: var(--color-text-secondary);
+    border-style: dashed;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .blf-code-annotated {
+    font-size: 0.88rem;
+    background: var(--color-bg-card);
+  }
+
+  .blf-code-example {
+    font-size: 0.8rem;
+  }
+
+  .blf-code-mini {
+    font-size: 0.72rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 0.9rem 0 0;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+  }
+
+  .blf-code-inline {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82em;
+    white-space: nowrap;
+    padding: 0.12em 0.42em;
+    border-radius: 5px;
+    background: var(--color-bg-card-hover);
+    color: var(--color-accent);
+  }
+
+  .blf-toc {
+    margin: 2.5rem 0 0;
+    padding: 1.4rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-bg-card);
+  }
+
+  .blf-toc-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .blf-toc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem 1.5rem;
+  }
+
+  .blf-toc-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    padding: 0.35rem 0.25rem;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .blf-toc-link:hover {
+    color: var(--color-accent);
+  }
+
+  .blf-toc-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    opacity: 0.8;
+  }
+
+  .blf-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blf-section-num {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    opacity: 0.8;
+    flex-shrink: 0;
+  }
+
+  .blf-heading {
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--color-text-heading);
+  }
+
+  .blf-subheading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin: 2rem 0 0.5rem;
+  }
+
+  .blf-lead {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--color-text-secondary);
+    max-width: 48rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blf-body {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .blf-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .blf-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .blf-card {
+    padding: 1.35rem;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+    transition: border-color 0.25s ease;
+  }
+
+  .blf-card:hover {
+    border-color: var(--color-accent-dark);
+  }
+
+  .blf-card-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .blf-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin-bottom: 0.4rem;
+  }
+
+  .blf-card-body {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+  }
+
+  .blf-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .blf-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg-card);
+    margin-top: 1.25rem;
+  }
+
+  .blf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    line-height: 1.65;
+  }
+
+  .blf-table th {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-text-heading);
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .blf-table td {
+    padding: 0.7rem 1rem;
+    vertical-align: top;
+    color: var(--color-text-secondary);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .blf-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .blf-table tbody tr:hover {
+    background: var(--color-bg-card-hover);
+  }
+
+  .blf-emphasis {
+    color: var(--color-text-heading) !important;
+    font-weight: 600;
+  }
+
+  .blf-badge {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+  }
+
+  .blf-badge-required {
+    color: var(--color-accent);
+    border-color: var(--color-accent-dark);
+    background: var(--color-accent-glow);
+  }
+
+  .blf-form-block {
+    margin-top: 2rem;
+  }
+
+  .blf-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .blf-list li {
+    position: relative;
+    padding-left: 1.35rem;
+    margin-bottom: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  .blf-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .blf-rules {
+    margin-bottom: 0.5rem;
+  }
+
+  .blf-rule {
+    padding: 1.1rem 1.25rem;
+    border-radius: 12px;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-bg-card);
+  }
+
+  .blf-examples {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.75rem;
+  }
+
+  .blf-example-card {
+    padding: 1.35rem;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+  }
+
+  .blf-example-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-heading);
+    margin-bottom: 0.75rem;
+  }
+
+  .blf-details {
+    margin-bottom: 0.25rem;
+  }
+
+  .blf-details summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    padding: 0.25rem 0;
+  }
+
+  .blf-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .blf-details summary::after {
+    content: '+';
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  .blf-details[open] summary::after {
+    content: '−';
+  }
+
+  .blf-fields {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0.75rem 0 0.25rem;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    background: var(--color-bg-secondary);
+    font-size: 0.86rem;
+  }
+
+  .blf-field {
+    display: grid;
+    grid-template-columns: minmax(9rem, max-content) 1fr;
+    gap: 1rem;
+  }
+
+  .blf-fields dt {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .blf-fields dd {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  .blf-example-note {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .blf-steps {
+    counter-reset: blf-step;
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 2rem;
+  }
+
+  .blf-steps li {
+    position: relative;
+    padding-left: 2.2rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    counter-increment: blf-step;
+  }
+
+  .blf-steps li::before {
+    content: counter(blf-step);
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    width: 1.45rem;
+    height: 1.45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+    border: 1px solid var(--color-accent-dark);
+  }
+
+  .blf-timeline {
+    position: relative;
+    margin-top: 1.75rem;
+    padding-left: 0.5rem;
+  }
+
+  .blf-timeline-item {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .blf-timeline-item:last-child {
+    border-bottom: none;
+  }
+
+  .blf-timeline-marker {
+    padding-top: 0.1rem;
+  }
+
+  .blf-feedback {
+    border-top: none;
+    padding-top: 1rem;
+    padding-bottom: 5rem;
+  }
+
+  .blf-feedback-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 18px;
+    border: 1px solid var(--color-border-light);
+    background: var(--color-bg-card);
+  }
+
+  .blf-feedback-card .blf-heading {
+    margin-bottom: 0.75rem;
+  }
+
+  .blf-feedback-card .blf-lead {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  .blf-feedback-card .blf-footnote {
+    margin-top: 1.5rem;
+  }
+
+  .blf-footnote {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin-top: 0.75rem;
+  }
+
+  .blf-source {
+    margin: 0.75rem 0 2rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-bg-secondary);
+  }
+
+  .blf-source-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-card);
+  }
+
+  .blf-source-name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .blf-copy {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .blf-copy:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .blf-code-source {
+    max-height: 30rem;
+    margin: 0;
+    overflow: auto;
+    border: none;
+    border-radius: 0;
+    white-space: pre;
+    font-size: 0.76rem;
+  }
+
+  /* Token colors — stay inside the site's theme palette */
+  .tok-order {
+    color: var(--color-text-muted);
+  }
+
+  .tok-producer {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .tok-beverage {
+    color: var(--color-text-heading);
+    font-weight: 700;
+  }
+
+  .tok-style {
+    color: var(--color-text-primary);
+  }
+
+  .tok-abv,
+  .tok-size,
+  .tok-container,
+  .tok-stock {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .tok-currency {
+    color: var(--color-text-heading);
+    font-weight: 700;
+  }
+
+  .tok-cost,
+  .tok-price {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .tok-vat {
+    color: var(--color-accent-light);
+    font-weight: 600;
+  }
+
+  .tok-cost-inc,
+  .tok-price-inc {
+    color: var(--color-accent);
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .blf-table-stack,
+    .blf-table-stack tbody,
+    .blf-table-stack tr,
+    .blf-table-stack td {
+      display: block;
+      width: 100%;
+    }
+
+    .blf-table-stack thead {
+      display: none;
+    }
+
+    .blf-table-stack tr {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .blf-table-stack tr:last-child {
+      border-bottom: none;
+    }
+
+    .blf-table-stack td {
+      border: none;
+      padding: 0.2rem 0;
+    }
+
+    .blf-table-stack td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 0.1rem;
+      font-size: 0.64rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    .blf-table-stack td:first-child {
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+    }
+
+    .blf-table-stack td:first-child::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blf-grid-2,
+    .blf-grid-3 {
+      grid-template-columns: 1fr;
+    }
+
+    .blf-toc-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blf-timeline-item {
+      grid-template-columns: 4rem 1fr;
+    }
+
+    .blf-field {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+
+    .blf-fields dd {
+      margin-bottom: 0.35rem;
+    }
+  }
+</style>

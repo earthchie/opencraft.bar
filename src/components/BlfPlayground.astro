@@ -1,0 +1,519 @@
+---
+import type { PlaygroundContent } from '@data/standard/types';
+
+export interface Props {
+  content: PlaygroundContent;
+  sample: string;
+  lang: 'en' | 'th';
+}
+
+const { content, sample, lang } = Astro.props;
+
+const i18n = {
+  labels: content.labels,
+  messages: {
+    lineLabel: content.lineLabel,
+    unknownToken: content.unknownToken,
+    vatMismatch: content.vatMismatch,
+    missingProducer: content.missingProducer,
+    empty: content.empty,
+    statusParsed: content.statusParsed,
+    statusWarnings: content.statusWarnings,
+    statusErrors: content.statusErrors,
+  },
+};
+---
+
+<section id="playground" class="blf-playground" data-pagefind-ignore>
+  <div class="pg-shell" data-lang={lang} data-i18n={JSON.stringify(i18n)}>
+    <div class="pg-bar">
+      <span class="pg-dot" style="background: #e06c5a;"></span>
+      <span class="pg-dot" style="background: #e0b04a;"></span>
+      <span class="pg-dot" style="background: #6fbf73;"></span>
+      <span class="pg-bar-label">{content.label}</span>
+    </div>
+
+    <div class="pg-body">
+      <div class="pg-pane">
+        <div class="pg-pane-head">
+          <label class="pg-label" for="blf-input">{content.inputLabel}</label>
+          <div class="pg-actions">
+            <button type="button" class="pg-btn" id="blf-sample">{content.sampleButton}</button>
+            <button type="button" class="pg-btn" id="blf-clear">{content.clearButton}</button>
+          </div>
+        </div>
+
+        <textarea
+          id="blf-input"
+          class="pg-textarea"
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="off"
+          aria-describedby="blf-hint blf-status">{sample}</textarea>
+
+        <p id="blf-hint" class="pg-hint">{content.description}</p>
+        <p id="blf-status" class="pg-status" aria-live="polite"></p>
+      </div>
+
+      <div class="pg-pane pg-output">
+        <div class="pg-pane-head">
+          <span class="pg-label">{content.outputLabel}</span>
+        </div>
+        <div id="blf-results" class="pg-results" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { parseBlf } from '../scripts/blf-parser.js';
+
+  const root = document.querySelector<HTMLElement>('.pg-shell');
+  const input = document.getElementById('blf-input') as HTMLTextAreaElement | null;
+  const resultsEl = document.getElementById('blf-results');
+  const statusEl = document.getElementById('blf-status');
+  const sampleBtn = document.getElementById('blf-sample');
+  const clearBtn = document.getElementById('blf-clear');
+
+  if (root && input && resultsEl && statusEl) {
+    const i18n = JSON.parse(root.dataset.i18n || '{}');
+    const labels = i18n.labels || {};
+    const messages = i18n.messages || {};
+    const locale = root.dataset.lang === 'th' ? 'th-TH' : 'en-US';
+    const numberFormat = new Intl.NumberFormat(locale, { maximumFractionDigits: 2 });
+    const initialValue = input.value;
+
+    const formatNumber = (value: number) => numberFormat.format(value);
+
+    const element = (tag: string, className: string, text?: string) => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    };
+
+    const fillMessage = (template: string, values: Record<string, string>) =>
+      template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+
+    const renderWarning = (warning: { code: string; token?: string; field?: string; expected?: number; actual?: number }) => {
+      if (warning.code === 'unknown-token') {
+        return fillMessage(messages.unknownToken, { token: warning.token || '' });
+      }
+
+      if (warning.code === 'vat-mismatch') {
+        const fieldLabel = warning.field === 'cost' ? labels.costIncVat : labels.retailPriceIncVat;
+        return fillMessage(messages.vatMismatch, {
+          field: fieldLabel || warning.field || '',
+          expected: formatNumber(warning.expected ?? 0),
+          actual: formatNumber(warning.actual ?? 0),
+        });
+      }
+
+      return warning.code;
+    };
+
+    const renderItem = (result: ReturnType<typeof parseBlf>['results'][number]) => {
+      const card = element('article', result.ok ? 'pg-item' : 'pg-item pg-item-error');
+      const head = element('div', 'pg-item-head');
+
+      if (result.item && result.item.orderNumber !== null) {
+        head.append(element('span', 'pg-order', `#${result.item.orderNumber}`));
+      }
+
+      const titleWrap = element('div', 'pg-item-title');
+
+      if (result.ok && result.item) {
+        const item = result.item;
+        titleWrap.append(element('h3', 'pg-name', item.beverageName || item.producerName));
+
+        const subParts: string[] = [];
+        if (item.beverageName) subParts.push(item.producerName);
+        if (item.style) subParts.push(item.style);
+        if (subParts.length) titleWrap.append(element('p', 'pg-sub', subParts.join(' · ')));
+      } else {
+        titleWrap.append(element('h3', 'pg-name', messages.missingProducer || 'Invalid record'));
+        titleWrap.append(element('p', 'pg-sub', `${messages.lineLabel || 'Line'} ${result.lineNumber}`));
+      }
+
+      head.append(titleWrap);
+      card.append(head);
+
+      if (result.ok && result.item) {
+        const item = result.item;
+        const chips = element('div', 'pg-chips');
+
+        if (item.abv !== null) chips.append(element('span', 'pg-chip', `${labels.abv} ${formatNumber(item.abv)}%`));
+        if (item.containerSize) {
+          chips.append(element('span', 'pg-chip', `${formatNumber(item.containerSize.value)}${item.containerSize.unit}`));
+        }
+        if (item.containerType) chips.append(element('span', 'pg-chip', item.containerType));
+        if (item.currency) chips.append(element('span', 'pg-chip', `${labels.currency} ${item.currency}`));
+        if (item.stockAmount !== null) {
+          chips.append(element('span', 'pg-chip', `${labels.stock} ${formatNumber(item.stockAmount)}`));
+        }
+
+        if (chips.childElementCount > 0) card.append(chips);
+
+        const prices: Array<[string, string]> = [];
+        if (item.costExVat !== null) prices.push([labels.costExVat, formatNumber(item.costExVat)]);
+        if (item.costIncVat !== null) prices.push([labels.costIncVat, formatNumber(item.costIncVat)]);
+        if (item.vatRate !== null) prices.push([labels.vat, `${formatNumber(item.vatRate)}%`]);
+        if (item.retailPriceExVat !== null) prices.push([labels.retailPriceExVat, formatNumber(item.retailPriceExVat)]);
+        if (item.retailPriceIncVat !== null) prices.push([labels.retailPriceIncVat, formatNumber(item.retailPriceIncVat)]);
+
+        if (prices.length > 0) {
+          const list = element('dl', 'pg-prices');
+          for (const [label, value] of prices) {
+            const row = element('div', 'pg-price');
+            row.append(element('dt', '', label), element('dd', '', value));
+            list.append(row);
+          }
+          card.append(list);
+        }
+      }
+
+      for (const warning of result.warnings) {
+        card.append(element('p', 'pg-warning', renderWarning(warning)));
+      }
+
+      if (!result.ok) {
+        card.append(element('code', 'pg-raw', result.raw));
+      }
+
+      return card;
+    };
+
+    const render = () => {
+      const parsed = parseBlf(input.value);
+      resultsEl.replaceChildren();
+
+      if (parsed.results.length === 0) {
+        resultsEl.append(element('p', 'pg-empty', messages.empty || ''));
+      } else {
+        for (const result of parsed.results) {
+          resultsEl.append(renderItem(result));
+        }
+      }
+
+      statusEl.textContent = `${messages.statusParsed || 'Parsed'}: ${formatNumber(parsed.itemCount)} · ${messages.statusWarnings || 'Warnings'}: ${formatNumber(parsed.warningCount)} · ${messages.statusErrors || 'Errors'}: ${formatNumber(parsed.errorCount)}`;
+    };
+
+    let timer: number | undefined;
+
+    input.addEventListener('input', () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(render, 150);
+    });
+
+    sampleBtn?.addEventListener('click', () => {
+      input.value = initialValue;
+      render();
+      input.focus();
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      input.value = '';
+      render();
+      input.focus();
+    });
+
+    render();
+  }
+</script>
+
+<style>
+  .blf-playground {
+    max-width: 56rem;
+    margin: 2.5rem auto 0;
+  }
+
+  .pg-shell {
+    --pg-warning-color: #e0a04a;
+    overflow: hidden;
+    border: 1px solid var(--color-border-light);
+    border-radius: 16px;
+    background: var(--color-bg-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  :global([data-theme='wheat']) .pg-shell,
+  :global([data-theme='lager']) .pg-shell {
+    --pg-warning-color: #9a6a1a;
+  }
+
+  .pg-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+  }
+
+  .pg-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .pg-bar-label {
+    margin-left: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .pg-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .pg-pane {
+    min-width: 0;
+    padding: 1rem 1.15rem 1.15rem;
+  }
+
+  .pg-pane + .pg-pane {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .pg-pane-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 1.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .pg-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .pg-actions {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .pg-btn {
+    padding: 0.28rem 0.55rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 0.68rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .pg-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .pg-textarea {
+    width: 100%;
+    height: 16.5rem;
+    resize: vertical;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.76rem;
+    line-height: 1.7;
+    tab-size: 2;
+  }
+
+  .pg-textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
+  }
+
+  .pg-hint {
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .pg-status {
+    margin-top: 0.35rem;
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pg-output {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pg-results {
+    max-height: 21rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 0.2rem;
+  }
+
+  :global(.pg-item) {
+    min-width: 0;
+    margin-bottom: 0.55rem;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg-secondary);
+  }
+
+  :global(.pg-item:last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.pg-item-error) {
+    border-color: rgba(224, 108, 90, 0.45);
+    background: rgba(224, 108, 90, 0.05);
+  }
+
+  :global(.pg-item-head) {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  :global(.pg-order) {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    padding: 0.08rem 0.3rem;
+    border: 1px solid var(--color-accent-dark);
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.66rem;
+    color: var(--color-accent);
+  }
+
+  :global(.pg-name) {
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-text-heading);
+  }
+
+  :global(.pg-sub) {
+    margin-top: 0.1rem;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+  }
+
+  :global(.pg-chips) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.55rem;
+  }
+
+  :global(.pg-chip) {
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg-card);
+    font-size: 0.66rem;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  :global(.pg-prices) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.2rem 0.9rem;
+    margin-top: 0.55rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  :global(.pg-price) {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.7rem;
+    line-height: 1.6;
+  }
+
+  :global(.pg-price dt) {
+    min-width: 0;
+    color: var(--color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  :global(.pg-price dd) {
+    min-width: 0;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  :global(.pg-warning) {
+    margin-top: 0.45rem;
+    font-size: 0.68rem;
+    line-height: 1.5;
+    color: var(--pg-warning-color);
+  }
+
+  :global(.pg-warning::before) {
+    content: '⚠ ';
+  }
+
+  :global(.pg-raw) {
+    display: block;
+    margin-top: 0.45rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.68rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  :global(.pg-empty) {
+    padding: 2rem 1rem;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .pg-body {
+      grid-template-columns: 1fr;
+    }
+
+    .pg-pane + .pg-pane {
+      border-left: none;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .pg-textarea {
+      height: 13rem;
+    }
+
+    .pg-results {
+      max-height: 24rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :global(.pg-prices) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
