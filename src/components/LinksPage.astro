@@ -5,7 +5,6 @@ import Logo from './Logo.astro';
 import BeerBubbles from './BeerBubbles.astro';
 import OfficialLinkIcon from './OfficialLinkIcon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import ThemePicker from './ThemePicker.astro';
 import { officialLinks } from '@data/officialLinks';
 import { t } from '@i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
@@ -24,7 +23,7 @@ const pageDescription = isEn
   : 'ลิงก์อย่างเป็นทางการของ OpenCraft — เว็บไซต์, LINE Open Chat, Facebook และ Instagram';
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription} forceTheme="ipa">
   <main
     class="relative min-h-screen flex flex-col theme-transition overflow-hidden"
     style="background: radial-gradient(70% 45% at 50% 0%, var(--color-accent-glow), transparent 70%), var(--color-bg-primary);"
@@ -35,7 +34,6 @@ const pageDescription = isEn
     <!-- Controls -->
     <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
       <LanguageSwitcher />
-      <ThemePicker />
     </div>
 
     <div class="container-main relative z-10 flex-1 flex flex-col justify-center py-16">

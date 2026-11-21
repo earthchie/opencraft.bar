@@ -1,12 +1,21 @@
 ---
 // BaseLayout — HTML shell with SEO, theme, fonts, global styles
+export type ThemeId = 'dark' | 'wheat' | 'lager' | 'ipa';
+
 export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  /** Lock the page to one theme and ignore the visitor's saved theme. */
+  forceTheme?: ThemeId;
 }
 
-const { title = 'OpenCraft', description = "OpenCraft — Where Craft Meets Open Culture", ogImage = '/og.png' } = Astro.props;
+const {
+  title = 'OpenCraft',
+  description = "OpenCraft — Where Craft Meets Open Culture",
+  ogImage = '/og.png',
+  forceTheme,
+} = Astro.props;
 
 // Construct full OG image URL
 const siteUrl = 'https://opencraft.bar';
@@ -19,7 +28,7 @@ import '/src/styles/animations.css';
 ---
 
 <!DOCTYPE html>
-<html lang={Astro.currentLocale || 'th'} data-theme="dark">
+<html lang={Astro.currentLocale || 'th'} data-theme={forceTheme ?? 'dark'}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,13 +63,15 @@ import '/src/styles/animations.css';
   <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
   <script is:inline src="/pagefind/pagefind-ui.js"></script>
 
-  <!-- Inline theme script — runs before paint to prevent FOUC -->
-  <script is:inline>
-    (function() {
-      var theme = localStorage.getItem('opencraft-theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
-  </script>
+  <!-- Inline theme script — runs before paint to prevent FOUC (skipped when the page is locked to a theme) -->
+  {!forceTheme && (
+    <script is:inline>
+      (function() {
+        var theme = localStorage.getItem('opencraft-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  )}
 </head>
 <body class="min-h-screen flex flex-col antialiased theme-transition">
   <slot />
