@@ -2,6 +2,7 @@
 // LinksPage — Linktree-style hub for OpenCraft's official channels
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Logo from './Logo.astro';
+import BeerBubbles from './BeerBubbles.astro';
 import OfficialLinkIcon from './OfficialLinkIcon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import ThemePicker from './ThemePicker.astro';
@@ -28,23 +29,21 @@ const pageDescription = isEn
     class="relative min-h-screen flex flex-col theme-transition overflow-hidden"
     style="background: radial-gradient(70% 45% at 50% 0%, var(--color-accent-glow), transparent 70%), var(--color-bg-primary);"
   >
+    <!-- Rising beer bubbles -->
+    <BeerBubbles />
+
     <!-- Controls -->
     <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
       <LanguageSwitcher />
       <ThemePicker />
     </div>
 
-    <div class="container-main flex-1 flex flex-col justify-center py-16">
+    <div class="container-main relative z-10 flex-1 flex flex-col justify-center py-16">
       <div class="w-full max-w-md mx-auto page-enter">
         <!-- Identity -->
         <header class="text-center mb-10">
           <a href={homeUrl} class="inline-flex flex-col items-center" aria-label="OpenCraft">
-            <span
-              class="inline-flex items-center justify-center w-28 h-28 rounded-full"
-              style="background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); box-shadow: var(--shadow-glow);"
-            >
-              <Logo variant="icon" size="lg" />
-            </span>
+            <Logo variant="icon" size="lg" className="drop-shadow-[0_0_28px_rgba(200,147,79,0.28)]" />
           </a>
           <p class="mt-5 text-sm" style="color: var(--color-text-secondary);">
             {t('footer.tagline', locale)}
@@ -101,7 +100,7 @@ const pageDescription = isEn
     </div>
 
     <!-- Copyright -->
-    <footer class="pb-8 text-center text-xs" style="color: var(--color-text-muted);">
+    <footer class="relative z-10 pb-8 text-center text-xs" style="color: var(--color-text-muted);">
       <p>{t('footer.copyright', locale)}</p>
     </footer>
   </main>

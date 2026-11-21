@@ -1,0 +1,31 @@
+---
+// BeerBubbles — rising stout bubbles layer, reused from the home hero
+---
+
+<div class="absolute inset-0 beer-bg" data-beer-bg aria-hidden="true"></div>
+
+<script>
+  function spawnBubbles() {
+    document.querySelectorAll<HTMLElement>('[data-beer-bg]').forEach((bg) => {
+      bg.querySelectorAll('.beer-bubble').forEach((bubble) => bubble.remove());
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < 300; i++) {
+        const bubble = document.createElement('div');
+        bubble.className = 'beer-bubble';
+        const size = 1.5 + Math.pow(Math.random(), 1.8) * 11;
+        const left = Math.random() * 100;
+        const duration = 4 + Math.random() * 8;
+        const delay = Math.random() * -12;
+        const opacity = 0.2 + Math.random() * 0.7;
+        bubble.style.cssText =
+          'left:' + left + '%;width:' + size + 'px;height:' + size + 'px;' +
+          'animation-duration:' + duration + 's;animation-delay:' + delay + 's;opacity:' + opacity + ';';
+        frag.appendChild(bubble);
+      }
+      bg.appendChild(frag);
+    });
+  }
+
+  spawnBubbles();
+  document.addEventListener('astro:after-swap', spawnBubbles);
+</script>

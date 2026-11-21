@@ -1,6 +1,7 @@
 ---
 // HeroSection — full-width hero with gradient background, tagline, CTA
 import Logo from './Logo.astro';
+import BeerBubbles from './BeerBubbles.astro';
 import { t } from '@i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -9,8 +10,7 @@ const locale = Astro.currentLocale || 'th';
 
 <section class="hero-gradient relative overflow-hidden min-h-[90vh] flex items-center justify-center theme-transition" id="hero-section">
   <!-- Stout beer background: bubbles -->
-  <div class="absolute inset-0 beer-bg" id="beer-bg">
-  </div>
+  <BeerBubbles />
 
   <!-- Dark overlay -->
   <div class="absolute inset-0" style="background: rgba(10, 8, 5, 0.2);"></div>
@@ -72,26 +72,3 @@ const locale = Astro.currentLocale || 'th';
     </div>
   </div>
 </section>
-
-<script>
-  function spawnBubbles() {
-    const bg = document.getElementById('beer-bg');
-    if (!bg) return;
-    bg.querySelectorAll('.beer-bubble').forEach(function(b) { b.remove(); });
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < 300; i++) {
-      const b = document.createElement('div');
-      b.className = 'beer-bubble';
-      const size = 1.5 + Math.pow(Math.random(), 1.8) * 11;
-      const left = Math.random() * 100;
-      const duration = 4 + Math.random() * 8;
-      const delay = Math.random() * -12;
-      const opacity = 0.2 + Math.random() * 0.7;
-      b.style.cssText = 'left:' + left + '%;width:' + size + 'px;height:' + size + 'px;animation-duration:' + duration + 's;animation-delay:' + delay + 's;opacity:' + opacity + ';';
-      frag.appendChild(b);
-    }
-    bg.appendChild(frag);
-  }
-  spawnBubbles();
-  document.addEventListener('astro:after-swap', spawnBubbles);
-</script>
