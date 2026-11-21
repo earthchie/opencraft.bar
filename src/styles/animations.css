@@ -250,8 +250,8 @@
     border-radius: 50%;
     background: radial-gradient(
       circle at 30% 30%,
-      rgba(255, 255, 250, 0.6),
-      rgba(240, 235, 225, 0.12)
+      var(--bubble-core),
+      var(--bubble-edge)
     );
     animation: bubbleRise linear infinite;
     will-change: transform;

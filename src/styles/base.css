@@ -97,6 +97,9 @@
   --color-gradient-2: #8b6914;
   --color-gradient-3: #1a0f07;
 
+  --bubble-core: rgba(255, 255, 250, 0.6);
+  --bubble-edge: rgba(240, 235, 225, 0.12);
+
   --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.3);
 
@@ -143,6 +146,9 @@
   --color-gradient-2: #b8860b;
   --color-gradient-3: #8b7355;
 
+  --bubble-core: rgba(166, 122, 58, 0.65);
+  --bubble-edge: rgba(166, 122, 58, 0.18);
+
   --shadow-card: 0 4px 6px -1px rgba(91, 70, 54, 0.15), 0 2px 4px -2px rgba(91, 70, 54, 0.08);
   --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.2);
 
@@ -188,6 +194,9 @@
   --color-gradient-1: #d4a76a;
   --color-gradient-2: #c8934f;
   --color-gradient-3: #f5e6a8;
+
+  --bubble-core: rgba(166, 122, 58, 0.6);
+  --bubble-edge: rgba(166, 122, 58, 0.16);
 
   --shadow-card: 0 4px 6px -1px rgba(74, 48, 32, 0.1), 0 2px 4px -2px rgba(74, 48, 32, 0.06);
   --shadow-glow: 0 0 15px rgba(200, 147, 79, 0.2);
