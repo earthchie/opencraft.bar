@@ -112,8 +112,15 @@
     "lineOpenChat": "LINE Open Chat",
     "facebookPage": "Official Facebook Page",
     "instagram": "Official Instagram",
+    "allLinks": "View all links",
     "copyright": "© 2026 OpenCraft. All rights reserved.",
     "craftedWith": "Crafted with ❤️ and open source"
+  },
+  "linksPage": {
+    "title": "Links",
+    "subtitle": "OpenCraft's official channels",
+    "ariaLabel": "OpenCraft official links",
+    "back": "Back to website"
   },
   "common": {
     "loading": "Loading...",

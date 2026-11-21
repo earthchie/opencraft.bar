@@ -11,6 +11,10 @@ export default defineConfig({
       prefixDefaultLocale: true,
     },
   },
+  redirects: {
+    // Short, shareable link (bio link) for the Thai link hub
+    '/links': '/th/links/',
+  },
   image: {
     domains: [],
   },

@@ -1,0 +1,126 @@
+---
+// LinksPage — Linktree-style hub for OpenCraft's official channels
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Logo from './Logo.astro';
+import OfficialLinkIcon from './OfficialLinkIcon.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import ThemePicker from './ThemePicker.astro';
+import { officialLinks } from '@data/officialLinks';
+import { t } from '@i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export interface Props {
+  locale: 'en' | 'th';
+}
+
+const { locale } = Astro.props;
+const isEn = locale === 'en';
+const homeUrl = getRelativeLocaleUrl(locale, '');
+
+const pageTitle = isEn ? 'Links' : 'ลิงก์';
+const pageDescription = isEn
+  ? "OpenCraft's official links — website, LINE Open Chat, Facebook, and Instagram."
+  : 'ลิงก์อย่างเป็นทางการของ OpenCraft — เว็บไซต์, LINE Open Chat, Facebook และ Instagram';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <main
+    class="relative min-h-screen flex flex-col theme-transition overflow-hidden"
+    style="background: radial-gradient(70% 45% at 50% 0%, var(--color-accent-glow), transparent 70%), var(--color-bg-primary);"
+  >
+    <!-- Controls -->
+    <div class="absolute top-4 right-4 z-20 flex items-center gap-2">
+      <LanguageSwitcher />
+      <ThemePicker />
+    </div>
+
+    <div class="container-main flex-1 flex flex-col justify-center py-16">
+      <div class="w-full max-w-md mx-auto page-enter">
+        <!-- Identity -->
+        <header class="text-center mb-10">
+          <a href={homeUrl} class="inline-flex flex-col items-center" aria-label="OpenCraft">
+            <span
+              class="inline-flex items-center justify-center w-28 h-28 rounded-full"
+              style="background-color: var(--color-bg-secondary); border: 1px solid var(--color-border); box-shadow: var(--shadow-glow);"
+            >
+              <Logo variant="icon" size="lg" />
+            </span>
+          </a>
+          <p class="mt-5 text-sm" style="color: var(--color-text-secondary);">
+            {t('footer.tagline', locale)}
+          </p>
+          <p class="mt-2 text-sm" style="color: var(--color-text-muted);">
+            {t('linksPage.subtitle', locale)}
+          </p>
+        </header>
+
+        <!-- Official links -->
+        <nav aria-label={t('linksPage.ariaLabel', locale)}>
+          <ul class="space-y-3">
+            {officialLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                  class="link-card group relative flex items-center justify-center px-14 py-4 rounded-xl font-medium transition-all duration-300 hover:-translate-y-0.5"
+                  style="background-color: var(--color-bg-card); border: 1px solid var(--color-border); color: var(--color-text-primary); box-shadow: var(--shadow-card);"
+                >
+                  <span class="link-icon absolute left-4 flex items-center justify-center w-9 h-9 rounded-full">
+                    <OfficialLinkIcon name={link.icon} class="w-4 h-4" />
+                  </span>
+                  <span class="text-center">{t(link.key, locale)}</span>
+                  <svg
+                    class="absolute right-4 w-4 h-4 opacity-40 group-hover:opacity-90 transition-opacity"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7m0 0H8m9 0v9" />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <!-- Back to website -->
+        <div class="mt-8 text-center">
+          <a
+            href={homeUrl}
+            class="inline-flex items-center gap-1.5 text-sm transition-opacity hover:opacity-100 opacity-80"
+            style="color: var(--color-accent);"
+          >
+            <span aria-hidden="true">←</span>
+            {t('linksPage.back', locale)}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <footer class="pb-8 text-center text-xs" style="color: var(--color-text-muted);">
+      <p>{t('footer.copyright', locale)}</p>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .link-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .link-icon {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-accent);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .link-card:hover .link-icon {
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+</style>

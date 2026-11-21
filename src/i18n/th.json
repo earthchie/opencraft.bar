@@ -112,8 +112,15 @@
     "lineOpenChat": "LINE Open Chat",
     "facebookPage": "เพจ Facebook ทางการ",
     "instagram": "Instagram ทางการ",
+    "allLinks": "ดูลิงก์ทั้งหมด",
     "copyright": "© 2026 OpenCraft. สงวนลิขสิทธิ์",
     "craftedWith": "สร้างด้วย ❤️ และโอเพนซอร์ส"
+  },
+  "linksPage": {
+    "title": "ลิงก์",
+    "subtitle": "ช่องทางอย่างเป็นทางการของ OpenCraft",
+    "ariaLabel": "ลิงก์อย่างเป็นทางการของ OpenCraft",
+    "back": "กลับหน้าเว็บ"
   },
   "common": {
     "loading": "กำลังโหลด...",
