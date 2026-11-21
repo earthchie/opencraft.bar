@@ -5,7 +5,7 @@ import Logo from './Logo.astro';
 import BeerBubbles from './BeerBubbles.astro';
 import OfficialLinkIcon from './OfficialLinkIcon.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { officialLinks } from '@data/officialLinks';
+import { linksPageLinks } from '@data/officialLinks';
 import { t } from '@i18n/utils';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -36,8 +36,8 @@ const pageDescription = isEn
       <LanguageSwitcher />
     </div>
 
-    <div class="container-main relative z-10 flex-1 flex flex-col justify-center py-16">
-      <div class="w-full max-w-md mx-auto page-enter">
+    <div class="container-main relative z-10 flex-1 flex flex-col py-16">
+      <div class="w-full max-w-md mx-auto my-auto page-enter">
         <!-- Identity -->
         <header class="text-center mb-10">
           <a href={homeUrl} class="inline-flex flex-col items-center" aria-label="OpenCraft">
@@ -54,7 +54,7 @@ const pageDescription = isEn
         <!-- Official links -->
         <nav aria-label={t('linksPage.ariaLabel', locale)}>
           <ul class="space-y-3">
-            {officialLinks.map((link) => (
+            {linksPageLinks.map((link) => (
               <li>
                 <a
                   href={link.href}
