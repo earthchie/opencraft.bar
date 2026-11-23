@@ -857,11 +857,13 @@ const sectionIds = {
 
   .blf-examples {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1rem;
     margin-top: 1.75rem;
   }
 
   .blf-example-card {
+    min-width: 0;
     padding: 1.35rem;
     border-radius: 14px;
     border: 1px solid var(--color-border);
@@ -918,8 +920,9 @@ const sectionIds = {
 
   .blf-field {
     display: grid;
-    grid-template-columns: minmax(9rem, max-content) 1fr;
+    grid-template-columns: minmax(9rem, max-content) minmax(0, 1fr);
     gap: 1rem;
+    min-width: 0;
   }
 
   .blf-fields dt {
@@ -931,6 +934,7 @@ const sectionIds = {
     color: var(--color-text-primary);
     font-weight: 500;
     line-height: 1.6;
+    overflow-wrap: anywhere;
   }
 
   .blf-example-note {
